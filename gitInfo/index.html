@@ -4,21 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>First Post | Yuki’s Blog</title>
+<title>gitInfo | Yuki’s Blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="First Post" />
+<meta property="og:title" content="gitInfo" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="오늘 처음 블로그를 만들어보았습니다" />
-<meta property="og:description" content="오늘 처음 블로그를 만들어보았습니다" />
-<link rel="canonical" href="https://hajunyoo.github.io/Blog/markdown/2022/07/01/first.html" />
-<meta property="og:url" content="https://hajunyoo.github.io/Blog/markdown/2022/07/01/first.html" />
+<meta name="description" content="Yuki’s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다." />
+<meta property="og:description" content="Yuki’s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다." />
+<link rel="canonical" href="https://hajunyoo.github.io/Blog/gitInfo/" />
+<meta property="og:url" content="https://hajunyoo.github.io/Blog/gitInfo/" />
 <meta property="og:site_name" content="Yuki’s Blog" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2022-07-01T00:00:00-05:00" />
+<meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="First Post" />
+<meta property="twitter:title" content="gitInfo" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-01T00:00:00-05:00","datePublished":"2022-07-01T00:00:00-05:00","description":"오늘 처음 블로그를 만들어보았습니다","headline":"First Post","mainEntityOfPage":{"@type":"WebPage","@id":"https://hajunyoo.github.io/Blog/markdown/2022/07/01/first.html"},"url":"https://hajunyoo.github.io/Blog/markdown/2022/07/01/first.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Yuki’s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.","headline":"gitInfo","url":"https://hajunyoo.github.io/Blog/gitInfo/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://hajunyoo.github.io/Blog/feed.xml" title="Yuki's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -85,41 +84,46 @@ window.onload = wrap_img;
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+        <img src="https://ghchart.rshah.org/HaJunYoo" alt="" style="width: 660px; height: 100px;">
+<div id="repos">
+<script>
+// 비동기 작업을 위해 async function 선언
+const initRepo = async () =>{
+        const _username = 'HaJunYoo'
 
-  <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">First Post</h1><p class="page-description">오늘 처음 블로그를 만들어보았습니다</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-01T00:00:00-05:00" itemprop="datePublished">
-        Jul 1, 2022
-      </time>
-       • <span class="read-time" title="Estimated read time">
-    
-    
-      1 min read
-    
-</span></p>
+        // 추가할 dom선택
+        const repoUl = document.getElementById("repos")
 
-    
-      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
-      
-        <a class="category-tags-link" href="/Blog/categories/#markdown">markdown</a>
-        
-      
-      </p>
-    
+        // headers 설명 : 깃허브에 요청할 형식 지정
+        let response = await fetch('https://api.github.com/users/HaJunYoo/repos',
+        {headers:{
+            'Accept' : 'application/vnd.github.v3+json'
+        }});
+        const repoJson = await response.json()
+        // repo받아온 내용 확인
+        // console.log(repoJson);
 
-    </header>
+        // json내용을 map을 이용해 각 dom을 만들고 추가
+        repoJson.map((repos)=>{
+            let h2Element = document.createElement("h2")
+            h2Element.textContent = repos.name
 
-  <div class="post-content e-content" itemprop="articleBody">
-    <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h3"><a href="#오늘-처음-블로그를-만들어보았습니다-">오늘 처음 블로그를 만들어보았습니다 </a></li>
-</ul><h3 id="오늘-처음-블로그를-만들어보았습니다-">
-<a class="anchor" href="#%EC%98%A4%EB%8A%98-%EC%B2%98%EC%9D%8C-%EB%B8%94%EB%A1%9C%EA%B7%B8%EB%A5%BC-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EC%95%98%EC%8A%B5%EB%8B%88%EB%8B%A4-" aria-hidden="true"><span class="octicon octicon-link"></span></a>오늘 처음 블로그를 만들어보았습니다 <br>
-</h3>
-<p>앞으로 열심히 해보겠습니다</p>
+            let pElementDesc = document.createElement("p")
+            pElementDesc.textContent = "레포설명 : " + repos.description
 
-  </div><a class="u-url" href="/Blog/markdown/2022/07/01/first.html" hidden></a>
-</article>
+            let aElementURL = document.createElement("a")
+            aElementURL.href = repos.svn_url
+            aElementURL.textContent = repos.svn_url
 
+            //각 요소를 <div id="repos">에 추가
+            repoUl.append(h2Element)
+            repoUl.append(pElementDesc)
+            repoUl.append(aElementURL)
+            repoUl.append(document.createElement("br"))
+        })
+    }
+    initRepo()
+</script>
       </div>
     </main><footer class="site-footer h-card">
   <data class="u-url" href="/Blog/"></data>

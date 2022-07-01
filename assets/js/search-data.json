@@ -40,11 +40,13 @@
   
 
   
-      ,"page3": {
-          "title": "Sample",
-          "content": "안녕하세요 . Steady Commit을 실천하겠습니다. .",
-          "url": "https://hajunyoo.github.io/Blog/sample/",
-          "relUrl": "/sample/",
+
+  
+      ,"page4": {
+          "title": "Index",
+          "content": "안녕하세요 . Steady Commit을 실천하겠습니다. . Index .",
+          "url": "https://hajunyoo.github.io/Blog/index/",
+          "relUrl": "/index/",
           "date": ""
       }
       
@@ -70,7 +72,7 @@
   
 
   
-      ,"page11": {
+      ,"page12": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://hajunyoo.github.io/Blog/robots.txt",
