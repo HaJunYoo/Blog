@@ -109,7 +109,7 @@ const initRepo = async () =>{
         // 추가할 dom선택
         const repoUl = document.getElementById("repos")
         //갯수설정
-        const count = 5;
+        const count = 100;
         // headers 설명 : 깃허브에 요청할 형식 지정
         let response = await fetch('https://api.github.com/users/HaJunYoo/repos?'+
                        'per_page='+count,
