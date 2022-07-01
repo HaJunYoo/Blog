@@ -11,6 +11,9 @@ https://HaJunYoo.github.io/Blog/
 
 _powered by [fastpages](https://github.com/fastai/fastpages)_
 
+## reference
+https://blog.kubeflow.org/jupyter/2020/02/20/test.html
+
 
 ## What To Do Next?
 
