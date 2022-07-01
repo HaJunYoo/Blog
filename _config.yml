@@ -57,7 +57,7 @@ annotations: false
 show_tags: true
 
 # Add your Google Analytics ID here if you have one and want to use it
-google_analytics: G-935QDHD36J
+google_analytics: G-V1MM5F0SWD
 
 exclude:
   - docker-compose.yml
