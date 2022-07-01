@@ -51,7 +51,7 @@
   
       ,"page1": {
           "title": "About Me",
-          "content": "This website is powered by fastpages 1. . a blogging platform that natively supports Jupyter notebooks in addition to other formats. &#8617; . |",
+          "content": "👋 “Connecting the dots, So you have to trust that the dots will somehow connect in your future.” -Steve Jobs . . 📚 간단 소개 문구 . 👋 안녕하세요 . 👀 빅데이터 연합 분석 동아리 BITAMIN 7th 운영진, 8th 멤버 👀 HUFS 멋쟁이사자처럼 10th 멤버 . 👀 저는 데이터 사이언스와 데이터 엔지니어링에 관심이 많습니다 🌱 Now I’m studying deep about Django 🌱 Hope to study : Elastic search &amp; Spark 💞️ 언젠가 이 곳에서 협업할 수 있기를 기대합니다 📫 How to reach me -&gt; https://linktr.ee/yookie1209 👀 This is my portfolio resume : https://innovative-tortoise-4fd.notion.site/554998db07aa4dee88964118770706c3 👀 My Blog : https://hajunyoo.github.io/Blog/ . 📚 STACKS . . .",
           "url": "https://hajunyoo.github.io/Blog/about/",
           "relUrl": "/about/",
           "date": ""
@@ -62,6 +62,22 @@
   
 
   
+      ,"page3": {
+          "title": "Sample",
+          "content": "안녕하세요 . Steady Commit을 실천하겠습니다. .",
+          "url": "https://hajunyoo.github.io/Blog/sample/",
+          "relUrl": "/sample/",
+          "date": ""
+      }
+      
+  
+
+  
+  
+
+  
+
+  
   
 
   
@@ -70,18 +86,13 @@
   
 
   
-
-  
   
 
   
   
 
   
-  
-
-  
-      ,"page10": {
+      ,"page11": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://hajunyoo.github.io/Blog/robots.txt",
