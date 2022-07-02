@@ -274,3 +274,25 @@ pre code {
   width: 100%;
   height: 100%;
 }
+
+
+
+// my customizations
+// * image-preview class should be on the containing div!
+// * the divs below post-list should have class="post-item"!
+.p-3 {
+    min-height: 150px;
+}
+.Subhead {
+    display: inline;
+}
+.image-preview {
+    max-width: 120px;
+    float: left;
+    padding-right: 1em;
+}
+
+.center {
+  display: block;
+  margin: auto;
+}
