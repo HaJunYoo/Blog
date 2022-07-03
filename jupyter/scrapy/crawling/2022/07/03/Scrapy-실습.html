@@ -187,7 +187,11 @@ window.onload = wrap_img;
 <a class="anchor" href="#Scrapy-%EC%8B%A4%EC%8A%B5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scrapy 실습<a class="anchor-link" href="#Scrapy-%EC%8B%A4%EC%8A%B5"> </a>
 </h1>
 <p>http꞉// 를 붙여주면, start_urls 에서 http꞉// 를 무조건 붙여주기 때문에, 결과적으로 http꞉// 가 두 번 붙게되어, 강제로 http꞉// 를 start_urls 에서 삭제해야 한다</p>
-<div class="highlight"><pre><span></span>scrapy genspider gmarket_best corners.gmarket.co.kr/Bestsellers
+<div class="highlight"><pre><span></span>// 프로젝트를 생성하고 크롤러 모듈을 생성하자
+
+scrapy startproject ecommerce1
+
+scrapy genspider gmarket_best corners.gmarket.co.kr/Bestsellers
 </pre></div>
 <p>위의 명령어를 통해 url에 맞는 크롤러 python 모듈을 생성하자</p>
 <p>start_urls는 def parse의 response로 들어가게 된다</p>
