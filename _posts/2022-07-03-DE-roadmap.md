@@ -4,7 +4,7 @@ layout: post
 description: 데이터 엔지니어 및 로드맵 따라가기
 categories: [backend]
 title: Data engineer Roadmap
-image: images/de_roadmap.png
+image: 
 ---
 
 
