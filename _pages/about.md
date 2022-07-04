@@ -21,7 +21,7 @@ permalink: /about/
 🌱 Hope to study : Elastic search & Spark <br>
 💞️ 언젠가 이 곳에서 협업할 수 있기를 기대합니다 <br>
 📫 How to reach me -> [Yuki's 링크 트리](https://linktr.ee/yookie1209)<br>
-👀 This is my portfolio resume : [Yuki's Portfolio](https://innovative-tortoise-4fd.notion.site/554998db07aa4dee88964118770706c3) <br>
+👀 This is my portfolio resume : [Yuki's Portfolio](https://innovative-tortoise-rec-django.notion.site/554998db07aa4dee88964118770706c3) <br>
 👀 My Blog : [Yuki's Blog](https://hajunyoo.github.io/Blog/)
 
 <!---
