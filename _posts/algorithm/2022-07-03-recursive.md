@@ -5,7 +5,7 @@ comments: false
 title: 재귀함수와 스택
 description: 재귀함수와 스택을 설명
 categories: [algorithm]
-image: images/algorithm/파도반.png
+image: 
 ---
 # 재귀함수와 스택
 
