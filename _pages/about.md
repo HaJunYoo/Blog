@@ -9,7 +9,7 @@ permalink: /about/
 
 ----
 
-<div align=left><h2>📚간단 소개 문구</h2></div>
+<div style="text-align: left"><h3>📚간단 소개 문구</h3></div>
 
 안녕하세요 👋 <br>
 
@@ -28,7 +28,8 @@ HaJunYoo/HaJunYoo is a ✨ special ✨ repository because its `README.md` (this 
 You can click the Preview link to take a look at your changes.
 --->
 -----
-<div align=left><h2>📚 STACKS</h2></div>
+
+<div style="text-align: left"><h4>📚 STACKS</h4>
 
   <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"><img src="https://img.shields.io/badge/c-A8B9CC?style=for-the-badge&logo=c&logoColor=white"><img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> 
   <br>
@@ -51,5 +52,7 @@ You can click the Preview link to take a look at your changes.
 
   <img src="https://img.shields.io/badge/scikit-learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white"><img src="https://img.shields.io/badge/Tensorflow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white"><img src="https://img.shields.io/badge/pytorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white">
   <br>
+
+</div>
 
 -----
