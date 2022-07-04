@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>파도반 수열 | Yuki’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="파도반 수열" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="파도반 수열 (백준 9461) 문제" />
+<meta property="og:description" content="파도반 수열 (백준 9461) 문제" />
+<link rel="canonical" href="https://hajunyoo.github.io/Blog/algorithm/sort/2022/07/02/bj_9461.html" />
+<meta property="og:url" content="https://hajunyoo.github.io/Blog/algorithm/sort/2022/07/02/bj_9461.html" />
+<meta property="og:site_name" content="Yuki’s Blog" />
+<meta property="og:image" content="https://hajunyoo.github.io/Blog/images/algorithm/%ED%8C%8C%EB%8F%84%EB%B0%98.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-02T00:00:00-05:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://hajunyoo.github.io/Blog/images/algorithm/%ED%8C%8C%EB%8F%84%EB%B0%98.png" />
+<meta property="twitter:title" content="파도반 수열" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-02T00:00:00-05:00","datePublished":"2022-07-02T00:00:00-05:00","description":"파도반 수열 (백준 9461) 문제","headline":"파도반 수열","image":"https://hajunyoo.github.io/Blog/images/algorithm/%ED%8C%8C%EB%8F%84%EB%B0%98.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://hajunyoo.github.io/Blog/algorithm/sort/2022/07/02/bj_9461.html"},"url":"https://hajunyoo.github.io/Blog/algorithm/sort/2022/07/02/bj_9461.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://hajunyoo.github.io/Blog/feed.xml" title="Yuki's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V1MM5F0SWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V1MM5F0SWD');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Yuki&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog/about/">About Me</a><a class="page-link" href="/Blog/gitInfo/">gitInfo</a><a class="page-link" href="/Blog/search/">Search</a><a class="page-link" href="/Blog/categories/">Category</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">파도반 수열</h1><p class="page-description">파도반 수열 (백준 9461) 문제</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-02T00:00:00-05:00" itemprop="datePublished">
+        Jul 2, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#algorithm">algorithm</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/Blog/categories/#sort">sort</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#문제">문제</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#입력">입력</a></li>
+<li class="toc-entry toc-h4"><a href="#출력">출력</a></li>
+</ul>
+</li>
+</ul><h2 id="문제">
+<a class="anchor" href="#%EB%AC%B8%EC%A0%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>문제</h2>
+
+<p>오른쪽 그림과 같이 삼각형이 나선 모양으로 놓여져 있다. 첫 삼각형은 정삼각형으로 변의 길이는 1이다. <br></p>
+
+<p>그 다음에는 다음과 같은 과정으로 정삼각형을 계속 추가한다. 나선에서 가장 긴 변의 길이를 k라 했을 때, 그 변에 길이가 k인 정삼각형을 추가한다.<br></p>
+
+<p>파도반 수열 P(N)은 나선에 있는 정삼각형의 변의 길이이다. P(1)부터 P(10)까지 첫 10개 숫자는 1, 1, 1, 2, 2, 3, 4, 5, 7, 9이다.<br></p>
+
+<p>N이 주어졌을 때, P(N)을 구하는 프로그램을 작성하시오.<br></p>
+
+<p><img src="/Blog/images/algorithm/%ED%8C%8C%EB%8F%84%EB%B0%98.png" alt=""></p>
+
+<h4 id="입력">
+<a class="anchor" href="#%EC%9E%85%EB%A0%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>입력</h4>
+
+<p>첫째 줄에 테스트 케이스의 개수 T가 주어진다. 각 테스트 케이스는 한 줄로 이루어져 있고, N이 주어진다. (1 ≤ N ≤ 100)</p>
+
+<h4 id="출력">
+<a class="anchor" href="#%EC%B6%9C%EB%A0%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>출력</h4>
+
+<p>각 테스트 케이스마다 P(N)을 출력한다.</p>
+
+<ul>
+  <li>예제 입력 1</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2 <span class="o">&gt;</span> T
+6
+12
+</code></pre></div></div>
+
+<ul>
+  <li>예제 출력 1</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3
+16
+</code></pre></div></div>
+<hr>
+<p>점화식을 세워야한다면 바로 동적계획법 문제임을 인식하고 풀면 된다.</p>
+
+<p>점화식은 <code class="language-plaintext highlighter-rouge">f(n+3) = f(n) + f(n+1)</code> 과 같다</p>
+
+<p>함수를 이용해서 만드는 방법도 있지만 아래 방법은 함수 호출 때마다 반복문을 수행하기 때문에 처음에 반복문을 수행해서 memoization 리스트를 만들어 놓고 
+<br>
+필요한 인덱스를 가져오는 것보다 시간 복잡도 측면에서 조금 더 불리하다. 조금이라도 아껴야하지 않을까.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 함수 호출용
+</span><span class="n">t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span> <span class="c1"># t 개수를 입력받는다
+</span><span class="n">dp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">101</span>
+
+<span class="n">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">wave</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">number</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="p">:</span>
+        <span class="n">dp</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">dp</span><span class="p">[</span><span class="n">number</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">):</span> <span class="c1"># 문제에서는 enter을 기준으로 입력을 받는다
+</span>    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">wave</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span> <span class="c1"># memoization 리스트 
+</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> 
+ <span class="mi">21</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">86</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">151</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">265</span><span class="p">,</span> 
+ <span class="mi">351</span><span class="p">,</span> <span class="mi">465</span><span class="p">,</span> <span class="mi">616</span><span class="p">,</span> <span class="mi">816</span><span class="p">,</span> <span class="mi">1081</span><span class="p">,</span> <span class="mi">1432</span><span class="p">,</span> <span class="mi">1897</span><span class="p">,</span> <span class="mi">2513</span><span class="p">,</span> <span class="mi">3329</span><span class="p">,</span> 
+ <span class="mi">4410</span><span class="p">,</span> <span class="mi">5842</span><span class="p">,</span> <span class="mi">7739</span><span class="p">,</span> <span class="mi">10252</span><span class="p">,</span> <span class="mi">13581</span><span class="p">,</span> <span class="mi">17991</span><span class="p">,</span> <span class="mi">23833</span><span class="p">,</span> <span class="mi">31572</span><span class="p">,</span> <span class="mi">41824</span><span class="p">,</span> <span class="mi">55405</span><span class="p">,</span> <span class="mi">73396</span><span class="p">,</span> 
+ <span class="mi">97229</span><span class="p">,</span> <span class="mi">128801</span><span class="p">,</span> <span class="mi">170625</span><span class="p">,</span> <span class="mi">226030</span><span class="p">,</span> <span class="mi">299426</span><span class="p">,</span> <span class="mi">396655</span><span class="p">,</span> <span class="mi">525456</span><span class="p">,</span> <span class="mi">696081</span><span class="p">,</span> <span class="mi">922111</span><span class="p">,</span> <span class="mi">1221537</span><span class="p">,</span> <span class="mi">1618192</span><span class="p">,</span> <span class="mi">2143648</span><span class="p">,</span> <span class="mi">2839729</span><span class="p">,</span> <span class="mi">3761840</span><span class="p">,</span> 
+ <span class="mi">4983377</span><span class="p">,</span> <span class="mi">6601569</span><span class="p">,</span> <span class="mi">8745217</span><span class="p">,</span> <span class="mi">11584946</span><span class="p">,</span> <span class="mi">15346786</span><span class="p">,</span> <span class="mi">20330163</span><span class="p">,</span> <span class="mi">26931732</span><span class="p">,</span> <span class="mi">35676949</span><span class="p">,</span> <span class="mi">47261895</span><span class="p">,</span> <span class="mi">62608681</span><span class="p">,</span> <span class="mi">82938844</span><span class="p">,</span> <span class="mi">109870576</span><span class="p">,</span> 
+ <span class="mi">145547525</span><span class="p">,</span> <span class="mi">192809420</span><span class="p">,</span> <span class="mi">255418101</span><span class="p">,</span> <span class="mi">338356945</span><span class="p">,</span> <span class="mi">448227521</span><span class="p">,</span> <span class="mi">593775046</span><span class="p">,</span> <span class="mi">786584466</span><span class="p">,</span> <span class="mi">1042002567</span><span class="p">,</span> <span class="mi">1380359512</span><span class="p">,</span> <span class="mi">1828587033</span><span class="p">,</span> <span class="mi">2422362079</span><span class="p">,</span> 
+ <span class="mi">3208946545</span><span class="p">,</span> <span class="mi">4250949112</span><span class="p">,</span> <span class="mi">5631308624</span><span class="p">,</span> <span class="mi">7459895657</span><span class="p">,</span> <span class="mi">9882257736</span><span class="p">,</span> <span class="mi">13091204281</span><span class="p">,</span> <span class="mi">17342153393</span><span class="p">,</span> <span class="mi">22973462017</span><span class="p">,</span> <span class="mi">30433357674</span><span class="p">,</span> <span class="mi">40315615410</span><span class="p">,</span> 
+ <span class="mi">53406819691</span><span class="p">,</span> <span class="mi">70748973084</span><span class="p">,</span> <span class="mi">93722435101</span><span class="p">,</span> <span class="mi">124155792775</span><span class="p">,</span> <span class="mi">164471408185</span><span class="p">,</span> <span class="mi">217878227876</span><span class="p">,</span> <span class="mi">288627200960</span><span class="p">,</span> <span class="mi">382349636061</span><span class="p">,</span> <span class="mi">506505428836</span><span class="p">,</span> 
+ <span class="mi">670976837021</span><span class="p">,</span> <span class="mi">888855064897</span><span class="p">]</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 문제 제출용
+</span>
+<span class="n">t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span> <span class="c1"># t 개수를 입력받는다
+</span>
+<span class="n">dp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">101</span> <span class="c1"># 100번째
+</span>
+<span class="n">dp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">dp</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">dp</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">98</span><span class="p">)</span> <span class="p">:</span>
+    <span class="n">dp</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="n">dp</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">):</span> <span class="c1"># 문제에서는 enter을 기준으로 입력을 받는다
+</span>    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+</code></pre></div></div>
+
+
+  </div><!-- from https://github.com/utterance/utterances
+<script src="https://utteranc.es/client.js"
+        repo="HaJunYoo/Blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>-->
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yukiblog-1.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript><a class="u-url" href="/Blog/algorithm/sort/2022/07/02/bj_9461.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Yuki&#39;s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/HaJunYoo" target="_blank" title="HaJunYoo"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
