@@ -1,1 +1,4 @@
+User-agent: *
+Allow: /
+
 Sitemap: https://hajunyoo.github.io/Blog/sitemap.xml

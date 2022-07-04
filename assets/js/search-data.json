@@ -185,15 +185,4 @@
   
   
 
-  
-      ,"page13": {
-          "title": "",
-          "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
-          "url": "https://hajunyoo.github.io/Blog/robots.txt",
-          "relUrl": "/robots.txt",
-          "date": ""
-      }
-      
-  
-
 }
