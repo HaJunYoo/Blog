@@ -2,9 +2,9 @@
 toc: true
 layout: post
 comments: true
+title: 데이터 웨어하우스(Data Warehouse)란
 description: 데이터 웨어하우스(Data Warehouse)란
 categories: [database]
-title: 데이터 웨어하우스(Data Warehouse)란
 image: images/맥 스펙.png
 ---
 
