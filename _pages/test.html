@@ -23,6 +23,8 @@ search_exclude: true
 {% assign categories_list = nil %}
 </ul>
 
+<hr/>
+
 {% for category in site.categories %}
   <h3 id="{{ category[0] | downcase | url_escape | strip | replace: ' ', '-' }}"> <i class="fas fa-tags category-tags-icon"></i> {{ category[0] | camelcase }}</h3>
   <ul>
