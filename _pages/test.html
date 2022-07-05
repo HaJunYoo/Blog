@@ -24,13 +24,19 @@ search_exclude: true
 </ul>
 
 {% for category in site.categories %}
-  <h3 id="{{ category[0] | downcase | url_escape | strip | replace: ' ', '-' }}">{{ category[0] | camelcase }}</h3>
+  <h3 id="{{ category[0] | downcase | url_escape | strip | replace: ' ', '-' }}"> <i class="fas fa-tags category-tags-icon"></i> {{ category[0] | camelcase }}</h3>
   <ul>
     {% assign pages_list = category[1] %}
     {% for post in pages_list %}
+      {% if post.hide != true %}
       {% if post.title != null %}
       {% if group == null or group == post.group %}
-      <li><a href="{{ site.url }}{{ post.url }}">{{ post.title }} <time datetime="{{ post.date | date_to_xmlschema }}" itemprop="datePublished">{{ post.date | date: "%B %d, %Y" }}</time></a></li>
+
+        <article class="archive-item">
+          <p class="post-meta post-meta-title"><a class="page-meta" href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a>  • {{ post.date | date: date_format }}</p>
+        </article>
+
+      {% endif %}
       {% endif %}
       {% endif %}
     {% endfor %}
