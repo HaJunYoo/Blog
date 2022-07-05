@@ -23,40 +23,13 @@ permalink: /about/
 👀 This is my portfolio resume : [Yuki's Portfolio](https://innovative-tortoise-rec-django.notion.site/554998db07aa4dee88964118770706c3) <br>
 👀 My Blog : [Yuki's Blog](https://hajunyoo.github.io/Blog/)
 
-<!---
-HaJunYoo/HaJunYoo is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
 -----
+<h4>Yuki's Github</h4>
 
-<div><h4>📚 STACKS</h4>
+![잔디](https://ghchart.rshah.org/HaJunYoo "https://github.com/HaJunYoo")
 
-  <img style="text-align: left" src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"><img src="https://img.shields.io/badge/c-A8B9CC?style=for-the-badge&logo=c&logoColor=white"><img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"> 
-  <br>
-  
-  <img style="text-align: left" src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"><img src="https://img.shields.io/badge/sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=black">
-  <br>
-  
-
-  <img style="text-align: left" src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white">
-  <br>
-
-  <img style="text-align: left" src="https://img.shields.io/badge/linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"> 
-  <br>
-  
-  <img style="text-align: left" src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-  <br>
-
-  <img style="text-align: left" src="https://img.shields.io/badge/scikit-learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white"><img src="https://img.shields.io/badge/Tensorflow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white"><img src="https://img.shields.io/badge/pytorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white">
-  <br>
-
-</div>
------
 ![HaJun's github stats](https://github-readme-stats.vercel.app/api?username=HaJunYoo&show_icons=true&theme=tokyonight)
 
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=HaJunYoo&layout=compact&theme=tokyonight)
 
-![잔디](https://ghchart.rshah.org/HaJunYoo "https://github.com/HaJunYoo")
-<br>
-[Github](https://github.com/HaJunYoo)
-<br>
+
