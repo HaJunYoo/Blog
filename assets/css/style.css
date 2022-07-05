@@ -466,15 +466,11 @@ pre code { font-size: 12px !important; }
 
 .highlight .ge { text-decoration: underline; }
 
-.highlight .bp { font-style: italic; }
-
 .highlight .c, .highlight .ch, .highlight .cm, .highlight .cpf, .highlight .cs { color: #6272a4; }
 
 .highlight .c1 { color: gray; }
 
 .highlight .kd, .highlight .kt, .highlight .nb, .highlight .nl, .highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi, .highlight .vm { color: #8be9fd; }
-
-.highlight .kd, .highlight .nb, .highlight .nl, .highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi, .highlight .vm { font-style: italic; }
 
 .highlight .fm, .highlight .na, .highlight .nc, .highlight .nf { color: #ace591; }
 
@@ -486,6 +482,6 @@ pre code { font-size: 12px !important; }
 
 .highlight .gd { color: #ff5555; }
 
-p code { font-size: 19px; }
+p code { font-size: 13px; }
 
 /*# sourceMappingURL=style.css.map */
