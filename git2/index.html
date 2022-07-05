@@ -4,23 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Page 3 of 3 for Yuki’s Blog | Yuki’s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</title>
+<title>git2 | Yuki’s Blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Yuki’s Blog" />
+<meta property="og:title" content="git2" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Yuki’s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다." />
 <meta property="og:description" content="Yuki’s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다." />
-<link rel="canonical" href="https://hajunyoo.github.io/Blog/page3/" />
-<meta property="og:url" content="https://hajunyoo.github.io/Blog/page3/" />
+<link rel="canonical" href="https://hajunyoo.github.io/Blog/git2/" />
+<meta property="og:url" content="https://hajunyoo.github.io/Blog/git2/" />
 <meta property="og:site_name" content="Yuki’s Blog" />
-<meta property="og:image" content="https://hajunyoo.github.io/Blog/images/logo.png" />
 <meta property="og:type" content="website" />
-<link rel="prev" href="https://hajunyoo.github.io/Blog/page2/" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta property="twitter:image" content="https://hajunyoo.github.io/Blog/images/logo.png" />
-<meta property="twitter:title" content="Yuki’s Blog" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="git2" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Yuki’s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.","headline":"Yuki’s Blog","image":"https://hajunyoo.github.io/Blog/images/logo.png","url":"https://hajunyoo.github.io/Blog/page3/"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Yuki’s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.","headline":"git2","url":"https://hajunyoo.github.io/Blog/git2/"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://hajunyoo.github.io/Blog/feed.xml" title="Yuki's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -103,107 +100,58 @@ window.onload = wrap_img;
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home"><p><a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fhajunyoo.github.io%2FBlog%2F&amp;count_bg=%2379C83D&amp;title_bg=%23555555&amp;icon=python.svg&amp;icon_color=%23FFFFFF&amp;title=hits%21%21+&amp;edge_flat=false" alt="Hits" /></a></p>
-
-<div align="left">
-<a href="https://github.com/HaJunYoo">
-    <img src="http://img.shields.io/badge/-Github-655ced?style=flat&amp;logo=github&amp;link=https://github.com/HaJunYoo" style="height : auto; margin-right : 10px;" />
-</a><a href="https://instagram.com/yookie1209">
-    <img src="http://img.shields.io/badge/-Instagram-black?style=flat&amp;logo=Instagram&amp;link=https://instagram.com/yookie1209/" style="height : auto; margin-left : 10px; margin-right : 10px;" />
-</a> <a href="mailto:hajuny129@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-d14836?style=flat-square&amp;logo=Gmail&amp;logoColor=white&amp;link=mailto:hajuny129@gmail.com" style="height : auto; margin-left : 10px; margin-right : 10px;" />
-</a>
-</div>
-
-<p><img src="/Blog/images/logo.png" width="200" height="200" />
-<!--![](/Blog/images/logo.png "https://github.com/HaJunYoo")--></p>
-<blockquote>
-  <h3 id="안녕하세요-유키yuki-입니다---">안녕하세요. <strong>유키(Yuki)</strong> 입니다. 👋  <br /></h3>
-  <p>지속 가능한 커밋을 목표로 삼는 <strong>TIL 블로그</strong>입니다.
-<br />
-“Connecting the dots, So you have to trust that the dots will somehow connect in your future.” <br /> - Steve Jobs
-<br /></p>
-  <h4 id="yuki의-tech-blog는-데이터-사이언스와-엔지니어링-그리고-프로그래밍-전반에-대해서-다루고-있습니다">“Yuki의 Tech Blog는 데이터 사이언스와 엔지니어링 그리고 프로그래밍 전반에 대해서 다루고 있습니다.”</h4>
-</blockquote>
-
-<hr />
+        <script>
 
 
 
+await axios
+  .get(`https://api.github.com/users/$HaJunYoo/repos`, {
+	headers: {
+		Accept: "application/vnd.github.nightshade-preview+json",
+				// Authorization: `Token b6b4269b1...`,
+		},
+	})
+	.then((el) => changeHandler(el.data));
 
-  
+const changeHandler = (data) => {
+	const repoData = JSON.stringify(data);
+	localStorage.setItem("repoData", repoData);
+	setToggle(!toggle);
+};
 
-  <!-- Hide posts if front matter flag hide:true -->
-  
-  
+// repoRegister 개수만큼 요청 후 해당 이슈만큼 map으로 뿌려줌
+useEffect(() => {
+	// 처음 불러올때 초기화
+	let temp = [];
+	const username = localStorage.getItem("username");
+	const repoRegister = JSON.parse(localStorage.getItem("repoRegister"));
 
-  <!-- Sort posts by rank, then date -->
-  
-  
-  
+	if (repoRegister) {
+		const getRepo = async () => {
+			for (let i = 0; i < repoRegister.length; i++) {
+				let url = `htts://api.github.com/repos/$HaJunYoo/${repoRegister[i].name}/issues`;
 
- 
-  
+				await axios
+					.get(url, {
+						headers: {
+							Accept: "application/vnd.github.nightshade-preview+json",
+						},
+					})
+					.then((res) =>
+						res.data.forEach((el) => {
+							el.repo = repoRegister[i].name;
+							temp.push(el);
+						})
+					);
+			}
+			setLoading(!loading);
+			setIssue(temp);
+		};
+		getRepo();
+	}
+	}, []);
 
-   <!-- Assemble final sorted posts array -->
-  
-  <ul class="post-list"><li><div class="Box box-shadow-medium rounded-1 col-12"><div class="col-8 d-table-cell p-3">
-        <h3>
-          <a class="post-link" href="/Blog/datascience/recommendation/2022/07/02/Neural-Collaborative-Filtering-%EC%8B%A4%EC%8A%B5.html">
-            Neural Collaborative Filtering
-          </a>
-        </h3>
-        <p class="post-meta-description">Neural Collaborative Filtering 실습</p>
-          <p class="post-meta">Jul 2, 2022</p>
-      </div>
-  </div></li><li><div class="Box box-shadow-medium rounded-1 col-12"><div class="col-8 d-table-cell p-3">
-        <h3>
-          <a class="post-link" href="/Blog/etc/2022/07/01/first.html">
-            First Post
-          </a>
-        </h3>
-        <p class="post-meta-description">오늘 처음 블로그를 만들어보았습니다</p>
-          <p class="post-meta">Jul 1, 2022</p>
-      </div>
-  </div></li><li><div class="Box box-shadow-medium rounded-1 col-12"><div class="col-8 d-table-cell p-3">
-        <h3>
-          <a class="post-link" href="/Blog/backend/2022/07/01/roadmap.html">
-            Backend Roadmap
-          </a>
-        </h3>
-        <p class="post-meta-description">Back end 기본기 및 로드맵 따라가기</p>
-          <p class="post-meta">Jul 1, 2022</p>
-      </div>
-  </div></li><li><div class="Box box-shadow-medium rounded-1 col-12"><div class="col-4 d-table-cell p-3 v-align-middle">
-        <img class="image-preview " src="/Blog/images/%EB%A7%A5%20%EC%8A%A4%ED%8E%99.png" />
-      </div><div class="col-8 d-table-cell p-3">
-        <h3>
-          <a class="post-link" href="/Blog/etc/2022/07/01/second.html">
-            맥에서 깃허브 블로그를 만들기 위해 ruby 실행 시 오류 발생
-          </a>
-        </h3>
-        <p class="post-meta-description">맥에서 깃허브 블로그를 만들기 위해 ruby 실행 시 오류 발생</p>
-          <p class="post-meta">Jul 1, 2022</p>
-      </div>
-  </div></li><li><div class="Box box-shadow-medium rounded-1 col-12"><div class="col-8 d-table-cell p-3">
-        <h3>
-          <a class="post-link" href="/Blog/datascience/project/2022/06/25/2021_LPoint.html">
-            2021 Lpoint 클릭스트림
-          </a>
-        </h3>
-        <p class="post-meta-description">2021 국민대학교 빅데이터 경영학과 학회 D&A에서 주최한 Lpoint 클릭스트림 데이터를 이용한 성별 예측 대회</p>
-          <p class="post-meta">Jun 25, 2022</p>
-      </div>
-  </div></li></ul>
-
-    
-      <div class="pager">
-        <ul class="pagination">
-          <li><a href="/Blog/page2/" class="previous-page">2</a></li>
-          <li><div class="current-page">3</div></li>
-          <li><div class="pager-edge">•</div></li>
-        </ul>
-      </div></div>
+</script>
       </div>
     </main><footer class="site-footer h-card">
   <data class="u-url" href="/Blog/"></data>
