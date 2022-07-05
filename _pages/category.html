@@ -30,7 +30,8 @@ search_exclude: true
 
   <ul>
   {% for category in categories %}
-    <li><a href="#{{ category }}">{{ category }}</a></li>
+<!--    {{category}}-->
+    <li><a href="#{{ category }}">{{ category[0] | camelcase }} ({{ category[1].size }})</a></li>
   {% endfor %}
   </ul>
 
