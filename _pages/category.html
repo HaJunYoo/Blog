@@ -6,19 +6,6 @@ search_exclude: true
 ---
 
 {% if site.categories.size > 0 %}
-<h2>Tags</h2>
-
-{% assign alldocs = site.COLLECTIONNAME | <additional filtering and sorting> %}
-{% assign grouptag =  alldocs | map: 'tags' | join: ','  | split: ','  | group_by: tag %}
-{%- for tag in grouptag -%}
-    <h1>{{- tag.name -}} - {{tag.size}}</h1>
-	{%- for document in alldocs -%}
-    	{% if document.tags contains tag.name %}
-        	 <p>{{- document.title -}}
-		 {% endif %}
-    {%- endfor -%}
-{%- endfor -%}
-
 
 <h2>Contents</h2>
 
@@ -31,12 +18,12 @@ search_exclude: true
   <ul>
   {% for category in categories %}
 <!--    {{category}}-->
-    <li><a href="#{{ category }}">{{ category[0] | camelcase }} ({{ category[1].size }})</a></li>
+    <li><a href="#{{ category }}">{{ category }}</a></li>
   {% endfor %}
   </ul>
 
   {% for category in categories %}
-      <h3 id ="{{ category }}"><i class="fas fa-tags category-tags-icon"></i></i> {{ category }}</h3>
+      <h3 id ="{{ category }}"><i class="fas fa-tags category-tags-icon"></i>{{ category }}</h3>
       <a name="{{ category | slugize }}"></a>
       {% for post in site.categories[category] %}
         {% if post.hide != true %}
