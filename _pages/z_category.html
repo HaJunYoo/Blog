@@ -27,7 +27,10 @@ search_exclude: true
 
 {% for category in site.categories %}
 
-    <details> <summary> <h3 id="{{ category[0] | downcase | url_escape | strip | replace: ' ', '-' }}"> <i class="fas fa-tags category-tags-icon"></i> {{ category[0] | camelcase }}</h3></summary>
+  <h3 id="{{ category[0] | downcase | url_escape | strip | replace: ' ', '-' }}"> <i class="fas fa-tags category-tags-icon"></i> {{ category[0] | camelcase }}</h3>
+
+    <details>
+       <summary> Open </summary>
 
       <ul>
         {% assign pages_list = category[1] %}
