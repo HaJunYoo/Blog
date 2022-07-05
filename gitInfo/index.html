@@ -162,19 +162,10 @@ const initRepo = async () =>{
             repoUl.append(pElementDesc)
             repoUl.append(aElementURL)
             repoUl.append(document.createElement("br"))
+            repoUl.append(document.createElement("/hr"))
         })
     }
-    // initRepo()
-
-    $('#repos').pagination({
-    dataSource: initRepo(),
-    callback: function(data, pagination) {
-        // template method of yourself
-        var html = template(data);
-        dataContainer.html(html);
-    }
-})
-
+    initRepo()
 
 </script>
       </div>
