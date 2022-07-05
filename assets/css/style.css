@@ -345,7 +345,7 @@ p { margin-top: 1rem !important; margin-bottom: 1rem !important; }
 
 h1, h2, h3, h4 { font-weight: normal !important; margin-bottom: 0.5rem !important; }
 
-h1 code, h2 code, h3 code, h4 code { font-size: 80%; }
+h1 code, h2 code, h3 code, h4 code { font-size: 70%; }
 
 pre { margin-bottom: 1.5rem !important; }
 
@@ -425,7 +425,7 @@ table th { text-align: center !important; }
 
 .code_cell { margin: 1.5rem !important; }
 
-pre code { font-size: 10px !important; }
+pre code { font-size: 12px !important; }
 
 .youtube-iframe-wrapper { position: relative; padding-bottom: 56.10%; height: 0; overflow: hidden; }
 
