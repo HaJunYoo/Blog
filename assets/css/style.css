@@ -355,7 +355,7 @@ li h3, li h4 { margin-top: .05rem !important; margin-bottom: .05rem !important; 
 
 li .post-meta-description { color: #585858; font-size: 15px; margin-top: .05rem !important; margin-bottom: .05rem !important; }
 
-details { border-bottom: 1px solid #efefef; color: #666; padding: 15px; text-indent: 2em; }
+details { color: #666; padding: 15px; text-indent: 2em; }
 
 details > summary { color: #333; padding: 15px 0; }
 
