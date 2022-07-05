@@ -101,6 +101,7 @@ window.onload = wrap_img;
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         <img src="https://ghchart.rshah.org/HaJunYoo" alt="" style="width: 660px; height: 100px;">
+
 <div id="repos"></div>
 
 <script>
@@ -124,7 +125,7 @@ const repoLanguage = async (repo) =>{
 const initRepo = async () =>{
         // 추가할 dom선택
         const repoUl = document.getElementById("repos")
-        //갯수설정
+        //갯수 설정
         const count = 100;
         // headers 설명 : 깃허브에 요청할 형식 지정
         let response = await fetch('https://api.github.com/users/HaJunYoo/repos?'+
@@ -139,7 +140,7 @@ const initRepo = async () =>{
         // json내용을 map을 이용해 각 dom을 만들고 추가
         // repoLanguage 함수의 비동기 작업을 위한 async function선언
         repoJson.map(async (repos)=>{
-            let h2Element = document.createElement("h2")
+            let h2Element = document.createElement("h3")
             h2Element.textContent = repos.name
 
             let pElementDesc = document.createElement("p")
@@ -163,7 +164,18 @@ const initRepo = async () =>{
             repoUl.append(document.createElement("br"))
         })
     }
-    initRepo()
+    // initRepo()
+
+    $('#repos').pagination({
+    dataSource: initRepo(),
+    callback: function(data, pagination) {
+        // template method of yourself
+        var html = template(data);
+        dataContainer.html(html);
+    }
+})
+
+
 </script>
       </div>
     </main><footer class="site-footer h-card">
