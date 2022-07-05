@@ -26,13 +26,19 @@ search_exclude: true
 <hr/>
 
 {% for category in site.categories %}
+
   <h3 id="{{ category[0] | downcase | url_escape | strip | replace: ' ', '-' }}"> <i class="fas fa-tags category-tags-icon"></i> {{ category[0] | camelcase }}</h3>
+
+  <details>
+    <summary>{{ category[0] | camelcase }} 열기 </summary>
+
   <ul>
     {% assign pages_list = category[1] %}
     {% for post in pages_list %}
       {% if post.hide != true %}
       {% if post.title != null %}
       {% if group == null or group == post.group %}
+
       {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
 
         <article class="archive-item">
@@ -42,10 +48,14 @@ search_exclude: true
       {% endif %}
       {% endif %}
       {% endif %}
+
     {% endfor %}
     {% assign pages_list = nil %}
     {% assign group = nil %}
   </ul>
+
+  </details>
+
 {% endfor %}
 
 {% endif %}
