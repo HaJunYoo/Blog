@@ -5,9 +5,129 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 06 Jul 2022 17:26:04 +0900</pubDate>
-    <lastBuildDate>Wed, 06 Jul 2022 17:26:04 +0900</lastBuildDate>
+    <pubDate>Wed, 06 Jul 2022 08:11:22 -0500</pubDate>
+    <lastBuildDate>Wed, 06 Jul 2022 08:11:22 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>합이 같은 부분집합 (DFS 아마존 인터뷰)</title>
+        <description>&lt;h1 id=&quot;합이-같은-부분집합dfs--아마존-인터뷰&quot;&gt;합이 같은 부분집합(DFS : 아마존 인터뷰)&lt;/h1&gt;
+
+&lt;p&gt;N개의 원소로 구성된 자연수 집합이 주어지면, 이 집합을 두 개의 부분집합으로 나누었을 때,&lt;/p&gt;
+
+&lt;p&gt;두 부분 집합의 원소의 합이 서로 같은 경우가 존재하면 “YES”를 출력하고, 그렇지 않으면 “NO”를 출력하는 프로그램을 작성하시오.&lt;/p&gt;
+
+&lt;p&gt;예를 들어 {1, 3, 5, 6, 7, 10}이 입력되면 {1, 3, 5, 7} = {6, 10} 으로 두 부분 집합의 합이 16으로 같은 경우가 존재하는 것을 알 수 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;입력 설명
+    &lt;ul&gt;
+      &lt;li&gt;첫번째 줄에 자연수 N(1≤ N ≤ 10) 이 주어집니다.&lt;/li&gt;
+      &lt;li&gt;두번째 줄에 집합의 원소 N개가 주어진다. 각 원소는 중복되지 않는다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;출력 설명
+    &lt;ul&gt;
+      &lt;li&gt;첫번째 줄에 “YES” 또는 “NO”를 출력한다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;입력 예제 1
+    &lt;ul&gt;
+      &lt;li&gt;6&lt;/li&gt;
+      &lt;li&gt;1 3 5 6 7 10&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;출력 예제 1
+    &lt;ul&gt;
+      &lt;li&gt;YES&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Total&lt;/strong&gt;은 입력받은 수들의 총합&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DFS(index, sum)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;왼쪽 매개변수(index)&lt;/code&gt;는 리스트의 index&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;오른쪽 매개변수 sum&lt;/code&gt;은 index까지의 부분 집합들의 합이다.&lt;/p&gt;
+
+&lt;p&gt;함수는 매 리스트 인덱스 분기점마다 해당 리스트의 원소를 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;add or not&lt;/code&gt; 을 선택하면서 리스트의 끝까지 탐색한다.&lt;/p&gt;
+
+&lt;p&gt;리스트의 끝까지 탐색을 했고 아래의 조건을 만족하였을 때,&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Sum == Total - sum&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;⇒ YES&lt;/p&gt;
+
+&lt;p&gt;⇒ 프로그램을 종료&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/Blog/images/algorithm/부분집합합.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;DFS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 트리의 끝까지 탐색을 해서 인덱스가 오버되었을 때 
+&lt;/span&gt;		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 두 부분 집합이 같다면 &quot;Yes&quot;를 출력하고 프로그램 종료
+&lt;/span&gt;			&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;yes&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 아예 프로그램을 종료 -&amp;gt; process finished with exit code 0
+&lt;/span&gt;		
+	&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
+		&lt;span class=&quot;n&quot;&gt;DFS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# L번 인덱스의 원소를 합하겠다
+&lt;/span&gt;		&lt;span class=&quot;n&quot;&gt;DFS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# L번 인덱스의 원소를 합하지 않겠다. 
+&lt;/span&gt;		
+	
+
+&lt;span class=&quot;n&quot;&gt;DFS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;No&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 참이 되는 경우가 없을 때 함수를 재귀적으로 다 실행시키고 와서 해당 &quot;No&quot;를 출력
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;모든 분기를 다 찾아보지 않는 것으로 시간 복잡도를 낮출 수 있다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;DFS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;total&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 가지를 더 뻗어나갈 필요가 없다. -&amp;gt; 시간 복잡도를 더 아낄 수 있다. 
+&lt;/span&gt;		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; 
+
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;total&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
+			&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;yes&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		
+	&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; 
+		&lt;span class=&quot;n&quot;&gt;DFS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# L번 인덱스의 원소를 합하겠다
+&lt;/span&gt;		&lt;span class=&quot;n&quot;&gt;DFS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# L번 인덱스의 원소를 합하지 않겠다. 
+&lt;/span&gt;		
+	
+
+&lt;span class=&quot;n&quot;&gt;DFS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;No&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Wed, 06 Jul 2022 00:00:00 -0500</pubDate>
+        <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/06/subsetsum.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/06/subsetsum.html</guid>
+        
+        
+        <category>algorithm</category>
+        
+      </item>
     
       <item>
         <title>부분집합 구하기(DFS)</title>
@@ -151,7 +271,7 @@
 &lt;span class=&quot;n&quot;&gt;DFS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 1부터 스택을 쌓아서 입력을 넘지 않을 때까지 깊이 우선 탐색을 진행한다. 
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
-        <pubDate>Wed, 06 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Wed, 06 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/06/subset-dfs.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/06/subset-dfs.html</guid>
         
@@ -274,7 +394,7 @@
 
 &lt;p&gt;순회 방식에서 사용 빈도는  &lt;strong&gt;전위 » 후위 &amp;gt; 중위&lt;/strong&gt;&lt;/p&gt;
 </description>
-        <pubDate>Tue, 05 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Tue, 05 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/05/binarytree-dfs.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/05/binarytree-dfs.html</guid>
         
@@ -381,7 +501,7 @@
   &lt;li&gt;데이터 웨어하우스에 저장된 자료 중에서 일정한 주제나 특정 부서의 자료를 별도의 장소에 중복 저장하여 사용자들이 사용하도록 하게 한 것&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/data_warehouse.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/data_warehouse.html</guid>
         
@@ -439,7 +559,7 @@
 &lt;p&gt;◼ 다차원화 된 쿼리
 ◼ 설정한 디멘션에 따라 측정값(요약값) 산출해서 검토 → 의사결정에 도움을 받음&lt;/p&gt;
 </description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/OLAP.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/OLAP.html</guid>
         
@@ -600,7 +720,7 @@
   &lt;li&gt;복잡한 relationship이 있는 테이블이 있는 경우 JOIN을 제공하지 않기 때문에 적합하지 않음&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/Nosql.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/Nosql.html</guid>
         
@@ -703,7 +823,7 @@
   &lt;li&gt;기존의 RDB가 C(일관성)와 A(가용성) 중심이라면 &lt;strong&gt;비정형 데이터베이스는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;P(지속성)&lt;/code&gt;을 중시&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/CAP-theorem.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/CAP-theorem.html</guid>
         
@@ -727,7 +847,7 @@
 &lt;p&gt;&lt;img src=&quot;/Blog/images/de_roadmap.png&quot; alt=&quot;roadmap&quot; /&gt;&lt;/p&gt;
 
 </description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/backend/2022/07/03/DE-roadmap.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/backend/2022/07/03/DE-roadmap.html</guid>
         
@@ -791,7 +911,7 @@
 
 &lt;p&gt;그런 후 스택이 텅 비면 이제 다음 코드 라인으로 이동해서 코드를 수행한다.&lt;/p&gt;
 </description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/03/recursive.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/03/recursive.html</guid>
         
@@ -863,7 +983,7 @@
 &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/03/recursive-binary.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/03/recursive-binary.html</guid>
         
@@ -1082,7 +1202,7 @@ __pycache__      items.py         pipelines.py     spiders
 &lt;/div&gt;
 
 </description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/scrapy/crawling/2022/07/03/Scrapy-%EC%8B%A4%EC%8A%B5.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/scrapy/crawling/2022/07/03/Scrapy-%EC%8B%A4%EC%8A%B5.html</guid>
         
@@ -1140,7 +1260,7 @@ __pycache__      items.py         pipelines.py     spiders
 &lt;p&gt;파이썬의 자체 내장 기본 정렬 알고리즘을 따르기 때문에 &lt;br /&gt;
 시간 복잡도는 최악의 경우 &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;O&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;O(NlogN)&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.02778em;&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.01968em;&quot;&gt;Nl&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.03588em;&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.10903em;&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;을 따르게 된다.&lt;/p&gt;
 </description>
-        <pubDate>Sat, 02 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sat, 02 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/02/sort_2.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/02/sort_2.html</guid>
         
@@ -1246,7 +1366,7 @@ __pycache__      items.py         pipelines.py     spiders
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 </description>
-        <pubDate>Sat, 02 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sat, 02 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/02/bj_9461.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/02/bj_9461.html</guid>
         
@@ -2742,7 +2862,7 @@ configuration을 바꾸면서 모델의 성능을 측정해볼 수 있다.&lt;/p
 &lt;/div&gt;
 
 </description>
-        <pubDate>Sat, 02 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sat, 02 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/datascience/recommendation/2022/07/02/Neural-Collaborative-Filtering-%EC%8B%A4%EC%8A%B5.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/datascience/recommendation/2022/07/02/Neural-Collaborative-Filtering-%EC%8B%A4%EC%8A%B5.html</guid>
         
@@ -2853,7 +2973,7 @@ gem install bundler
 &lt;p&gt;이제 번들 서버를 사용해 로컬에서 업데이트 진행 상황을 확인이 가능해졌다!&lt;/p&gt;
 
 </description>
-        <pubDate>Fri, 01 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Fri, 01 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/etc/2022/07/01/second.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/etc/2022/07/01/second.html</guid>
         
@@ -2867,7 +2987,7 @@ gem install bundler
         <description>&lt;h3 id=&quot;오늘-처음-블로그를-만들어보았습니다-&quot;&gt;오늘 처음 블로그를 만들어보았습니다 &lt;br /&gt;&lt;/h3&gt;
 &lt;p&gt;앞으로 열심히 해보겠습니다&lt;/p&gt;
 </description>
-        <pubDate>Fri, 01 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Fri, 01 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/etc/2022/07/01/first.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/etc/2022/07/01/first.html</guid>
         
@@ -2882,7 +3002,7 @@ gem install bundler
 
 &lt;p&gt;&lt;img src=&quot;/Blog/images/backend.png&quot; alt=&quot;roadmap&quot; /&gt;&lt;/p&gt;
 </description>
-        <pubDate>Fri, 01 Jul 2022 00:00:00 +0900</pubDate>
+        <pubDate>Fri, 01 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/backend/2022/07/01/roadmap.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/backend/2022/07/01/roadmap.html</guid>
         
@@ -18461,7 +18581,7 @@ You can set `force_col_wise=true` to remove the overhead.
 &lt;/div&gt;
 
 </description>
-        <pubDate>Sat, 25 Jun 2022 00:00:00 +0900</pubDate>
+        <pubDate>Sat, 25 Jun 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/datascience/project/2022/06/25/2021_LPoint.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/datascience/project/2022/06/25/2021_LPoint.html</guid>
         
