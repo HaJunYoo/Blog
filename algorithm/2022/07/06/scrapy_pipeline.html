@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Scrapy pipeline을 통한 필터링 저장 | Yuki’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Scrapy pipeline을 통한 필터링 저장" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Scrapy pipeline을 통해 원하는 데이터만 크롤링" />
+<meta property="og:description" content="Scrapy pipeline을 통해 원하는 데이터만 크롤링" />
+<link rel="canonical" href="https://hajunyoo.github.io/Blog/algorithm/2022/07/06/scrapy_pipeline.html" />
+<meta property="og:url" content="https://hajunyoo.github.io/Blog/algorithm/2022/07/06/scrapy_pipeline.html" />
+<meta property="og:site_name" content="Yuki’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-06T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Scrapy pipeline을 통한 필터링 저장" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-06T00:00:00-05:00","datePublished":"2022-07-06T00:00:00-05:00","description":"Scrapy pipeline을 통해 원하는 데이터만 크롤링","headline":"Scrapy pipeline을 통한 필터링 저장","mainEntityOfPage":{"@type":"WebPage","@id":"https://hajunyoo.github.io/Blog/algorithm/2022/07/06/scrapy_pipeline.html"},"url":"https://hajunyoo.github.io/Blog/algorithm/2022/07/06/scrapy_pipeline.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://hajunyoo.github.io/Blog/feed.xml" title="Yuki's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V1MM5F0SWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V1MM5F0SWD');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Yuki&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog/about/">About Me</a><a class="page-link" href="/Blog/gitInfo/">gitInfo</a><a class="page-link" href="/Blog/search/">Search</a><a class="page-link" href="/Blog/categories/">Category</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Scrapy pipeline을 통한 필터링 저장</h1><p class="page-description">Scrapy pipeline을 통해 원하는 데이터만 크롤링</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-06T00:00:00-05:00" itemprop="datePublished">
+        Jul 6, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#algorithm">algorithm</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#scrapy-pipeline">Scrapy pipeline</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#settingspy-주석-처리-해제">settings.py 주석 처리 해제</a></li>
+<li class="toc-entry toc-h3"><a href="#pipelinespy-의-역활">pipelines.py 의 역활?</a></li>
+</ul>
+</li>
+</ul><h1 id="scrapy-pipeline">
+<a class="anchor" href="#scrapy-pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scrapy pipeline</h1>
+
+<blockquote>
+  <p>Scrapy 프로젝트를 생성하면 <code class="language-plaintext highlighter-rouge">pipelines.py</code>가 제공되는데 해당 파일의 역활을 이해해보자.</p>
+</blockquote>
+
+<ul>
+  <li>pipelines.py 역할은 아이템 데이터 후처리하는 것에 포커스가 맞춰져 있다.
+    <ul>
+      <li>일부 아이템은 저장</li>
+      <li>중복되는 아이템을 저장</li>
+      <li>데이터베이스등에 저장</li>
+      <li>특별한 포멧으로 아이템을 저장</li>
+    </ul>
+
+    <p><br></p>
+  </li>
+  <li>
+    <p>pipelines.py &amp; spider</p>
+
+    <ul>
+      <li>간단한 크롤링의 경우,
+        <ul>
+          <li>해당 spider의 parse 함수에서 pipelines.py 역할을 처리할 수 있다.
+            <ul>
+              <li>원하는 데이터만 <code class="language-plaintext highlighter-rouge">yield</code>를 호출하면 됩니다.</li>
+            </ul>
+          </li>
+          <li>다만, 복잡하고 방대한 크롤링의 경우, 별도 파일에 작성할 수 있도록 되어 있다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="settingspy-주석-처리-해제">
+<a class="anchor" href="#settingspy-%EC%A3%BC%EC%84%9D-%EC%B2%98%EB%A6%AC-%ED%95%B4%EC%A0%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>settings.py 주석 처리 해제</h3>
+
+<p><strong>settings.py</strong> <br>
+아래의 코드 주석 처리를 풀어주자.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ITEM_PIPELINES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'mycrawler.pipelines.MycrawlerPipeline'</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+<span class="p">}</span> <span class="c1"># 프로젝트가 만들어 지면 알아서 생성이 된다
+# 위의 300은 우선 순위 번호로, 1000 이하의 양의 정수 중 임의로 숫자를 부여하면 됩니다, 
+# 여러 클래스가 존재할 때, 숫자가 낮으면 낮을 수록 먼저 실행이 됩니다. 
+</span></code></pre></div></div>
+<p>cd 명령어를 통해 mycrawler(크롤링) 폴더로 가서 아래의 명령어를 수행 <br>
+<code class="language-plaintext highlighter-rouge">scrapy crawl test_web -o test_web.json -t json</code>  를 실행해보자.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">07</span> <span class="mi">01</span><span class="p">:</span><span class="mi">47</span><span class="p">:</span><span class="mi">01</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">.</span><span class="n">middleware</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Enabled</span> <span class="n">item</span> <span class="n">pipelines</span><span class="p">:</span>
+<span class="p">[</span><span class="s">'mycrawler.pipelines.MycrawlerPipeline'</span><span class="p">]</span>
+</code></pre></div></div>
+<p>위와 같은 라인을 발견할 수 있다. <br>
+즉, 위의 settings.py 주석 처리를 해제하면 
+크롤링을 돌렸을 때, 파이프라인이 지원이 되는지 터미널에서 확인이 가능하다.</p>
+
+<h3 id="pipelinespy-의-역활">
+<a class="anchor" href="#pipelinespy-%EC%9D%98-%EC%97%AD%ED%99%9C" aria-hidden="true"><span class="octicon octicon-link"></span></a>pipelines.py 의 역활?</h3>
+
+<p><code class="language-plaintext highlighter-rouge">from scrapy.exceptions import DropItem</code> 을 import 해주자.
+아래의 코드 양식은 저장해져 있다.</p>
+
+<ol>
+  <li>각 아이템 생성 시, pipeline.py 에 있는 <code class="language-plaintext highlighter-rouge">process_item</code>을 호출</li>
+  <li>필요한 아이템만 return해준 후, 필터링할 아이템은 <code class="language-plaintext highlighter-rouge">raise DropItem('메세지')</code>을 통해 처리하지 않도록 해줌</li>
+  <li>크롤링 -&gt; 후처리 -&gt; 원하는 아이템만 필터하여 저장이 가능</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scrapy.exceptions</span> <span class="kn">import</span> <span class="n">DropItem</span>
+
+<span class="k">class</span> <span class="nc">MycrawlerPipeline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s">'product_type'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'제외하고 싶은 아이템 타입'</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DropItem</span><span class="p">(</span><span class="s">'drop item for hanger door'</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">item</span>
+</code></pre></div></div>
+
+<p>다음과 같이 실행 후, 문자열로 지정한 상품은 저장되지 않음을 확인할 수 있습니다.</p>
+
+  </div><a class="u-url" href="/Blog/algorithm/2022/07/06/scrapy_pipeline.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Yuki&#39;s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/HaJunYoo" target="_blank" title="HaJunYoo"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
