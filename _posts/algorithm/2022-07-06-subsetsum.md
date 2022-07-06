@@ -2,7 +2,7 @@
 toc: true
 layout: post
 comments: false
-title: 합이 같은 부분집합(DFS : 아마존 인터뷰)
+title: 합이 같은 부분집합 (DFS 아마존 인터뷰)
 description: 깊이 우선 탐색을 이용, 부분집합 합이 같은 것을 알아보기
 categories: [algorithm]
 image:
