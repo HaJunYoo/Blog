@@ -123,3 +123,5 @@ feed:
   
 exclude:
   - settings.ini
+
+timezone: Asia/Seoul # 0706 추가
