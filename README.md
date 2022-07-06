@@ -12,7 +12,13 @@ https://HaJunYoo.github.io/Blog/
 _powered by [fastpages](https://github.com/fastai/fastpages)_
 
 ## reference
+
+### 참고 블로그
 https://blog.kubeflow.org/jupyter/2020/02/20/test.html
+
+
+### Boxes and Stuff
+https://fastpagesdev.netlify.app/fastpages/orgmode/2020/04/27/blogging-with-orgmode-and-fastpages
 
 
 ## What To Do Next?
