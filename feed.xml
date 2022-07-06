@@ -3,10 +3,10 @@
   <channel>
     <title>Yuki's Blog</title>
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
-    <link>https://HaJunYoo.github.io/Blog/</link>
-    <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 06 Jul 2022 10:19:01 +0900</pubDate>
-    <lastBuildDate>Wed, 06 Jul 2022 10:19:01 +0900</lastBuildDate>
+    <link>https://HaJunYoo.github.io/</link>
+    <atom:link href="https://HaJunYoo.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 06 Jul 2022 14:54:26 +0900</pubDate>
+    <lastBuildDate>Wed, 06 Jul 2022 14:54:26 +0900</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -15,7 +15,7 @@
 
 &lt;p&gt;아래 그림과 같은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;이진트리&lt;/code&gt;를 전위순회와 후위순회를 연습하자.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/algorithm/이진트리순회.png&quot; alt=&quot;그림 1&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/algorithm/이진트리순회.png&quot; alt=&quot;그림 1&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;트리는 루트를 기반으로 왼쪽 자식부터 오른쪽 자식으로 탐색을 한다.&lt;/p&gt;
 
@@ -45,7 +45,7 @@
 
 &lt;p&gt;((4-5-2) - (6-7-3) - 1)&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/algorithm/이진트리순회1.png&quot; alt=&quot;그림 2&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/algorithm/이진트리순회1.png&quot; alt=&quot;그림 2&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;부모(n)&lt;/code&gt;를 기준으로&lt;/p&gt;
 
@@ -53,7 +53,7 @@
 
 &lt;p&gt;오른쪽 자식은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2n+1&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/algorithm/이진트리순회2.png&quot; alt=&quot;그림 3&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/algorithm/이진트리순회2.png&quot; alt=&quot;그림 3&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;vertex&lt;/strong&gt; ⇒ &lt;strong&gt;node&lt;/strong&gt;&lt;/p&gt;
 
@@ -124,8 +124,8 @@
 &lt;p&gt;순회 방식에서 사용 빈도는  &lt;strong&gt;전위 » 후위 &amp;gt; 중위&lt;/strong&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 05 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/05/binarytree-dfs.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/05/binarytree-dfs.html</guid>
+        <link>https://HaJunYoo.github.io/algorithm/2022/07/05/binarytree-dfs.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/algorithm/2022/07/05/binarytree-dfs.html</guid>
         
         
         <category>algorithm</category>
@@ -231,8 +231,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/data_warehouse.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/data_warehouse.html</guid>
+        <link>https://HaJunYoo.github.io/database/2022/07/03/data_warehouse.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/database/2022/07/03/data_warehouse.html</guid>
         
         
         <category>database</category>
@@ -252,13 +252,13 @@
 &lt;p&gt;◼ 일반적으로 최종 사용자가 필요한 정보를 자료원으로부터 직접 가공하여 분석
 ◼ 사용자가 분석 도중 대화식으로 여러 차원 또는 분석 기법간에 심층분석(Drill-down), 또는 축약분석(Drill-up) 가능&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/database/스크린샷_2022-07-04_오후_2.39.56.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/database/스크린샷_2022-07-04_오후_2.39.56.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;n-dimensional cube&lt;/p&gt;
 
 &lt;h3 id=&quot;큐브와-셀&quot;&gt;큐브와 셀&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/database/스크린샷_2022-07-04_오후_2.43.37.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;/images/database/스크린샷_2022-07-04_오후_2.43.37.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;
  ⇒ 있는 데이터를 요약하는 것&lt;/p&gt;
 
 &lt;h3 id=&quot;온라인-분석처리의-구성요소&quot;&gt;온라인 분석처리의 구성요소&lt;/h3&gt;
@@ -289,8 +289,8 @@
 ◼ 설정한 디멘션에 따라 측정값(요약값) 산출해서 검토 → 의사결정에 도움을 받음&lt;/p&gt;
 </description>
         <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/OLAP.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/OLAP.html</guid>
+        <link>https://HaJunYoo.github.io/database/2022/07/03/OLAP.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/database/2022/07/03/OLAP.html</guid>
         
         
         <category>database</category>
@@ -371,7 +371,7 @@
   &lt;li&gt;데이터모델 : &amp;lt;키, 값&amp;gt; 저장 구조&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/database/테이블1.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt; &lt;img src=&quot;/Blog/images/database/테이블2.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/database/테이블1.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt; &lt;img src=&quot;/images/database/테이블2.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;설명 : 가장 간단한 데이터 모델, 응용 프로그램 모델링이 복잡&lt;/li&gt;
@@ -450,8 +450,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/Nosql.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/Nosql.html</guid>
+        <link>https://HaJunYoo.github.io/database/2022/07/03/Nosql.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/database/2022/07/03/Nosql.html</guid>
         
         
         <category>database</category>
@@ -470,7 +470,7 @@
   &lt;li&gt;예를 들어 관계형 데이터 베이스의 테이블들, 스프레드시트 등&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/database/테이블.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/database/테이블.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;비정형-데이터란&quot;&gt;비정형 데이터란?&lt;/h3&gt;
 
@@ -514,7 +514,7 @@
   &lt;li&gt;CAP정리(CAP Theorem), 혹은 브루어 정리(Brewer’s theorem) 등 으로 불리움&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/database/cap.png&quot; alt=&quot;&quot; title=&quot;CAP&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/database/cap.png&quot; alt=&quot;&quot; title=&quot;CAP&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;CAP theorem&lt;/strong&gt;&lt;/p&gt;
 
@@ -553,8 +553,8 @@
 &lt;/ul&gt;
 </description>
         <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/CAP-theorem.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/CAP-theorem.html</guid>
+        <link>https://HaJunYoo.github.io/database/2022/07/03/CAP-theorem.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/database/2022/07/03/CAP-theorem.html</guid>
         
         
         <category>database</category>
@@ -573,12 +573,12 @@
 
 &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/de_roadmap.png&quot; alt=&quot;roadmap&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/de_roadmap.png&quot; alt=&quot;roadmap&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/backend/2022/07/03/DE-roadmap.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/backend/2022/07/03/DE-roadmap.html</guid>
+        <link>https://HaJunYoo.github.io/backend/2022/07/03/DE-roadmap.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/backend/2022/07/03/DE-roadmap.html</guid>
         
         
         <category>backend</category>
@@ -615,7 +615,7 @@
 
 &lt;p&gt;이렇게 재귀로 인해 쌓인 메모리 묶음을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;스택 프레임&lt;/code&gt;이라고 한다&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/algorithm/재귀함수와 스택.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/algorithm/재귀함수와 스택.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;DFS(0)이 가장 위에 쌓이는 순간 DFS(0)은 x &amp;gt;0 조건을 성립하지 못하기 때문에 종료가 된다&lt;/p&gt;
 
@@ -641,8 +641,8 @@
 &lt;p&gt;그런 후 스택이 텅 비면 이제 다음 코드 라인으로 이동해서 코드를 수행한다.&lt;/p&gt;
 </description>
         <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/03/recursive.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/03/recursive.html</guid>
+        <link>https://HaJunYoo.github.io/algorithm/2022/07/03/recursive.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/algorithm/2022/07/03/recursive.html</guid>
         
         
         <category>algorithm</category>
@@ -713,8 +713,8 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
         <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/03/recursive-binary.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/03/recursive-binary.html</guid>
+        <link>https://HaJunYoo.github.io/algorithm/2022/07/03/recursive-binary.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/algorithm/2022/07/03/recursive-binary.html</guid>
         
         
         <category>algorithm</category>
@@ -932,8 +932,8 @@ __pycache__      items.py         pipelines.py     spiders
 
 </description>
         <pubDate>Sun, 03 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/scrapy/crawling/2022/07/03/Scrapy-%EC%8B%A4%EC%8A%B5.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/scrapy/crawling/2022/07/03/Scrapy-%EC%8B%A4%EC%8A%B5.html</guid>
+        <link>https://HaJunYoo.github.io/scrapy/crawling/2022/07/03/Scrapy-%EC%8B%A4%EC%8A%B5.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/scrapy/crawling/2022/07/03/Scrapy-%EC%8B%A4%EC%8A%B5.html</guid>
         
         
         <category>scrapy</category>
@@ -945,7 +945,7 @@ __pycache__      items.py         pipelines.py     spiders
       <item>
         <title>두 배열의 원소 교체</title>
         <description>&lt;p&gt;&lt;img src=&quot;../../images/algorithm/두배열원소교체.png&quot; alt=&quot;&quot; /&gt;
-&lt;img src=&quot;/Blog/images/algorithm/두배열원소교체.png&quot; alt=&quot;&quot; /&gt;
+&lt;img src=&quot;/images/algorithm/두배열원소교체.png&quot; alt=&quot;&quot; /&gt;
 &lt;strong&gt;범위 : 1&amp;lt;=N &amp;lt; 100,000, 0&amp;lt;= K &amp;lt;=N&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;예를 들어 N=5, k=3, 배열 A와 B가 다음과 같다고 해보자.&lt;br /&gt;
@@ -990,8 +990,8 @@ __pycache__      items.py         pipelines.py     spiders
 시간 복잡도는 최악의 경우 &lt;span class=&quot;katex&quot;&gt;&lt;span class=&quot;katex-mathml&quot;&gt;&lt;math xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;O&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;annotation encoding=&quot;application/x-tex&quot;&gt;O(NlogN)&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&quot;katex-html&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;base&quot;&gt;&lt;span class=&quot;strut&quot; style=&quot;height:1em;vertical-align:-0.25em;&quot;&gt;&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.02778em;&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;mopen&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.01968em;&quot;&gt;Nl&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.03588em;&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;mord mathnormal&quot; style=&quot;margin-right:0.10903em;&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;mclose&quot;&gt;)&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;을 따르게 된다.&lt;/p&gt;
 </description>
         <pubDate>Sat, 02 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/02/sort_2.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/02/sort_2.html</guid>
+        <link>https://HaJunYoo.github.io/algorithm/2022/07/02/sort_2.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/algorithm/2022/07/02/sort_2.html</guid>
         
         
         <category>algorithm</category>
@@ -1010,7 +1010,7 @@ __pycache__      items.py         pipelines.py     spiders
 
 &lt;p&gt;N이 주어졌을 때, P(N)을 구하는 프로그램을 작성하시오.&lt;br /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/algorithm/파도반.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/algorithm/파도반.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;입력&quot;&gt;입력&lt;/h4&gt;
 
@@ -1096,8 +1096,8 @@ __pycache__      items.py         pipelines.py     spiders
 
 </description>
         <pubDate>Sat, 02 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/02/bj_9461.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/02/bj_9461.html</guid>
+        <link>https://HaJunYoo.github.io/algorithm/2022/07/02/bj_9461.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/algorithm/2022/07/02/bj_9461.html</guid>
         
         
         <category>algorithm</category>
@@ -2592,8 +2592,8 @@ configuration을 바꾸면서 모델의 성능을 측정해볼 수 있다.&lt;/p
 
 </description>
         <pubDate>Sat, 02 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/datascience/recommendation/2022/07/02/Neural-Collaborative-Filtering-%EC%8B%A4%EC%8A%B5.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/datascience/recommendation/2022/07/02/Neural-Collaborative-Filtering-%EC%8B%A4%EC%8A%B5.html</guid>
+        <link>https://HaJunYoo.github.io/datascience/recommendation/2022/07/02/Neural-Collaborative-Filtering-%EC%8B%A4%EC%8A%B5.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/datascience/recommendation/2022/07/02/Neural-Collaborative-Filtering-%EC%8B%A4%EC%8A%B5.html</guid>
         
         
         <category>datascience</category>
@@ -2607,7 +2607,7 @@ configuration을 바꾸면서 모델의 성능을 측정해볼 수 있다.&lt;/p
         <description>&lt;h3 id=&quot;맥에서-깃허브-블로그를-만들기-위해-ruby-실행-시-오류-발생-&quot;&gt;맥에서 깃허브 블로그를 만들기 위해 ruby 실행 시 오류 발생 &lt;br /&gt;&lt;/h3&gt;
 
 &lt;p&gt;저자는 아래와 같은 스펙의 맥을 사용 중입니다.
-&lt;img src=&quot;/Blog/images/맥 스펙.png&quot; alt=&quot;&quot; title=&quot;맥 스펙 &quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;/images/맥 스펙.png&quot; alt=&quot;&quot; title=&quot;맥 스펙 &quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;brew&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rbenv&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;build&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -2703,8 +2703,8 @@ gem install bundler
 
 </description>
         <pubDate>Fri, 01 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/etc/2022/07/01/second.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/etc/2022/07/01/second.html</guid>
+        <link>https://HaJunYoo.github.io/etc/2022/07/01/second.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/etc/2022/07/01/second.html</guid>
         
         
         <category>etc</category>
@@ -2717,8 +2717,8 @@ gem install bundler
 &lt;p&gt;앞으로 열심히 해보겠습니다&lt;/p&gt;
 </description>
         <pubDate>Fri, 01 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/etc/2022/07/01/first.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/etc/2022/07/01/first.html</guid>
+        <link>https://HaJunYoo.github.io/etc/2022/07/01/first.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/etc/2022/07/01/first.html</guid>
         
         
         <category>etc</category>
@@ -2729,11 +2729,11 @@ gem install bundler
         <title>Backend Roadmap</title>
         <description>&lt;h3 id=&quot;backend-roadmap-따라가기&quot;&gt;Backend Roadmap 따라가기&lt;/h3&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/backend.png&quot; alt=&quot;roadmap&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/backend.png&quot; alt=&quot;roadmap&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 01 Jul 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/backend/2022/07/01/roadmap.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/backend/2022/07/01/roadmap.html</guid>
+        <link>https://HaJunYoo.github.io/backend/2022/07/01/roadmap.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/backend/2022/07/01/roadmap.html</guid>
         
         
         <category>backend</category>
@@ -18311,8 +18311,8 @@ You can set `force_col_wise=true` to remove the overhead.
 
 </description>
         <pubDate>Sat, 25 Jun 2022 00:00:00 +0900</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/datascience/project/2022/06/25/2021_LPoint.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/datascience/project/2022/06/25/2021_LPoint.html</guid>
+        <link>https://HaJunYoo.github.io/datascience/project/2022/06/25/2021_LPoint.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/datascience/project/2022/06/25/2021_LPoint.html</guid>
         
         
         <category>datascience</category>
