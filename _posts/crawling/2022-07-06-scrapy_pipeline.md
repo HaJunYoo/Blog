@@ -4,7 +4,7 @@ layout: post
 comments: false
 title: Scrapy pipeline을 통한 필터링 저장
 description: Scrapy pipeline을 통해 원하는 데이터만 크롤링
-categories: [algorithm]
+categories: [crawling]
 image:
 ---
 
