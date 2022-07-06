@@ -3,11 +3,11 @@ toc: true
 layout: post
 comments: false
 title: 합이 같은 부분집합(DFS : 아마존 인터뷰)
-description: 깊이 우선 탐색을 이용하여 부분집합 합이 같은 것을 알아보기
+description: 깊이 우선 탐색을 이용, 부분집합 합이 같은 것을 알아보기
 categories: [algorithm]
-image: 
-
+image:
 ---
+
 # 합이 같은 부분집합(DFS : 아마존 인터뷰)
 
 N개의 원소로 구성된 자연수 집합이 주어지면, 이 집합을 두 개의 부분집합으로 나누었을 때, 
@@ -51,7 +51,7 @@ N개의 원소로 구성된 자연수 집합이 주어지면, 이 집합을 두 
 
 ⇒ 프로그램을 종료
 
-![경우의수]({{site.baseurl}}/images/algorithm/부분집합합.png)
+![]({{site.baseurl}}/images/algorithm/부분집합합.png)
 
 ```python
 import sys

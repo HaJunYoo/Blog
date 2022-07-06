@@ -6,8 +6,8 @@ title: 부분집합 구하기(DFS)
 description: 깊이 우선 탐색을 이용한 부분집합 구하기
 categories: [algorithm]
 image: images/algorithm/부분집합구하기.jpeg
-
 ---
+
 # 부분 집합 구하기(DFS)
 
 자연수 N이 주어지면 1부터 N까지의 원소를 갖는 집합의 부분집합을 모두 출력하는 프로그램을 작성하세요
