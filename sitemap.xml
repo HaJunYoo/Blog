@@ -4,7 +4,7 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
-        <loc>https://HaJunYoo.github.io/algorithm/2022/07/06/scrapy_pipeline.html</loc>
+        <loc>https://HaJunYoo.github.io/crawling/2022/07/06/scrapy_pipeline.html</loc>
         
         <lastmod>2022-07-06T00:00:00-05:00</lastmod>
         
@@ -165,6 +165,22 @@
     
     <url>
         <loc>https://HaJunYoo.github.io/algorithm/2022/07/03/recursive-binary.html</loc>
+        
+        <lastmod>2022-07-03T00:00:00-05:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
+        <loc>https://HaJunYoo.github.io/crawling/2022/07/03/Scrapy-%EC%8B%A4%EC%8A%B5.html</loc>
         
         <lastmod>2022-07-03T00:00:00-05:00</lastmod>
         
