@@ -5,8 +5,8 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 08 Jul 2022 03:56:12 -0500</pubDate>
-    <lastBuildDate>Fri, 08 Jul 2022 03:56:12 -0500</lastBuildDate>
+    <pubDate>Fri, 08 Jul 2022 04:09:38 -0500</pubDate>
+    <lastBuildDate>Fri, 08 Jul 2022 04:09:38 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -133,7 +133,7 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;/Blog/images/crawling/무신사 크롤링.png&quot; width=&quot;60%&quot; height=&quot;60%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/Blog/images/crawling/무신사 크롤링.png&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
 &lt;/span&gt;
@@ -374,6 +374,9 @@ MARDI MERCREDI
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/Blog/images/crawling/데이터프레임1.png&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/Blog/images/crawling/데이터프레임2.png&quot; width=&quot;80%&quot; height=&quot;80%&quot; /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 08 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/crawling/2022/07/08/%EB%AC%B4%EC%8B%A0%EC%82%AC-%EC%85%80%EB%A0%88%EB%8B%88%EC%9B%80-%EC%88%9C%ED%9A%8C.html</link>
