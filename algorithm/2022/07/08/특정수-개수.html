@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>정렬된 배열에서 특정 수의 개수 구하기 | Yuki’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="정렬된 배열에서 특정 수의 개수 구하기" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="binary search를 이용한 특정 수 개수 구하기 분제(이코테 2021)" />
+<meta property="og:description" content="binary search를 이용한 특정 수 개수 구하기 분제(이코테 2021)" />
+<link rel="canonical" href="https://hajunyoo.github.io/Blog/algorithm/2022/07/08/%ED%8A%B9%EC%A0%95%EC%88%98-%EA%B0%9C%EC%88%98.html" />
+<meta property="og:url" content="https://hajunyoo.github.io/Blog/algorithm/2022/07/08/%ED%8A%B9%EC%A0%95%EC%88%98-%EA%B0%9C%EC%88%98.html" />
+<meta property="og:site_name" content="Yuki’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-08T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="정렬된 배열에서 특정 수의 개수 구하기" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-08T00:00:00-05:00","datePublished":"2022-07-08T00:00:00-05:00","description":"binary search를 이용한 특정 수 개수 구하기 분제(이코테 2021)","headline":"정렬된 배열에서 특정 수의 개수 구하기","mainEntityOfPage":{"@type":"WebPage","@id":"https://hajunyoo.github.io/Blog/algorithm/2022/07/08/%ED%8A%B9%EC%A0%95%EC%88%98-%EA%B0%9C%EC%88%98.html"},"url":"https://hajunyoo.github.io/Blog/algorithm/2022/07/08/%ED%8A%B9%EC%A0%95%EC%88%98-%EA%B0%9C%EC%88%98.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://hajunyoo.github.io/Blog/feed.xml" title="Yuki's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V1MM5F0SWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V1MM5F0SWD');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Yuki&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog/about/">About Me</a><a class="page-link" href="/Blog/gitInfo/">gitInfo</a><a class="page-link" href="/Blog/search/">Search</a><a class="page-link" href="/Blog/categories/">Category</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">정렬된 배열에서 특정 수의 개수 구하기</h1><p class="page-description">binary search를 이용한 특정 수 개수 구하기 분제(이코테 2021)</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-08T00:00:00-05:00" itemprop="datePublished">
+        Jul 8, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#algorithm">algorithm</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#정렬된-배열에서-특정-수의-개수-구하기">정렬된 배열에서 특정 수의 개수 구하기</a></li>
+</ul><h2 id="정렬된-배열에서-특정-수의-개수-구하기">
+<a class="anchor" href="#%EC%A0%95%EB%A0%AC%EB%90%9C-%EB%B0%B0%EC%97%B4%EC%97%90%EC%84%9C-%ED%8A%B9%EC%A0%95-%EC%88%98%EC%9D%98-%EA%B0%9C%EC%88%98-%EA%B5%AC%ED%95%98%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>정렬된 배열에서 특정 수의 개수 구하기</h2>
+
+<ul>
+  <li>입력 조건 :
+    <ul>
+      <li>첫째 줄에 N과 x가 정수 형태로 공백으로 구분되어 입력됩니다. <br>
+(1 ≤ N ≤ 1,000,000), (-10⁹ ≤ x ≤ 10⁹)</li>
+      <li>둘째 줄에 N개의 원소가 정수 형태로 공백으로 구분되어 입력됩니다. <br>
+(-10⁹ ≤ 각 원소의 값 ≤ 10⁹)</li>
+    </ul>
+  </li>
+  <li>출력 조건
+    <ul>
+      <li>수열의 원소 중에서 값이 x인 원소의 개수를 출력합니다. 단, 값이 x인 원소가 하나도 없다면 -1을 출력합니다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>입력 <br></p>
+<ul>
+  <li>7 2 <br>
+1 1 2 2 2 2 3</li>
+</ul>
+
+<p>출력</p>
+<ul>
+  <li>4</li>
+</ul>
+
+<p>입력</p>
+<ul>
+  <li>7 4 <br>
+1 1 2 2 2 2 3</li>
+</ul>
+
+<p>출력</p>
+<ul>
+  <li>-1</li>
+</ul>
+
+<blockquote>
+  <p>N개의 원소를 포함하고 있는 수열이 오름차순으로 정렬되어 있습니다. 이때 이 수열에서 x가 등장하는 횟수를 계산하세요. 예를 들어 수열 {1, 1, 2, 2, 2, 2, 3}이 있을 때 x = 2라면, 현재 수열에서 값이 2인 원소가 4개이므로 4를 출력합니다.</p>
+
+  <p>단, 이 문제는 시간 복잡도 O(log N)으로 알고리즘을 설계하지 않으면 ‘시간 초과’ 판정을 받습니다.</p>
+</blockquote>
+
+<blockquote>
+  <p>일반적인 선형탐색으로는 시간초과 판정을 받음
+<u>데이터가 정렬</u>되어 있기 때문에 <code class="language-plaintext highlighter-rouge">이진탐색</code> 을 수행할 수 있음
+특정 값이 등장하는 첫번째 위치와 마지막 위치를 찾아 위치 차이를 계산해 문제를 해결 가능</p>
+</blockquote>
+
+<p><strong><code class="language-plaintext highlighter-rouge">bisect</code> 라이브러리를 이용해서 특정 값의 왼쪽과 오른쪽 인덱스를 구하자.</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">bisect</span> <span class="kn">import</span> <span class="n">bisect_left</span><span class="p">,</span> <span class="n">bisect_right</span>
+
+<span class="c1"># 값이 left value, right value인 데이터의 개수를 반환하는 함수
+</span><span class="k">def</span> <span class="nf">count_by_range</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">left_value</span><span class="p">,</span> <span class="n">right_value</span><span class="p">):</span>
+    <span class="n">right_index</span> <span class="o">=</span> <span class="n">bisect_right</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">right_value</span><span class="p">)</span>
+    <span class="n">left_index</span> <span class="o">=</span> <span class="n">bisect_left</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">left_value</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">right_index</span> <span class="o">-</span> <span class="n">left_index</span>
+
+<span class="n">n</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">())</span>
+<span class="n">array</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">().</span><span class="n">split</span><span class="p">()))</span>
+
+<span class="c1"># 값이 [x, x] 범위 안에 있는 데이터의 수 계산
+</span><span class="n">count</span> <span class="o">=</span> <span class="n">count_by_range</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># 값이 x인 원소가 존재하지 않을 경우
+</span><span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 값이 존재할 경우
+</span><span class="k">else</span> <span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+
+
+</code></pre></div></div>
+
+  </div><!-- from https://github.com/utterance/utterances
+<script src="https://utteranc.es/client.js"
+        repo="HaJunYoo/Blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>-->
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yukiblog-1.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript><a class="u-url" href="/Blog/algorithm/2022/07/08/%ED%8A%B9%EC%A0%95%EC%88%98-%EA%B0%9C%EC%88%98.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Yuki&#39;s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/HaJunYoo" target="_blank" title="HaJunYoo"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

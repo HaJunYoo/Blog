@@ -5,8 +5,8 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 08 Jul 2022 04:09:38 -0500</pubDate>
-    <lastBuildDate>Fri, 08 Jul 2022 04:09:38 -0500</lastBuildDate>
+    <pubDate>Fri, 08 Jul 2022 10:39:41 -0500</pubDate>
+    <lastBuildDate>Fri, 08 Jul 2022 10:39:41 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -384,6 +384,95 @@ MARDI MERCREDI
         
         
         <category>crawling</category>
+        
+      </item>
+    
+      <item>
+        <title>정렬된 배열에서 특정 수의 개수 구하기</title>
+        <description>&lt;h2 id=&quot;정렬된-배열에서-특정-수의-개수-구하기&quot;&gt;정렬된 배열에서 특정 수의 개수 구하기&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;입력 조건 :
+    &lt;ul&gt;
+      &lt;li&gt;첫째 줄에 N과 x가 정수 형태로 공백으로 구분되어 입력됩니다. &lt;br /&gt;
+(1 ≤ N ≤ 1,000,000), (-10⁹ ≤ x ≤ 10⁹)&lt;/li&gt;
+      &lt;li&gt;둘째 줄에 N개의 원소가 정수 형태로 공백으로 구분되어 입력됩니다. &lt;br /&gt;
+(-10⁹ ≤ 각 원소의 값 ≤ 10⁹)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;출력 조건
+    &lt;ul&gt;
+      &lt;li&gt;수열의 원소 중에서 값이 x인 원소의 개수를 출력합니다. 단, 값이 x인 원소가 하나도 없다면 -1을 출력합니다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;입력 &lt;br /&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;7 2 &lt;br /&gt;
+1 1 2 2 2 2 3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;출력&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;4&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;입력&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;7 4 &lt;br /&gt;
+1 1 2 2 2 2 3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;출력&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;-1&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;N개의 원소를 포함하고 있는 수열이 오름차순으로 정렬되어 있습니다. 이때 이 수열에서 x가 등장하는 횟수를 계산하세요. 예를 들어 수열 {1, 1, 2, 2, 2, 2, 3}이 있을 때 x = 2라면, 현재 수열에서 값이 2인 원소가 4개이므로 4를 출력합니다.&lt;/p&gt;
+
+  &lt;p&gt;단, 이 문제는 시간 복잡도 O(log N)으로 알고리즘을 설계하지 않으면 ‘시간 초과’ 판정을 받습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;일반적인 선형탐색으로는 시간초과 판정을 받음
+&lt;u&gt;데이터가 정렬&lt;/u&gt;되어 있기 때문에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;이진탐색&lt;/code&gt; 을 수행할 수 있음
+특정 값이 등장하는 첫번째 위치와 마지막 위치를 찾아 위치 차이를 계산해 문제를 해결 가능&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bisect&lt;/code&gt; 라이브러리를 이용해서 특정 값의 왼쪽과 오른쪽 인덱스를 구하자.&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;bisect&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bisect_left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bisect_right&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 값이 left value, right value인 데이터의 개수를 반환하는 함수
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;count_by_range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;left_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;right_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bisect_right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;left_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bisect_left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;left_value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;right_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;left_index&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 값이 [x, x] 범위 안에 있는 데이터의 수 계산
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count_by_range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 값이 x인 원소가 존재하지 않을 경우
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 값이 존재할 경우
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Fri, 08 Jul 2022 00:00:00 -0500</pubDate>
+        <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/08/%ED%8A%B9%EC%A0%95%EC%88%98-%EA%B0%9C%EC%88%98.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/08/%ED%8A%B9%EC%A0%95%EC%88%98-%EA%B0%9C%EC%88%98.html</guid>
+        
+        
+        <category>algorithm</category>
         
       </item>
     
