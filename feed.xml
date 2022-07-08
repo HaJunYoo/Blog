@@ -5,8 +5,8 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 08 Jul 2022 10:39:41 -0500</pubDate>
-    <lastBuildDate>Fri, 08 Jul 2022 10:39:41 -0500</lastBuildDate>
+    <pubDate>Fri, 08 Jul 2022 10:43:16 -0500</pubDate>
+    <lastBuildDate>Fri, 08 Jul 2022 10:43:16 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -429,6 +429,8 @@ MARDI MERCREDI
   &lt;li&gt;-1&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
 &lt;blockquote&gt;
   &lt;p&gt;N개의 원소를 포함하고 있는 수열이 오름차순으로 정렬되어 있습니다. 이때 이 수열에서 x가 등장하는 횟수를 계산하세요. 예를 들어 수열 {1, 1, 2, 2, 2, 2, 3}이 있을 때 x = 2라면, 현재 수열에서 값이 2인 원소가 4개이므로 4를 출력합니다.&lt;/p&gt;
 
@@ -440,6 +442,8 @@ MARDI MERCREDI
 &lt;u&gt;데이터가 정렬&lt;/u&gt;되어 있기 때문에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;이진탐색&lt;/code&gt; 을 수행할 수 있음
 특정 값이 등장하는 첫번째 위치와 마지막 위치를 찾아 위치 차이를 계산해 문제를 해결 가능&lt;/p&gt;
 &lt;/blockquote&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bisect&lt;/code&gt; 라이브러리를 이용해서 특정 값의 왼쪽과 오른쪽 인덱스를 구하자.&lt;/strong&gt;&lt;/p&gt;
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;bisect&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bisect_left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bisect_right&lt;/span&gt;

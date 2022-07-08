@@ -169,6 +169,8 @@ window.onload = wrap_img;
   <li>-1</li>
 </ul>
 
+<p><br></p>
+
 <blockquote>
   <p>N개의 원소를 포함하고 있는 수열이 오름차순으로 정렬되어 있습니다. 이때 이 수열에서 x가 등장하는 횟수를 계산하세요. 예를 들어 수열 {1, 1, 2, 2, 2, 2, 3}이 있을 때 x = 2라면, 현재 수열에서 값이 2인 원소가 4개이므로 4를 출력합니다.</p>
 
@@ -180,6 +182,8 @@ window.onload = wrap_img;
 <u>데이터가 정렬</u>되어 있기 때문에 <code class="language-plaintext highlighter-rouge">이진탐색</code> 을 수행할 수 있음
 특정 값이 등장하는 첫번째 위치와 마지막 위치를 찾아 위치 차이를 계산해 문제를 해결 가능</p>
 </blockquote>
+
+<p><br></p>
 
 <p><strong><code class="language-plaintext highlighter-rouge">bisect</code> 라이브러리를 이용해서 특정 값의 왼쪽과 오른쪽 인덱스를 구하자.</strong></p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">bisect</span> <span class="kn">import</span> <span class="n">bisect_left</span><span class="p">,</span> <span class="n">bisect_right</span>
