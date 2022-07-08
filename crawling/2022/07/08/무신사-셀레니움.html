@@ -110,7 +110,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      2 min read
     
 </span></p>
 
@@ -195,10 +195,36 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">'https://www.musinsa.com/category/001'</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>무신사 접속 -&gt; 상의(전체보기) 카테고리 페이지로 접속을 한다.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 무신사 접속 -&gt; 상의(전체보기) 카테고리 페이지로 접속을 한다.</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">'https://www.musinsa.com/category/001'</span>
 
 <span class="c1"># 본인의 크롬 드라이버 절대주소</span>
-<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s1">'절대주소 혹은 상대주소'</span><span class="p">)</span>
+<span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s1">'본인의 크롬 드라이버 절대주소 혹은 상대주소'</span><span class="p">)</span>
 
 <span class="n">driver</span><span class="o">.</span><span class="n">implicitly_wait</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 웹 페이지 로딩 최대 5초 대기</span>
 <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
@@ -208,21 +234,6 @@ window.onload = wrap_img;
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:3: DeprecationWarning: executable_path has been deprecated, please pass in a Service object
-  This is separate from the ipykernel package so we can avoid doing imports until
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     
 
@@ -233,28 +244,15 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#searchList &gt; li:nth-child(1) &gt; div.li_inner &gt; div.list_img &gt; a &gt; img'</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 가장 첫번째 옷 아이템의 사진을 클릭 </span>
+
+<span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#searchList &gt; li:nth-child(1) &gt; div.li_inner &gt; div.list_img &gt; a &gt; img'</span><span class="p">)</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:3: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  This is separate from the ipykernel package so we can avoid doing imports until
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     
 
@@ -265,7 +263,9 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># img css selector을 가져온 후 </span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 상세 페이지 옷 사진 가져오기</span>
+
+<span class="c1"># img css selector을 가져온 후 </span>
 <span class="n">image</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#detail_bigimg &gt; div.product-img &gt; img'</span><span class="p">)</span>
 <span class="c1"># src 태그를 가져온다 </span>
 <span class="n">src</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s1">'src'</span><span class="p">)</span> 
@@ -287,15 +287,6 @@ window.onload = wrap_img;
 </div>
 </div>
 
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:3: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  This is separate from the ipykernel package so we can avoid doing imports until
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -309,7 +300,8 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">product_name</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#page_product_detail &gt; div.right_area.page_detail_product &gt; div.right_contents.section_product_summary &gt; span &gt; em'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 상품 이름 </span>
+<span class="n">product_name</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#page_product_detail &gt; div.right_area.page_detail_product &gt; div.right_contents.section_product_summary &gt; span &gt; em'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">product_name</span><span class="p">)</span>
 </pre></div>
 
@@ -328,15 +320,6 @@ window.onload = wrap_img;
 </div>
 </div>
 
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:2: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -350,7 +333,8 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># brand_name = driver.find_element_by_css_selector('#product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li:nth-child(1) &gt; p.product_article_contents &gt; strong &gt; a').text</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 브랜드 이름</span>
+<span class="c1"># brand_name = driver.find_element_by_css_selector('#product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li:nth-child(1) &gt; p.product_article_contents &gt; strong &gt; a').text</span>
 <span class="c1"># brand_name </span>
 </pre></div>
 
@@ -358,31 +342,6 @@ window.onload = wrap_img;
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:2: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>'COVERNAT'</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
     
 
@@ -393,7 +352,8 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 브랜드 이름과 품번 가져오기</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># #product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li:nth-child(1) &gt; p.product_article_contents &gt; strong</span>
+<span class="c1"># 브랜드 이름과 품번 가져오기</span>
 
 <span class="n">product_brand</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li:nth-child(1) &gt; p.product_article_contents &gt; strong'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 <span class="n">brand_id</span> <span class="o">=</span> <span class="n">product_brand</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span> 
@@ -420,15 +380,6 @@ CO0000STE1BK
 </div>
 </div>
 
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:4: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  after removing the cwd from sys.path.
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -442,7 +393,9 @@ CO0000STE1BK
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_gender</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li:nth-child(2) &gt; p.product_article_contents'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 시즌 정보와 성별 가져오기</span>
+
+<span class="n">season_gender</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li:nth-child(2) &gt; p.product_article_contents'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 <span class="n">season_gender</span> <span class="o">=</span> <span class="n">season_gender</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span> 
 <span class="n">season_gender</span> <span class="o">=</span> <span class="p">[</span><span class="n">elem</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">season_gender</span><span class="p">]</span>
 <span class="n">season</span> <span class="o">=</span> <span class="n">season_gender</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span><span class="s1">'/'</span><span class="o">+</span> <span class="n">season_gender</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -467,15 +420,6 @@ CO0000STE1BK
 </div>
 </div>
 
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:3: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  This is separate from the ipykernel package so we can avoid doing imports until
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -489,7 +433,9 @@ CO0000STE1BK
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">price</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#goods_price &gt; del'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 상품 가격 가져오기</span>
+
+<span class="n">price</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#goods_price &gt; del'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 <span class="n">price</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">'[-=.,#/?:$}원]'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
 <span class="n">price</span>
 </pre></div>
@@ -500,15 +446,6 @@ CO0000STE1BK
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:3: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  This is separate from the ipykernel package so we can avoid doing imports until
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -533,7 +470,9 @@ CO0000STE1BK
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># #product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li.article-tag-list.list &gt; p</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 해시태그 가져오기</span>
+
+<span class="c1"># #product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li.article-tag-list.list &gt; p</span>
 
 <span class="n">hashtag</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li.article-tag-list.list &gt; p'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 
@@ -550,15 +489,6 @@ CO0000STE1BK
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:5: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  """
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -592,7 +522,8 @@ CO0000STE1BK
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># #product-top-like &gt; p.product_article_contents.goods_like_1848166 &gt; span</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 좋야요 개수</span>
+<span class="c1"># #product-top-like &gt; p.product_article_contents.goods_like_1848166 &gt; span</span>
 
 <span class="n">like</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#product-top-like &gt; p.product_article_contents.goods_like_1848166 &gt; span'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 <span class="n">like</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">'[^0-9]'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="n">like</span><span class="p">)</span>
@@ -608,19 +539,10 @@ CO0000STE1BK
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:4: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  after removing the cwd from sys.path.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>'126053'</pre>
+<pre>'126089'</pre>
 </div>
 
 </div>
@@ -638,7 +560,8 @@ CO0000STE1BK
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rate</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li:nth-child(6) &gt; p.product_article_contents &gt; a &gt; span.prd-score__rating'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 평점</span>
+<span class="n">rate</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li:nth-child(6) &gt; p.product_article_contents &gt; a &gt; span.prd-score__rating'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 <span class="n">rate</span>
 </pre></div>
 
@@ -648,15 +571,6 @@ CO0000STE1BK
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:3: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  This is separate from the ipykernel package so we can avoid doing imports until
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -681,7 +595,8 @@ CO0000STE1BK
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rate_num</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li:nth-child(6) &gt; p.product_article_contents &gt; a &gt; span.prd-score__review-count'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 구매 후기 개수 -&gt; 평점과 구매 후기 개수를 곱해서 유의미한 feature을 만들어 낼 수 있을 것 같음 </span>
+<span class="n">rate_num</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#product_order_info &gt; div.explan_product.product_info_section &gt; ul &gt; li:nth-child(6) &gt; p.product_article_contents &gt; a &gt; span.prd-score__review-count'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 <span class="n">rate_num</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">'[^0-9]'</span><span class="p">,</span> <span class="s1">''</span><span class="p">,</span> <span class="n">rate_num</span><span class="p">)</span>
 <span class="n">rate_num</span>
 </pre></div>
@@ -695,19 +610,10 @@ CO0000STE1BK
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:2: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>'32361'</pre>
+<pre>'32374'</pre>
 </div>
 
 </div>
@@ -725,7 +631,8 @@ CO0000STE1BK
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># ~18세 / 19 ~ 23세 / 24 ~ 28세 / 29 ~ 33세 / 34 ~ 39세 / 40세 ~ </span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 구매 현황 (purchase status)</span>
+<span class="c1"># ~18세 / 19 ~ 23세 / 24 ~ 28세 / 29 ~ 33세 / 34 ~ 39세 / 40세 ~ </span>
 
 <span class="n">purchase_status</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#page_product_detail &gt; div.right_area.page_detail_product &gt; div.section_graph_detail &gt; div &gt; div &gt; div.graph_bar_wrap &gt; div &gt; ul'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 <span class="n">purchase_status</span> <span class="o">=</span> <span class="n">purchase_status</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span> 
@@ -740,15 +647,6 @@ CO0000STE1BK
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:3: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  This is separate from the ipykernel package so we can avoid doing imports until
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -773,7 +671,9 @@ CO0000STE1BK
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">purchase_men</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#graph_doughnut_label &gt; ul &gt; li:nth-child(1) &gt; dl &gt; dd'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 남성 구매 비율 (파이 차트)</span>
+
+<span class="n">purchase_men</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#graph_doughnut_label &gt; ul &gt; li:nth-child(1) &gt; dl &gt; dd'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 <span class="n">purchase_men</span>
 </pre></div>
 
@@ -783,15 +683,6 @@ CO0000STE1BK
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:4: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  after removing the cwd from sys.path.
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -816,7 +707,9 @@ CO0000STE1BK
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">purchase_women</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#graph_doughnut_label &gt; ul &gt; li:nth-child(2) &gt; dl &gt; dd'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 여성 구매 비율 (파이 차트)</span>
+
+<span class="n">purchase_women</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s1">'#graph_doughnut_label &gt; ul &gt; li:nth-child(2) &gt; dl &gt; dd'</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
 <span class="n">purchase_women</span>
 </pre></div>
 
@@ -826,15 +719,6 @@ CO0000STE1BK
 
 <div class="output_wrapper">
 <div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py:4: DeprecationWarning: find_element_by_* commands are deprecated. Please use find_element() instead
-  after removing the cwd from sys.path.
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
