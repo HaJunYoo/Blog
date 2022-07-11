@@ -5,13 +5,13 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 10 Jul 2022 22:15:09 -0500</pubDate>
-    <lastBuildDate>Sun, 10 Jul 2022 22:15:09 -0500</lastBuildDate>
+    <pubDate>Sun, 10 Jul 2022 22:20:14 -0500</pubDate>
+    <lastBuildDate>Sun, 10 Jul 2022 22:20:14 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
-        <title>럭키 스테이트</title>
-        <description>&lt;p&gt;이 문제는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[이코테 2021 - 모험가 길드]&lt;/code&gt; 와도 유사한 문제이다.&lt;/p&gt;
+        <title>모험가 길드</title>
+        <description>&lt;p&gt;이 문제는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[이코테 2021 - 그리디]&lt;/code&gt; 에 나온 문제이다.&lt;/p&gt;
 
 &lt;h3 id=&quot;문제-정의&quot;&gt;문제 정의&lt;/h3&gt;
 
@@ -39,6 +39,7 @@
 
 &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;
 &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+
 &lt;span class=&quot;n&quot;&gt;예제&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;출력&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
 
 &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
@@ -46,10 +47,10 @@
 
 &lt;h3 id=&quot;풀이&quot;&gt;풀이&lt;/h3&gt;
 &lt;ul&gt;
-  &lt;li&gt;2개의 변수를 만드는 것이 핵심
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;2개의 변수&lt;/code&gt;를 만드는 것이 핵심
     &lt;ul&gt;
-      &lt;li&gt;그룹에 포함된 모험가의 수&lt;/li&gt;
-      &lt;li&gt;그룹의 수&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;그룹에 포함된 모험가의 수&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;그룹의 수&lt;/strong&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;오름차순&lt;/code&gt;으로 정렬하여 그룹에 포함된 모험가의 수를 증가시키면서 반복문 수행&lt;/li&gt;
