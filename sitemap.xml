@@ -4,6 +4,22 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>https://HaJunYoo.github.io/algorithm/2022/07/11/%EC%83%81%ED%95%98%EC%A2%8C%EC%9A%B0.html</loc>
+        
+        <lastmod>2022-07-11T00:00:00-05:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
         <loc>https://HaJunYoo.github.io/algorithm/2022/07/11/%EB%AA%A8%ED%97%98%EA%B0%80%EA%B8%B8%EB%93%9C.html</loc>
         
         <lastmod>2022-07-11T00:00:00-05:00</lastmod>
