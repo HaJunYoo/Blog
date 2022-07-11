@@ -128,8 +128,7 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h3"><a href="#문제에-필요한-기술">문제에 필요한 기술</a></li>
-<li class="toc-entry toc-h1"><a href="#동-북-서-남">동, 북, 서, 남</a></li>
-<li class="toc-entry toc-h1"><a href="#현재-위치">현재 위치</a></li>
+<li class="toc-entry toc-h3"><a href="#문제-설명">문제 설명</a></li>
 </ul><h3 id="문제에-필요한-기술">
 <a class="anchor" href="#%EB%AC%B8%EC%A0%9C%EC%97%90-%ED%95%84%EC%9A%94%ED%95%9C-%EA%B8%B0%EC%88%A0" aria-hidden="true"><span class="octicon octicon-link"></span></a>문제에 필요한 기술</h3>
 
@@ -144,55 +143,60 @@ window.onload = wrap_img;
   <li>세로축(행) : x축</li>
   <li>가로축(열) : y축
     <ul>
-      <li>북 쪽으로 가려면 열을 고정하고 행이 -1 되야 한다.
-```python
-        <h1 id="동-북-서-남">
-<a class="anchor" href="#%EB%8F%99-%EB%B6%81-%EC%84%9C-%EB%82%A8" aria-hidden="true"><span class="octicon octicon-link"></span></a>동, 북, 서, 남</h1>
-      </li>
+      <li>북 쪽으로 가려면 열을 고정하고 행이 -1 되야 한다.</li>
     </ul>
   </li>
 </ul>
 
-<p>dx = [0, -1, 0, 1]
-dy = [1, 0, -1, 0]</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># 동, 북, 서, 남
+</span>
+<span class="n">dx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">dy</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
 
-<h1 id="현재-위치">
-<a class="anchor" href="#%ED%98%84%EC%9E%AC-%EC%9C%84%EC%B9%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>현재 위치</h1>
-<p>x, y = 2, 2</p>
+<span class="c1"># 현재 위치
+</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>
 
-<p>for i in range(4):
-    # 다음 위치
-    nx = x + dx[i]
-    ny = y + dy[i]
-    print(nx, ny)</p>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="c1"># 다음 위치
+</span>    <span class="n">nx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">ny</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>    
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-### 문제 설명
+</code></pre></div></div>
 
-여행가 A는 NxN 크기의 정사각형 공간에 서 있고, 이 공간은 1 x 1 크기의 정사각형으로 나누어져 있다.
+<h3 id="문제-설명">
+<a class="anchor" href="#%EB%AC%B8%EC%A0%9C-%EC%84%A4%EB%AA%85" aria-hidden="true"><span class="octicon octicon-link"></span></a>문제 설명</h3>
+
+<p>여행가 A는 NxN 크기의 정사각형 공간에 서 있고, 이 공간은 1 x 1 크기의 정사각형으로 나누어져 있다.
 가장 왼쪽 위 좌표는 (1, 1)이고 가장 오른쪽 아래 좌표는 (N, N)이다.
-상하좌우로 이동할 수 있으며, 시작 좌표는 (1,1)이다.
+상하좌우로 이동할 수 있으며, 시작 좌표는 (1,1)이다.</p>
 
-계획서대로 이동하면 되는데
-`L, R, U, D`는 각각 왼쪽, 오른쪽, 위, 아래로 한칸씩 이동하라는 뜻이다.
+<p>계획서대로 이동하면 되는데
+<code class="language-plaintext highlighter-rouge">L, R, U, D</code>는 각각 왼쪽, 오른쪽, 위, 아래로 한칸씩 이동하라는 뜻이다.</p>
 
-만약 공간을 벗어나는 움직임이 있다면 그 움직임은 무시하고 다음으로 넘어간다.
+<p>만약 공간을 벗어나는 움직임이 있다면 그 움직임은 무시하고 다음으로 넘어간다.</p>
 
-- 입력 조건
-  - 첫째 줄에 공간의 크기를 나타내는 N이 주어진다 (1 &lt;= N &lt;= 100)
-  - 둘째 줄에 여행가 A가 이동할 계획서 내용이 주어진다. ( 1&lt;= 이동 횟수 &lt;= 100)
+<ul>
+  <li>입력 조건
+    <ul>
+      <li>첫째 줄에 공간의 크기를 나타내는 N이 주어진다 (1 &lt;= N &lt;= 100)</li>
+      <li>둘째 줄에 여행가 A가 이동할 계획서 내용이 주어진다. ( 1&lt;= 이동 횟수 &lt;= 100)</li>
+    </ul>
+  </li>
+  <li>출력 조건
+    <ul>
+      <li>첫째 줄에 여행가 A가 최종적으로 도착할 지점의 좌표 (X, Y)를 공백으로 구분하여 출력한다.</li>
+    </ul>
+  </li>
+</ul>
 
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">입력</span> <span class="n">예시</span>
+<span class="mi">5</span>
+<span class="n">R</span> <span class="n">R</span> <span class="n">R</span> <span class="n">U</span> <span class="n">D</span> <span class="n">D</span>
 
-- 출력 조건
-  - 첫째 줄에 여행가 A가 최종적으로 도착할 지점의 좌표 (X, Y)를 공백으로 구분하여 출력한다.
-  
-```python
-입력 예시
-5
-R R R U D D
-
-출력 예시
-3 4
+<span class="n">출력</span> <span class="n">예시</span>
+<span class="mi">3</span> <span class="mi">4</span>
 
 </code></pre></div></div>
 
