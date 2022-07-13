@@ -114,3 +114,9 @@ class PostListView(LoginRequiredMixin, ListView):
 
 post_list = PostListView.as_view()
 ```
+
+
+--------
+##### Reference
+
+[https://velog.io/@chldppwls12/django-view-decorators](https://velog.io/@chldppwls12/django-view-decorators)
