@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>뷰 장식자 (View Decorators) | Yuki’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="뷰 장식자 (View Decorators)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="뷰 데코레이터(view decorator) in Django" />
+<meta property="og:description" content="뷰 데코레이터(view decorator) in Django" />
+<link rel="canonical" href="https://hajunyoo.github.io/Blog/django/2022/07/13/view-decorator.html" />
+<meta property="og:url" content="https://hajunyoo.github.io/Blog/django/2022/07/13/view-decorator.html" />
+<meta property="og:site_name" content="Yuki’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-13T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="뷰 장식자 (View Decorators)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-13T00:00:00-05:00","datePublished":"2022-07-13T00:00:00-05:00","description":"뷰 데코레이터(view decorator) in Django","headline":"뷰 장식자 (View Decorators)","mainEntityOfPage":{"@type":"WebPage","@id":"https://hajunyoo.github.io/Blog/django/2022/07/13/view-decorator.html"},"url":"https://hajunyoo.github.io/Blog/django/2022/07/13/view-decorator.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://hajunyoo.github.io/Blog/feed.xml" title="Yuki's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V1MM5F0SWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V1MM5F0SWD');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Yuki&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog/about/">About Me</a><a class="page-link" href="/Blog/gitInfo/">gitInfo</a><a class="page-link" href="/Blog/search/">Search</a><a class="page-link" href="/Blog/categories/">Category</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">뷰 장식자 (View Decorators)</h1><p class="page-description">뷰 데코레이터(view decorator) in Django</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-13T00:00:00-05:00" itemprop="datePublished">
+        Jul 13, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#Django">Django</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#장식자-decorators">장식자 (Decorators)</a></li>
+<li class="toc-entry toc-h2"><a href="#view-decorator뷰-데코레이터-in-django">View Decorator(뷰 데코레이터) in Django</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#fbv-에서의-사용">FBV 에서의 사용</a></li>
+<li class="toc-entry toc-h3"><a href="#몇-가지-장고-기본-decorators">몇 가지 장고 기본 Decorators</a></li>
+<li class="toc-entry toc-h3"><a href="#cbv에서의-decorator">CBV에서의 decorator</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#1--as_view를-이용해-함수를-만든-후-함수를-감싸줌">1.  as_view를 이용해 함수를 만든 후 함수를 감싸줌</a></li>
+<li class="toc-entry toc-h5"><a href="#2dispatch함수-사용">2dispatch 함수 사용</a></li>
+<li class="toc-entry toc-h5"><a href="#3-class에-직접-적용--가장-권장">3. Class에 직접 적용 ← 가장 권장</a></li>
+<li class="toc-entry toc-h5"><a href="#ps-데코레이터를-사용하지-않고-비슷한-기능의-loginrequiredmixin-상속">PS. 데코레이터를 사용하지 않고 비슷한 기능의 LoginRequiredMixin 상속</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><h2 id="장식자-decorators">
+<a class="anchor" href="#%EC%9E%A5%EC%8B%9D%EC%9E%90-decorators" aria-hidden="true"><span class="octicon octicon-link"></span></a>장식자 (Decorators)</h2>
+
+<blockquote>
+  <p>어떤 함수를 감싸는 (Wrapping) 함수</p>
+</blockquote>
+
+<ol>
+  <li>함수를 <code class="language-plaintext highlighter-rouge">장식자</code>가 wrapping 함</li>
+  <li>외부에서 장식한 함수를 보면 장식자가 먼저 인식됨</li>
+  <li>경우에 따라서 내부 로직에 들어가서 장식한 함수를 호출하기도 함</li>
+</ol>
+
+<h2 id="view-decorator뷰-데코레이터-in-django">
+<a class="anchor" href="#view-decorator%EB%B7%B0-%EB%8D%B0%EC%BD%94%EB%A0%88%EC%9D%B4%ED%84%B0-in-django" aria-hidden="true"><span class="octicon octicon-link"></span></a>View Decorator(뷰 데코레이터) in Django</h2>
+
+<h3 id="fbv-에서의-사용">
+<a class="anchor" href="#fbv-%EC%97%90%EC%84%9C%EC%9D%98-%EC%82%AC%EC%9A%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a>FBV 에서의 사용</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span>	<span class="kn">import</span> <span class="n">login_required</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span>	<span class="kn">import</span> <span class="n">render</span>
+
+<span class="o">@</span><span class="n">login_required</span>
+<span class="k">def</span> <span class="nf">protected_view1</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+	<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span>	<span class="s">'myapp/secret.html'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">protected_view2</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+	<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span>	<span class="s">'myapp/secret.html'</span><span class="p">)</span>
+
+<span class="n">protected_view2</span>	<span class="o">=</span>	<span class="n">login_required</span><span class="p">(</span><span class="n">protected_view2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>위의 두 함수 1,2 는 동일한 기능을 합니다.</p>
+
+<h3 id="몇-가지-장고-기본-decorators">
+<a class="anchor" href="#%EB%AA%87-%EA%B0%80%EC%A7%80-%EC%9E%A5%EA%B3%A0-%EA%B8%B0%EB%B3%B8-decorators" aria-hidden="true"><span class="octicon octicon-link"></span></a>몇 가지 장고 기본 Decorators</h3>
+
+<p><code class="language-plaintext highlighter-rouge">django.views.decorators.http</code></p>
+
+<ul>
+  <li>require_http_methods (request_method_list) : 뷰가 특정 요청 메소드만 허용하도록 요구</li>
+  <li>require_GET : 뷰가 GET 메소드만 허용하도록 요구</li>
+  <li>require_POST : 뷰가 POST 메소드만 허용하도록 요구</li>
+  <li>require_safe : 뷰가 GET 및 HEAD 메소드만 허용하도록 요구</li>
+  <li>지정 method가 아닐 경우, <code class="language-plaintext highlighter-rouge">HttpResponseNotAllowed</code> 응답 (상태코드 405)</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">django.contrib.auth.decorators</code></p>
+
+<ul>
+  <li>user_passes_test : 지정 함수가 False를 반환하면 login_url로 redirect</li>
+  <li>login_required : 로그아웃 상황에서 login_url로 redirect</li>
+  <li>permission_required : 지정 퍼미션이 없을 때 login_url로 redirect</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">django.contrib.admin.views.decorators</code></p>
+
+<ul>
+  <li>staff_member_required : staff member가 아닐 경우 login_url로 이동</li>
+</ul>
+
+<h3 id="cbv에서의-decorator">
+<a class="anchor" href="#cbv%EC%97%90%EC%84%9C%EC%9D%98-decorator" aria-hidden="true"><span class="octicon octicon-link"></span></a>CBV에서의 decorator</h3>
+
+<h5 id="1--as_view를-이용해-함수를-만든-후-함수를-감싸줌">
+<a class="anchor" href="#1--as_view%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%B4-%ED%95%A8%EC%88%98%EB%A5%BC-%EB%A7%8C%EB%93%A0-%ED%9B%84-%ED%95%A8%EC%88%98%EB%A5%BC-%EA%B0%90%EC%8B%B8%EC%A4%8C" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.  <code class="language-plaintext highlighter-rouge">as_view</code>를 이용해 함수를 만든 후 함수를 감싸줌</h5>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">django.contrib.auth.decorators</span> <span class="kn">import</span> <span class="n">login_required</span>
+<span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">TemplateView</span>
+
+<span class="c1"># TemplateView를 상속
+</span><span class="k">class</span> <span class="nc">MyTemplateView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+  <span class="n">template_name</span> <span class="o">=</span> <span class="s">'core/index.html'</span>
+
+<span class="n">index</span> <span class="o">=</span> <span class="n">MyTemplate</span><span class="p">.</span><span class="n">as_view</span><span class="p">()</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">login_required</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h5 id="2dispatch함수-사용">
+<a class="anchor" href="#2dispatch%ED%95%A8%EC%88%98-%EC%82%AC%EC%9A%A9" aria-hidden="true"><span class="octicon octicon-link"></span></a>2<code class="language-plaintext highlighter-rouge">dispatch</code> 함수 사용</h5>
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">dispatch</code>는 클래스가 새로운 함수를 만들 때 마다 항상 실행되는 함수</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">dispatch</code>에 새로운 내용을 추가하는 것 아닌데 재정의하기 때문에 가독성 떨어뜨림</li>
+  <li>Class의 멤버 함수에는 method_decorator를 활용
+    <ul>
+      <li>인자에도 decorator 내용을 넣는다.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">django.utils.decorators</span> <span class="kn">import</span> <span class="n">method_decorator</span>
+
+<span class="k">class</span> <span class="nc">MyTemplateView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+  <span class="n">template_name</span> <span class="o">=</span> <span class="s">'core/index.html'</span>
+  
+<span class="c1"># Class의 멤버 함수에는 method_decorator를 활용
+</span>  <span class="o">@</span><span class="n">method_decorator</span><span class="p">(</span><span class="n">login_required</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">dispatch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    
+ <span class="n">index</span> <span class="o">=</span> <span class="n">MyTmeplateView</span><span class="p">.</span><span class="n">as_view</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h5 id="3-class에-직접-적용--가장-권장">
+<a class="anchor" href="#3-class%EC%97%90-%EC%A7%81%EC%A0%91-%EC%A0%81%EC%9A%A9--%EA%B0%80%EC%9E%A5-%EA%B6%8C%EC%9E%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. <strong>Class에 직접 적용</strong> ← 가장 권장</h5>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">@method_decorator</code>에 <code class="language-plaintext highlighter-rouge">name</code> 지정해 직접 클래스 메소드에 대해 decorator 사용하기</strong></li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">method_decorator</span><span class="p">(</span><span class="n">login_required</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'dispatch'</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MyTemplateView</span><span class="p">(</span><span class="n">TemplateView</span><span class="p">):</span>
+  <span class="n">template_name</span> <span class="o">=</span> <span class="s">'core/index.html'</span>
+  
+<span class="n">index</span> <span class="o">=</span> <span class="n">MyTemplateView</span><span class="p">.</span><span class="n">as_view</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h5 id="ps-데코레이터를-사용하지-않고-비슷한-기능의-loginrequiredmixin-상속">
+<a class="anchor" href="#ps-%EB%8D%B0%EC%BD%94%EB%A0%88%EC%9D%B4%ED%84%B0%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%98%EC%A7%80-%EC%95%8A%EA%B3%A0-%EB%B9%84%EC%8A%B7%ED%95%9C-%EA%B8%B0%EB%8A%A5%EC%9D%98-loginrequiredmixin-%EC%83%81%EC%86%8D" aria-hidden="true"><span class="octicon octicon-link"></span></a>PS. 데코레이터를 사용하지 않고 비슷한 기능의 <code class="language-plaintext highlighter-rouge">LoginRequiredMixin</code> 상속</h5>
+<ul>
+  <li>마찬가지로 사용하려는 데코레이터와 비슷한 기능을 가진 클래스를 상속받아 재정의 가능.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">PostListView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">ListView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Post</span>
+    <span class="n">paginate_by</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">post_list</span> <span class="o">=</span> <span class="n">PostListView</span><span class="p">.</span><span class="n">as_view</span><span class="p">()</span>
+</code></pre></div></div>
+
+  </div><!-- from https://github.com/utterance/utterances
+<script src="https://utteranc.es/client.js"
+        repo="HaJunYoo/Blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>-->
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yukiblog-1.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript><a class="u-url" href="/Blog/django/2022/07/13/view-decorator.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Yuki&#39;s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/HaJunYoo" target="_blank" title="HaJunYoo"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
