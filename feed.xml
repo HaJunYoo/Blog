@@ -5,8 +5,8 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 13 Jul 2022 07:41:42 -0500</pubDate>
-    <lastBuildDate>Wed, 13 Jul 2022 07:41:42 -0500</lastBuildDate>
+    <pubDate>Wed, 13 Jul 2022 07:43:20 -0500</pubDate>
+    <lastBuildDate>Wed, 13 Jul 2022 07:43:20 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -131,6 +131,11 @@
 
 &lt;span class=&quot;n&quot;&gt;post_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PostListView&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;as_view&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;h5 id=&quot;reference&quot;&gt;Reference&lt;/h5&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://velog.io/@chldppwls12/django-view-decorators&quot;&gt;https://velog.io/@chldppwls12/django-view-decorators&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 13 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/django/2022/07/13/view-decorator.html</link>
