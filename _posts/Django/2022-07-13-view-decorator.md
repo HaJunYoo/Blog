@@ -72,7 +72,7 @@ index = MyTemplate.as_view()
 index = login_required(index)
 ```
 
-##### 2`dispatch` 함수 사용
+##### 2. `dispatch` 함수 사용
 - `dispatch`는 클래스가 새로운 함수를 만들 때 마다 항상 실행되는 함수
 - `dispatch`에 새로운 내용을 추가하는 것 아닌데 재정의하기 때문에 가독성 떨어뜨림
 - Class의 멤버 함수에는 method_decorator를 활용
