@@ -4,6 +4,22 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>https://HaJunYoo.github.io/algorithm/2022/07/13/%EC%B5%9C%EB%8C%80%EA%B3%B5%EC%95%BD%EC%88%98.html</loc>
+        
+        <lastmod>2022-07-13T00:00:00-05:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
         <loc>https://HaJunYoo.github.io/django/2022/07/13/view-decorator.html</loc>
         
         <lastmod>2022-07-13T00:00:00-05:00</lastmod>

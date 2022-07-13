@@ -5,9 +5,73 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 13 Jul 2022 07:43:20 -0500</pubDate>
-    <lastBuildDate>Wed, 13 Jul 2022 07:43:20 -0500</lastBuildDate>
+    <pubDate>Wed, 13 Jul 2022 11:16:53 -0500</pubDate>
+    <lastBuildDate>Wed, 13 Jul 2022 11:16:53 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>최대 공약수(재귀)</title>
+        <description>&lt;h2 id=&quot;최대공약수-재귀&quot;&gt;최대공약수 (재귀)&lt;/h2&gt;
+
+&lt;p&gt;두 개의 자연수에 대한 최대 공약수를 구하는 대표적인 알고리즘인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;유클리드 호제법&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;유클리드 호제법&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;두 자연수 A,B 에 대하여 (A&amp;gt;B) &lt;strong&gt;A를 B로 나눈 나머지를 R&lt;/strong&gt;이라고 합시다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;이 때 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A와 B의 최대공약수&lt;/code&gt;는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;B와 R의 최대공약수&lt;/code&gt;와 같습니다.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;유클리드 호제법의 아이디어를 그대로 재귀함수로 작성할 수 있습니다.
+    &lt;ul&gt;
+      &lt;li&gt;예시 GCD(192, 162)
+        &lt;ul&gt;
+          &lt;li&gt;1단계 : 192, 162&lt;/li&gt;
+          &lt;li&gt;2단계 : 162, 30&lt;/li&gt;
+          &lt;li&gt;3단계 : 30, 12&lt;/li&gt;
+          &lt;li&gt;4단계 : 12, 6&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;12는 6의 배수 → 6이 최대 공약수&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# a &amp;gt; b
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;gcd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;# a를 b로 나눴을 때 나머지가 0이라면
+&lt;/span&gt;	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;c1&quot;&gt;# 최대 공약수는 b
+&lt;/span&gt;		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gcd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;재귀 함수를 연속적으로 호출할 경우 컴퓨터 메모리 내부의 스택 프레임에 쌓입니다.&lt;/p&gt;
+
+    &lt;p&gt;→ 그래서 스택을 사용해야 할 때, 구현상 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;스택 라이브러리&lt;/code&gt; 대신에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;재귀함수&lt;/code&gt;를 이용하는 경우가 많습니다.&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;ex) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DFS&lt;/code&gt; → 스택 자료구조를 재귀 호출로 대체할 때가 있음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 13 Jul 2022 00:00:00 -0500</pubDate>
+        <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/13/%EC%B5%9C%EB%8C%80%EA%B3%B5%EC%95%BD%EC%88%98.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/13/%EC%B5%9C%EB%8C%80%EA%B3%B5%EC%95%BD%EC%88%98.html</guid>
+        
+        
+        <category>algorithm</category>
+        
+      </item>
     
       <item>
         <title>뷰 장식자 (View Decorators)</title>
@@ -83,7 +147,7 @@
 &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;login_required&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h5 id=&quot;2dispatch함수-사용&quot;&gt;2&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dispatch&lt;/code&gt; 함수 사용&lt;/h5&gt;
+&lt;h5 id=&quot;2-dispatch함수-사용&quot;&gt;2. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dispatch&lt;/code&gt; 함수 사용&lt;/h5&gt;
 &lt;ul&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dispatch&lt;/code&gt;는 클래스가 새로운 함수를 만들 때 마다 항상 실행되는 함수&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dispatch&lt;/code&gt;에 새로운 내용을 추가하는 것 아닌데 재정의하기 때문에 가독성 떨어뜨림&lt;/li&gt;
@@ -5262,115 +5326,6 @@ configuration을 바꾸면서 모델의 성능을 측정해볼 수 있다.&lt;/p
         <category>datascience</category>
         
         <category>recommendation</category>
-        
-      </item>
-    
-      <item>
-        <title>맥에서 깃허브 블로그를 만들기 위해 ruby 실행 시 오류 발생</title>
-        <description>&lt;h3 id=&quot;맥에서-깃허브-블로그를-만들기-위해-ruby-실행-시-오류-발생-&quot;&gt;맥에서 깃허브 블로그를 만들기 위해 ruby 실행 시 오류 발생 &lt;br /&gt;&lt;/h3&gt;
-
-&lt;p&gt;저자는 아래와 같은 스펙의 맥을 사용 중입니다.
-&lt;img src=&quot;/Blog/images/맥 스펙.png&quot; alt=&quot;&quot; title=&quot;맥 스펙 &quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;brew&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rbenv&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;build&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;pre&gt;
-&lt;code&gt;
-Error: Cannot install under Rosetta 2 in ARM default prefix (/opt/homebrew)!
-To rerun under ARM use:
-    arch -arm64 brew install ...
-To install under x86_64, install Homebrew into /usr/local.
-&lt;/code&gt;
-&lt;/pre&gt;
-
-&lt;p&gt;위의 에러 발생&lt;/p&gt;
-
-&lt;p&gt;아래처럼 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;arch-arm64&lt;/code&gt; 추가&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;arch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arm64&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;brew&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rbenv&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ruby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;build&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
-rbenv versions
-&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; system
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;아직은 시스템을 쓰고 있다고 뜸&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbenv install 2.6.4
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;이제 시스템 루비가 아닌 다른 루비 rbenv 를 설치해보겠습니다.&lt;/p&gt;
-
-&lt;p&gt;그런 후  버전을 확인하고 시스템 루비에서 방금 설치한 루비로 글로벌 버젼을 교체하겠습니다.&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;하지만 build가 fail 한다
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;구글링을 하다 아래의 방식을 참고하게 되었다&lt;br /&gt;
-&lt;a href=&quot;https://github.com/rbenv/ruby-build/issues/1691#issuecomment-983122764&quot;&gt;링크&lt;/a&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;arch -arm64 brew install openssl libffi zlib rbenv readline ruby-build
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;그런 후 다른 버전을 설치해본다&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;arch -arm64 rbenv install 2.7.5
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rbnev versions
-rbenv global 2.7.5
-
----
-
-system
-* 2.7.5 (set by /Users/yoohajun/.rbenv/version)
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;방금 설치한 것으로 &lt;strong&gt;global&lt;/strong&gt; 하게 바뀐 것을 확인 가능하다&lt;/p&gt;
-
-&lt;p&gt;shell 을 열어서 루비 패스를 추가해주고 저장해준 후 gem install을 해보자&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vi ~/.zshrc
-
-'''
-[[ -d ~/.rbenv  ]] &amp;amp;&amp;amp; \
-  export PATH=${HOME}/.rbenv/bin:${PATH} &amp;amp;&amp;amp; \
-  eval &quot;$(rbenv init -)&quot;
-
-'''
-
-source ~/.zshrc
-gem install bundler
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; unicode-display_width, terminal-table, jekyll after 11 seconds
-26 gems installed
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;설치가 완료되었다!&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;깃허브 블로그가 저장된 로컬 주소로 가서 터미널을 열어 번들을 설치해준다. &lt;br /&gt;&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle install
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;그 후 로컬 서버를 실행시켜준다&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle exec jekyll serve
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;이제 번들 서버를 사용해 로컬에서 업데이트 진행 상황을 확인이 가능해졌다!&lt;/p&gt;
-
-</description>
-        <pubDate>Fri, 01 Jul 2022 00:00:00 -0500</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/etc/2022/07/01/second.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/etc/2022/07/01/second.html</guid>
-        
-        
-        <category>etc</category>
         
       </item>
     
