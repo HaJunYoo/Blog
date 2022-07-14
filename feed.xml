@@ -5,8 +5,8 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 14 Jul 2022 12:26:17 -0500</pubDate>
-    <lastBuildDate>Thu, 14 Jul 2022 12:26:17 -0500</lastBuildDate>
+    <pubDate>Thu, 14 Jul 2022 12:31:29 -0500</pubDate>
+    <lastBuildDate>Thu, 14 Jul 2022 12:31:29 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -16,8 +16,6 @@
 &lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
 
 &lt;p&gt;N×M크기의 배열로 표현되는 미로가 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ed97c88f-06c6-4db3-be25-85c8cfc69126/스크린샷_2022-05-20_오후_4.44.24.png&quot; alt=&quot;미로&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;미로에서 1은 이동할 수 있는 칸을 나타내고, 0은 이동할 수 없는 칸을 나타낸다. 이러한 미로가 주어졌을 때, (1, 1)에서 출발하여 (N, M)의 위치로 이동할 때 지나야 하는 최소의 칸 수를 구하는 프로그램을 작성하시오. 한 칸에서 다른 칸으로 이동할 때, 서로 인접한 칸으로만 이동할 수 있다.&lt;/p&gt;
 
@@ -46,6 +44,8 @@
 &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;
 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&amp;amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbV0Io5%2Fbtrq4qzeVlD%2FkLHl8oJGbmK2m6CFEgsMOK%2Fimg.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;collections&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;deque&lt;/span&gt;
