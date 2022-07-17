@@ -6,9 +6,10 @@ title: URL Reverse를 통해 유연하게 URL 생성
 description: URL Reverse를 통해 유연하게 URL 생성하기 - Django
 categories: [Django]
 image:
+render_with_liquid: false
 ---
 
-{% raw %}
+
 # URL Dispatcher
 
 장고는 `urls.py`를 통해 **각 뷰에 대한 URL이 변경되는 유연한 URL 시스템**을 갖는다.
@@ -171,7 +172,6 @@ class Post(models.Model):
     
 - 특정 모델에 대한 Detail 뷰를 작성할 경우, Detail view에 대한 url configure 설정을 하자마자, `get_absolute_url()`을 구현할 것을 추천한다. 코드가 간결해 진다.
 
-{% endraw %}
 
 ---
 

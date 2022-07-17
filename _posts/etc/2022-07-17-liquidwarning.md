@@ -9,7 +9,7 @@ image:
 render_with_liquid: false
 ---
 
-{% raw %}
+
 
 # Jekyll에서 liquid warning 처리
 
@@ -24,8 +24,6 @@ Liquid Exception: Liquid syntax error (line 47): Tag
 
 과 같은 에러가 발생을 하거나 원하지 않는 동작을 하는 경우가 발생한다. 이런 경우에는 raw tag를 이용하면 된다.
 
-
-![그림1]({{site.baseurl}}/images/etc/rawtag2.png)
 
 Jekyll에서 liquid warning 처리하는 방법은 다음과 같습니다.
 
@@ -46,10 +44,16 @@ Jekyll 에서 사용되는 liquid가 `{{`와 `}}` , `{% %}`를 escape 문자�
 `raw tag` 를 사용하고
 
 문서 끝에 `raw tag` 를 사용하자
+```python
+{% raw %}
 
-![]({{site.baseurl}}/images/etc/rawtag1.png)
+문서
 
 {% endraw %}
+```
+혹은 markdown header에 아래와 같은 설정을 포함시키자
+
+`render_with_liquid: false`
 
 
 
