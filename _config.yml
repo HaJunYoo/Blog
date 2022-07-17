@@ -38,9 +38,9 @@ url: "https://HaJunYoo.github.io" # the base hostname & protocol for your site, 
 baseurl: "/Blog" # the subpath of your site, e.g. "/blog".
 
 # Github and twitter are optional:
-minima:
-  social_links:
-    github: HaJunYoo
+#minima:
+#  social_links:
+##    github: HaJunYoo
 
 # Set this to true to get LaTeX math equation support
 use_math: true
@@ -49,10 +49,10 @@ use_math: true
 show_description: true
 
 # Set this to true to display image previews on home page, if they exist
-show_image: false
+show_image: true
 
 # Set this to true to turn on annotations with hypothes.is (https://web.hypothes.is/)
-annotations: false
+annotations: true
 
 # Set this to true to display tags on each post
 show_tags: true
@@ -72,9 +72,9 @@ include:
 # This specifies what badges are turned on by default for notebook posts.
 default_badges:
   github: true
-  binder: true
+  binder: false
   colab: true
-  deepnote: true
+  deepnote: false
 
 # Escape HTML in post descriptions
 html_escape:
