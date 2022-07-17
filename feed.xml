@@ -5,20 +5,17 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Jul 2022 06:32:56 -0500</pubDate>
-    <lastBuildDate>Sun, 17 Jul 2022 06:32:56 -0500</lastBuildDate>
+    <pubDate>Sun, 17 Jul 2022 06:51:38 -0500</pubDate>
+    <lastBuildDate>Sun, 17 Jul 2022 06:51:38 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
         <title>Jekyll에서 liquid warning(Liquid Exception) 처리</title>
         <description>
-&lt;h1 id=&quot;jekyll에서-liquid-warningliquid-exception-처리&quot;&gt;Jekyll에서 liquid warning(Liquid Exception) 처리&lt;/h1&gt;
-
-&lt;h1 id=&quot;jekyll에서-liquid-warning-처리&quot;&gt;&lt;strong&gt;Jekyll에서 liquid warning 처리&lt;/strong&gt;&lt;/h1&gt;
+&lt;h1 id=&quot;jekyll에서-liquid-warning-처리&quot;&gt;Jekyll에서 liquid warning 처리&lt;/h1&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Liquid Exception: Liquid syntax error (line 46): Unknown tag 'url' in markdown(md)&lt;/code&gt;&lt;/p&gt;
-
 &lt;/blockquote&gt;
 
 &lt;p&gt;예제를 작성하거나 할 때에 liquid syntax를 포함시켜야 하는 경우가 있는데.. 그대로 작성하게 되는 경우에 해당 tag가 동작을 해서&lt;/p&gt;
@@ -46,11 +43,11 @@
 
 &lt;p&gt;아예 문서 시작 전에&lt;/p&gt;
 
-&lt;p&gt;raw tag를 사용하고&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;raw tag&lt;/code&gt; 를 사용하고&lt;/p&gt;
 
-&lt;p&gt;문서 끝에 raw tag를 사용하자&lt;/p&gt;
+&lt;p&gt;문서 끝에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;raw tag&lt;/code&gt; 를 사용하자&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;{{site.baseurl}}/images/etc/rawtag1.png&quot; alt=&quot;그림 2&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;{{site.baseurl}}/images/etc/rawtag1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 17 Jul 2022 00:00:00 -0500</pubDate>

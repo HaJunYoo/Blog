@@ -127,23 +127,17 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul id="toc" class="section-nav">
-<li class="toc-entry toc-h1"><a href="#jekyll에서-liquid-warningliquid-exception-처리">Jekyll에서 liquid warning(Liquid Exception) 처리</a></li>
 <li class="toc-entry toc-h1"><a href="#jekyll에서-liquid-warning-처리">Jekyll에서 liquid warning 처리</a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#결론">결론</a></li>
 </ul>
 </li>
 </ul>
-<h1 id="jekyll에서-liquid-warningliquid-exception-처리">
-<a class="anchor" href="#jekyll%EC%97%90%EC%84%9C-liquid-warningliquid-exception-%EC%B2%98%EB%A6%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jekyll에서 liquid warning(Liquid Exception) 처리</h1>
-
 <h1 id="jekyll에서-liquid-warning-처리">
-<a class="anchor" href="#jekyll%EC%97%90%EC%84%9C-liquid-warning-%EC%B2%98%EB%A6%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Jekyll에서 liquid warning 처리</strong>
-</h1>
+<a class="anchor" href="#jekyll%EC%97%90%EC%84%9C-liquid-warning-%EC%B2%98%EB%A6%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jekyll에서 liquid warning 처리</h1>
 
 <blockquote>
   <p><code class="language-plaintext highlighter-rouge">Liquid Exception: Liquid syntax error (line 46): Unknown tag 'url' in markdown(md)</code></p>
-
 </blockquote>
 
 <p>예제를 작성하거나 할 때에 liquid syntax를 포함시켜야 하는 경우가 있는데.. 그대로 작성하게 되는 경우에 해당 tag가 동작을 해서</p>
@@ -172,11 +166,11 @@ window.onload = wrap_img;
 
 <p>아예 문서 시작 전에</p>
 
-<p>raw tag를 사용하고</p>
+<p><code class="language-plaintext highlighter-rouge">raw tag</code> 를 사용하고</p>
 
-<p>문서 끝에 raw tag를 사용하자</p>
+<p>문서 끝에 <code class="language-plaintext highlighter-rouge">raw tag</code> 를 사용하자</p>
 
-<p><img src="%7B%7Bsite.baseurl%7D%7D/images/etc/rawtag1.png" alt="그림 2"></p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/images/etc/rawtag1.png" alt=""></p>
 
 
   </div><!-- from https://github.com/utterance/utterances
