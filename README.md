@@ -8,10 +8,12 @@ https://HaJunYoo.github.io/Blog/
 
 # My Blog
 
-
 _powered by [fastpages](https://github.com/fastai/fastpages)_
 
 ## reference
+
+### 참고 Theme
+- jekyll/minima
 
 ### 참고 블로그
 https://blog.kubeflow.org/jupyter/2020/02/20/test.html
