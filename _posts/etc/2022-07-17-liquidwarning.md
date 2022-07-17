@@ -6,6 +6,7 @@ title: Jekyll에서 liquid warning(Liquid Exception) 처리
 description: Jekyll fastpages 에서 liquid warning(Liquid Exception) 처리
 categories: [etc]
 image:
+render_with_liquid: false
 ---
 
 {% raw %}
