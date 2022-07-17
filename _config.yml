@@ -7,7 +7,7 @@
 # https://learnxinyminutes.com/docs/yaml/
 
 title: Yuki's Blog
-description: Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.
+description: Yuki's Tech Blog는 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.
 github_username: HaJunYoo
 # you can comment the below line out if your repo name is not different than your baseurl
 

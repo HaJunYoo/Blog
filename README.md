@@ -18,6 +18,8 @@ _powered by [fastpages](https://github.com/fastai/fastpages)_
 ### 참고 블로그
 https://blog.kubeflow.org/jupyter/2020/02/20/test.html
 
+### jekyll_theme_customizing
+https://github.com/jongheon0204/jekyll_theme_customizing
 
 ### Boxes and Stuff
 https://fastpagesdev.netlify.app/fastpages/orgmode/2020/04/27/blogging-with-orgmode-and-fastpages
