@@ -41,10 +41,11 @@ permalink: /about/
         style="height : auto; margin-left : 10px; margin-right : 10px;"/>
 </a>
 
+</div>
+
 ![잔디](https://ghchart.rshah.org/HaJunYoo "https://github.com/HaJunYoo")
 
 ![HaJun's github stats](https://github-readme-stats.vercel.app/api?username=HaJunYoo&show_icons=true&theme=tokyonight)
 
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=HaJunYoo&layout=compact&theme=tokyonight)
 
-</div>
