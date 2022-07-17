@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>URL Reverse를 통해 유연하게 URL 생성 | Yuki’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="URL Reverse를 통해 유연하게 URL 생성" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="URL Reverse를 통해 유연하게 URL 생성하기 - Django" />
+<meta property="og:description" content="URL Reverse를 통해 유연하게 URL 생성하기 - Django" />
+<link rel="canonical" href="https://hajunyoo.github.io/Blog/django/2022/07/17/reverse-django.html" />
+<meta property="og:url" content="https://hajunyoo.github.io/Blog/django/2022/07/17/reverse-django.html" />
+<meta property="og:site_name" content="Yuki’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-17T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="URL Reverse를 통해 유연하게 URL 생성" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-17T00:00:00-05:00","datePublished":"2022-07-17T00:00:00-05:00","description":"URL Reverse를 통해 유연하게 URL 생성하기 - Django","headline":"URL Reverse를 통해 유연하게 URL 생성","mainEntityOfPage":{"@type":"WebPage","@id":"https://hajunyoo.github.io/Blog/django/2022/07/17/reverse-django.html"},"url":"https://hajunyoo.github.io/Blog/django/2022/07/17/reverse-django.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://hajunyoo.github.io/Blog/feed.xml" title="Yuki's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V1MM5F0SWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V1MM5F0SWD');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Yuki&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog/about/">About Me</a><a class="page-link" href="/Blog/gitInfo/">gitInfo</a><a class="page-link" href="/Blog/search/">Search</a><a class="page-link" href="/Blog/categories/">Category</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">URL Reverse를 통해 유연하게 URL 생성</h1><p class="page-description">URL Reverse를 통해 유연하게 URL 생성하기 - Django</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-17T00:00:00-05:00" itemprop="datePublished">
+        Jul 17, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      2 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#Django">Django</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#url-dispatcher">URL Dispatcher</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#urlspy-정의">urls.py 정의</a></li>
+<li class="toc-entry toc-h2"><a href="#url-reverse-수행하기">URL Reverse 수행하기</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#url-reverse를-수행하는-4가지-함수">URL Reverse를 수행하는 4가지 함수</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#모델-객체에-대한-detail-주소-계산을-위한-코드-간소화">모델 객체에 대한 detail 주소 계산을 위한 코드 간소화</a></li>
+<li class="toc-entry toc-h2"><a href="#모델-클래스에get_absolute_url구현">모델 클래스에 **get_absolute_url()** 구현</a></li>
+<li class="toc-entry toc-h2"><a href="#기타">기타</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="url-dispatcher">
+<a class="anchor" href="#url-dispatcher" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL Dispatcher</h1>
+
+<p>장고는 <code class="language-plaintext highlighter-rouge">urls.py</code>를 통해 <strong>각 뷰에 대한 URL이 변경되는 유연한 URL 시스템</strong>을 갖는다.</p>
+
+<p>뷰에 대한 이름은 path에 name 파라미터를 지정하면 된다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">app_name</code>은 앱 내의 네임스페이스 역할을 한다. post_list가 다른 앱에 존재하더라도 <code class="language-plaintext highlighter-rouge">app_name</code>을 통해 구분할 수 있다.</p>
+
+<p>URL Reverse를 수행함으로써 개발자가 URL을 계산할 필요가 없다.</p>
+
+<p>추후에 path의 url이 변경되더라도 <code class="language-plaintext highlighter-rouge">URL Reverse가 변경된 url을 추적</code>하기 때문에 누락될 일이 없는 유연한 대응이 가능하다.</p>
+
+<h2 id="urlspy-정의">
+<a class="anchor" href="#urlspy-%EC%A0%95%EC%9D%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>urls.py 정의</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># project/urls.py
+</span><span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># ...
+</span>    <span class="n">path</span><span class="p">(</span><span class="s">'instagram/'</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">'instagram.urls'</span><span class="p">)),</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># instagram/urls.py
+</span><span class="n">app_name</span> <span class="o">=</span> <span class="s">'instagram'</span>  <span class="c1"># app_name 설정. 네임스페이스 역할
+</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">post_list</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'post_list'</span><span class="p">),</span>  <span class="c1"># name 파라미터 입력. 뷰의 이름.
+</span>    <span class="n">path</span><span class="p">(</span><span class="s">'&lt;int:pk&gt;/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">post_detail</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'post_detail'</span><span class="p">),</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="url-reverse-수행하기">
+<a class="anchor" href="#url-reverse-%EC%88%98%ED%96%89%ED%95%98%EA%B8%B0" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL Reverse 수행하기</h2>
+
+<p>instagram앱의 urls.py에서 정의한 <strong>url</strong>을 활용하는 예시</p>
+
+<p><strong>템플릿 예시</strong> 및 <strong>reverse</strong>, <strong>resolve_url</strong>, <strong>redirect</strong> 등의 함수를 이용해서 서버코드에서도 활용이 가능하다.</p>
+
+<p>url 내용을 변경하더라도 아래 예시들과 같이 URL Reverse를 사용한 코드는 변경할 필요가 없게된다.</p>
+
+<h3 id="url-reverse를-수행하는-4가지-함수">
+<a class="anchor" href="#url-reverse%EB%A5%BC-%EC%88%98%ED%96%89%ED%95%98%EB%8A%94-4%EA%B0%80%EC%A7%80-%ED%95%A8%EC%88%98" aria-hidden="true"><span class="octicon octicon-link"></span></a>URL Reverse를 수행하는 4가지 함수</h3>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">url 템플릿태그</code>
+내부적으로 reverse 함수를 사용</p>
+
+    <p><code class="language-plaintext highlighter-rouge">{% url 인자 %}</code></p>
+
+    <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"instagram/{{post.pk}}"</span><span class="o">&gt;</span><span class="n">포스트</span> <span class="n">리스트</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>  
+  <span class="c1"># (이런 하드코딩은 나중에 URL을 변경 시 함께 변경되어야 한다.) 
+</span>    
+  <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"{% url 'instagram:post_list' %}"</span><span class="o">&gt;</span><span class="n">포스트</span> <span class="n">리스트</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+    
+  <span class="o">----------------------------------------------------------</span>
+    
+  <span class="c1"># instagram앱에서 post_detail에 대한 pk=100일 때의 URL을 가져온다. 
+</span>    
+  <span class="c1"># (`instagram/100`)파라미터 이름(pk)는 생략이 가능하다. 
+</span>    
+  <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"{% url 'instagram:post_detail' 100 %}"</span><span class="o">&gt;</span><span class="n">포스트</span> <span class="n">리스트</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+    
+  <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"{% url 'instagram:post_detail' pk=100 %}"</span><span class="o">&gt;</span><span class="n">포스트</span> <span class="n">리스트</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+    
+  <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">"{% url 'instagram:post_detail' post.pk %}"</span><span class="o">&gt;</span><span class="n">포스트</span> <span class="n">리스트</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">reverse 함수</code></p>
+
+    <p>반환값 : URL 문자열</p>
+
+    <p>args 또는 kwargs라는 파라미터 이름을 지정해서 정해진 타입으로 입력해야 한다.</p>
+
+    <p>(<code class="language-plaintext highlighter-rouge">args:</code> <strong>리스트</strong> - 여러 개일 경우 파라미터 순서대로 지정, <code class="language-plaintext highlighter-rouge">kwargs:</code> <strong>딕셔너리</strong> - 파라미터 이름 지정)</p>
+
+    <p>매칭 URL이 없으면 NoReverseMatch 예외 발생</p>
+
+    <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse</span>
+    
+  <span class="n">reverse</span><span class="p">(</span><span class="s">'instagram:post_detail'</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">])</span>  <span class="c1"># '/instagram/100/' 반환
+</span>  <span class="n">reverse</span><span class="p">(</span><span class="s">'instagram:post_detail'</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s">'pk'</span><span class="p">:</span> <span class="mi">100</span><span class="p">})</span>  <span class="c1"># '/instagram/100/' 반환
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">resolve_url 함수</code></p>
+
+    <p>반환값 : URL 문자열</p>
+
+    <p>reverse를 래핑해서 편리하게 사용할 수 있도록 만든 함수.</p>
+
+    <p>동적으로 여러개의 파라미터를 입력하거나 파라미터 이름을 지정해서 입력한다.</p>
+
+    <p>매핑 URL이 없으면 “인자 문자열”을 그대로 리턴
+  내부적으로 <strong>reverse 함수</strong>를 사용</p>
+
+    <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">resolve_url</span>
+    
+  <span class="n">resolve_url</span><span class="p">(</span><span class="s">'instagram:post_detail'</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># '/instagram/100/' 반환
+</span>  <span class="n">resolve_url</span><span class="p">(</span><span class="s">'instagram:post_detail'</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># '/instagram/100/' 반환
+</span>  <span class="n">resolve_url</span><span class="p">(</span><span class="s">'/instagram/100/'</span><span class="p">)</span>  <span class="c1"># '/instagram/100/' 반환
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">redirect 함수</code></p>
+
+    <p>반환값 : HttpResponse(301 or 302) 인스턴스를 반환
+  뷰에서 특정 로직에 대한 리다이렉트 응답이 필요할 경우 사용가능.</p>
+
+    <p>매칭 URL이 없으면 “인자 문자열”을 그대로 URL로 사용
+  내부적으로 <strong>resolve_url 함수</strong>를 사용</p>
+
+    <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>  <span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">redirect</span>
+    
+  <span class="n">redirect</span><span class="p">(</span><span class="s">'instagram:post_detail'</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># /instagram/100/에 대한 HttpResponse 반환
+</span>  <span class="n">redirect</span><span class="p">(</span><span class="s">'instagram:post_detail'</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># /instagram/100/에 대한 HttpResponse 반환
+</span>  <span class="n">redirect</span><span class="p">(</span><span class="s">'/instagram/100/'</span><span class="p">)</span>  <span class="c1"># /instagram/100/에 대한 HttpResponse 반환
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="모델-객체에-대한-detail-주소-계산을-위한-코드-간소화">
+<a class="anchor" href="#%EB%AA%A8%EB%8D%B8-%EA%B0%9D%EC%B2%B4%EC%97%90-%EB%8C%80%ED%95%9C-detail-%EC%A3%BC%EC%86%8C-%EA%B3%84%EC%82%B0%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%BD%94%EB%93%9C-%EA%B0%84%EC%86%8C%ED%99%94" aria-hidden="true"><span class="octicon octicon-link"></span></a>모델 객체에 대한 detail 주소 계산을 위한 코드 간소화</h2>
+
+<p>인자로 <code class="language-plaintext highlighter-rouge">모델 객체(post)</code>를 넘겨준다</p>
+
+<p>다음 코드를 매번 입력하는 것도 좋지만</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">resolve_url</span><span class="p">(</span><span class="s">'instagram:post_detail'</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">post</span><span class="p">.</span><span class="n">pk</span><span class="p">)</span>
+<span class="n">redirect</span><span class="p">(</span><span class="s">'instagram:post_detail'</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">post</span><span class="p">.</span><span class="n">pk</span><span class="p">)</span>
+<span class="p">{</span><span class="o">%</span> <span class="n">url</span> <span class="s">'instagram:post_detail'</span> <span class="n">post</span><span class="p">.</span><span class="n">pk</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>아래와 같이 사용할 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">resolve_url</span><span class="p">(</span><span class="n">post</span><span class="p">)</span> <span class="c1"># 파이썬 상
+</span><span class="n">redirect</span><span class="p">(</span><span class="n">post</span><span class="p">)</span> <span class="c1"># 파이썬 상
+</span><span class="o">**</span><span class="p">{{</span> <span class="n">post</span><span class="p">.</span><span class="n">get_absolute_url</span> <span class="p">}}</span> <span class="c1"># 템플릿 문법**
+</span></code></pre></div></div>
+
+<h2 id="모델-클래스에get_absolute_url구현">
+<a class="anchor" href="#%EB%AA%A8%EB%8D%B8-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%97%90get_absolute_url%EA%B5%AC%ED%98%84" aria-hidden="true"><span class="octicon octicon-link"></span></a>모델 클래스에 <code class="language-plaintext highlighter-rouge">**get_absolute_url()**</code> 구현</h2>
+
+<p>모델 클래스를 만들면 내부 클래스 메소드로 <code class="language-plaintext highlighter-rouge">get_absolute_url</code> 메서드를 구현하면 된다.</p>
+
+<p>resolve_url 함수는 가장 먼저 <code class="language-plaintext highlighter-rouge">get_absolute_url()</code> 함수의 존재 여부를 확인하고 존재한다면 reverse를 수행하지 않고 그 리턴값을 즉시 리턴하게 되어 있다.</p>
+
+<p>redirect 또한 내부적으로는 resolve_url을 사용하기에 get_absolute_url() 구현 여부에 따라 영향을 받는다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Post</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="c1"># ...
+</span>    <span class="k">def</span> <span class="nf">get_absolute_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s">'instagram:post_detail'</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">pk</span><span class="p">])</span>
+</code></pre></div></div>
+
+<h2 id="기타">
+<a class="anchor" href="#%EA%B8%B0%ED%83%80" aria-hidden="true"><span class="octicon octicon-link"></span></a>기타</h2>
+
+<ul>
+  <li>
+    <p><strong>CreateView</strong>, <strong>UpdateView와</strong> 같은 Generic CBV에서 success_url을 지정할 수 있다.</p>
+
+    <p>만약 지정하지 않았을 경우, 해당 모델 인스턴스의 <code class="language-plaintext highlighter-rouge">get_absolute_url()</code> 주소로 이동 가능한지 여부를 체크하고, 이동이 가능할 경우 이동한다.</p>
+  </li>
+  <li>
+    <p>특정 모델에 대한 Detail 뷰를 작성할 경우, Detail view에 대한 url configure 설정을 하자마자, <code class="language-plaintext highlighter-rouge">get_absolute_url()</code>을 구현할 것을 추천한다. 코드가 간결해 진다.</p>
+  </li>
+</ul>
+
+<hr>
+
+<h3 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h3>
+
+<p><a href="https://velog.io/@joje/URL-Reverse%EB%A5%BC-%ED%86%B5%ED%95%B4-%EC%9C%A0%EC%97%B0%ED%95%98%EA%B2%8C-URL-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0">https://velog.io/@joje/URL-Reverse를-통해-유연하게-URL-생성하기</a></p>
+
+<p><strong>**<a href="https://velog.io/@joje/series/%ED%8C%8C%EC%9D%B4%EC%8D%AC%EC%9E%A5%EA%B3%A0-%EC%9B%B9%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B0%9C%EB%B0%9C-%EC%99%84%EB%B2%BD-%EA%B0%80%EC%9D%B4%EB%93%9C-with-AskCompany">파이썬/장고 웹서비스 개발 완벽 가이드 with AskCompany</a> - Inflearn</strong></p>
+
+  </div><!-- from https://github.com/utterance/utterances
+<script src="https://utteranc.es/client.js"
+        repo="HaJunYoo/Blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>-->
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yukiblog-1.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript><a class="u-url" href="/Blog/django/2022/07/17/reverse-django.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Yuki&#39;s Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/HaJunYoo" target="_blank" title="HaJunYoo"><svg class="svg-icon grey"><use xlink:href="/Blog/assets/minima-social-icons.svg#github"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
