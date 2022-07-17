@@ -5,8 +5,8 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Jul 2022 07:29:09 -0500</pubDate>
-    <lastBuildDate>Sun, 17 Jul 2022 07:29:09 -0500</lastBuildDate>
+    <pubDate>Sun, 17 Jul 2022 07:35:30 -0500</pubDate>
+    <lastBuildDate>Sun, 17 Jul 2022 07:35:30 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -204,7 +204,7 @@
 &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_absolute_url&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}}&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# 템플릿 문법**
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;모델-클래스에get_absolute_url구현&quot;&gt;모델 클래스에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;**get_absolute_url()**&lt;/code&gt; 구현&lt;/h2&gt;
+&lt;h2 id=&quot;모델-클래스에-get_absolute_url-구현&quot;&gt;모델 클래스에  &lt;strong&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get_absolute_url()&lt;/code&gt;&lt;/strong&gt;  구현&lt;/h2&gt;
 
 &lt;p&gt;모델 클래스를 만들면 내부 클래스 메소드로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;get_absolute_url&lt;/code&gt; 메서드를 구현하면 된다.&lt;/p&gt;
 
