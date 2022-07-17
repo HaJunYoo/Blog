@@ -133,9 +133,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#reference">reference</a></li>
 </ul>
 </li>
-</ul><p>{% raw %}</p>
-
-<h1 id="jekyll에서-liquid-warning-처리">
+</ul><h1 id="jekyll에서-liquid-warning-처리">
 <a class="anchor" href="#jekyll%EC%97%90%EC%84%9C-liquid-warning-%EC%B2%98%EB%A6%AC" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jekyll에서 liquid warning 처리</h1>
 
 <blockquote>
@@ -148,8 +146,6 @@ window.onload = wrap_img;
 </code></pre></div></div>
 
 <p>과 같은 에러가 발생을 하거나 원하지 않는 동작을 하는 경우가 발생한다. 이런 경우에는 raw tag를 이용하면 된다.</p>
-
-<p><img src="%7B%7Bsite.baseurl%7D%7D/images/etc/rawtag2.png" alt="그림1"></p>
 
 <p>Jekyll에서 liquid warning 처리하는 방법은 다음과 같습니다.</p>
 
@@ -171,10 +167,15 @@ window.onload = wrap_img;
 <p><code class="language-plaintext highlighter-rouge">raw tag</code> 를 사용하고</p>
 
 <p>문서 끝에 <code class="language-plaintext highlighter-rouge">raw tag</code> 를 사용하자</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="o">%</span> <span class="n">raw</span> <span class="o">%</span><span class="p">}</span>
 
-<p><img src="%7B%7Bsite.baseurl%7D%7D/images/etc/rawtag1.png" alt=""></p>
+<span class="n">문서</span>
 
-<p>{% endraw %}</p>
+<span class="p">{</span><span class="o">%</span> <span class="n">endraw</span> <span class="o">%</span><span class="p">}</span>
+</code></pre></div></div>
+<p>혹은 markdown header에 아래와 같은 설정을 포함시키자</p>
+
+<p><code class="language-plaintext highlighter-rouge">render_with_liquid: false</code></p>
 
 <h3 id="reference">
 <a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>reference</h3>
