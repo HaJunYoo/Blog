@@ -29,9 +29,6 @@ search_exclude: true
 
   <h3 id="{{ category[0] | downcase | url_escape | strip | replace: ' ', '-' }}"> <i class="fas fa-tags category-tags-icon"></i> {{ category[0] | camelcase }}</h3>
 
-    <details>
-       <summary> Open </summary>
-
       <ul>
         {% assign pages_list = category[1] %}
         {% for post in pages_list %}
@@ -54,7 +51,6 @@ search_exclude: true
         {% assign group = nil %}
       </ul>
 
-  </details>
 
 {% endfor %}
 
