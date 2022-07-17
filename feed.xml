@@ -5,8 +5,8 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Jul 2022 06:27:50 -0500</pubDate>
-    <lastBuildDate>Sun, 17 Jul 2022 06:27:50 -0500</lastBuildDate>
+    <pubDate>Sun, 17 Jul 2022 06:32:56 -0500</pubDate>
+    <lastBuildDate>Sun, 17 Jul 2022 06:32:56 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -28,7 +28,7 @@
 
 &lt;p&gt;과 같은 에러가 발생을 하거나 원하지 않는 동작을 하는 경우가 발생한다. 이런 경우에는 raw tag를 이용하면 된다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;{{site.baseurl}}/images/etc/스크린샷 2022-07-17 오후 8.24.16.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;{{site.baseurl}}/images/etc/rawtag2.png&quot; alt=&quot;그림1&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Jekyll에서 liquid warning 처리하는 방법은 다음과 같습니다.&lt;/p&gt;
 
@@ -50,7 +50,7 @@
 
 &lt;p&gt;문서 끝에 raw tag를 사용하자&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;{{site.baseurl}}/images/etc/스크린샷 2022-07-17 오후 8.24.01.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;{{site.baseurl}}/images/etc/rawtag1.png&quot; alt=&quot;그림 2&quot; /&gt;&lt;/p&gt;
 
 </description>
         <pubDate>Sun, 17 Jul 2022 00:00:00 -0500</pubDate>
