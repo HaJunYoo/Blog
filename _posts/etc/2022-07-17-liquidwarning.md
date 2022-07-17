@@ -50,3 +50,8 @@ Jekyll 에서 사용되는 liquid가 `{{`와 `}}` , `{% %}`를 escape 문자�
 ![]({{site.baseurl}}/images/etc/rawtag1.png)
 
 {% endraw %}
+
+
+
+### reference
+[https://jekyllrb-ko.github.io/docs/liquid/tags/](https://jekyllrb-ko.github.io/docs/liquid/tags/)
