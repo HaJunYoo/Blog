@@ -3,8 +3,8 @@ toc: true
 layout: post
 comments: true
 title: URL Reverse를 통해 유연하게 URL 생성
-description: URL Reverse를 통해 유연하게 URL 생성하기 (Django)
-categories: [algorithm]
+description: URL Reverse를 통해 유연하게 URL 생성하기 - Django
+categories: [Django]
 image:
 ---
 
