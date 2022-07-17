@@ -26,7 +26,7 @@ Liquid Exception: Liquid syntax error (line 47): Tag
 과 같은 에러가 발생을 하거나 원하지 않는 동작을 하는 경우가 발생한다. 이런 경우에는 raw tag를 이용하면 된다.
 
 
-![]({{site.baseurl}}/images/etc/스크린샷 2022-07-17 오후 8.24.16.png)
+![그림1]({{site.baseurl}}/images/etc/rawtag2.png)
 
 Jekyll에서 liquid warning 처리하는 방법은 다음과 같습니다.
 
@@ -48,6 +48,6 @@ raw tag를 사용하고
 
 문서 끝에 raw tag를 사용하자
 
-![]({{site.baseurl}}/images/etc/스크린샷 2022-07-17 오후 8.24.01.png)
+![그림 2]({{site.baseurl}}/images/etc/rawtag1.png)
 
 {% endraw %}
