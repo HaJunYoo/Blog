@@ -4,6 +4,22 @@
         xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
     <url>
+        <loc>https://HaJunYoo.github.io/etc/2022/07/17/liquidwarning.html</loc>
+        
+        <lastmod>2022-07-17T00:00:00-05:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
         <loc>https://HaJunYoo.github.io/django/2022/07/17/reverse-django.html</loc>
         
         <lastmod>2022-07-17T00:00:00-05:00</lastmod>

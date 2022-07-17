@@ -5,9 +5,62 @@
     <description>Yuki's Tech Blog. 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Jul 2022 06:15:09 -0500</pubDate>
-    <lastBuildDate>Sun, 17 Jul 2022 06:15:09 -0500</lastBuildDate>
+    <pubDate>Sun, 17 Jul 2022 06:27:50 -0500</pubDate>
+    <lastBuildDate>Sun, 17 Jul 2022 06:27:50 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>Jekyll에서 liquid warning(Liquid Exception) 처리</title>
+        <description>
+&lt;h1 id=&quot;jekyll에서-liquid-warningliquid-exception-처리&quot;&gt;Jekyll에서 liquid warning(Liquid Exception) 처리&lt;/h1&gt;
+
+&lt;h1 id=&quot;jekyll에서-liquid-warning-처리&quot;&gt;&lt;strong&gt;Jekyll에서 liquid warning 처리&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Liquid Exception: Liquid syntax error (line 46): Unknown tag 'url' in markdown(md)&lt;/code&gt;&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;예제를 작성하거나 할 때에 liquid syntax를 포함시켜야 하는 경우가 있는데.. 그대로 작성하게 되는 경우에 해당 tag가 동작을 해서&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Liquid Exception: Liquid syntax error (line 47): Tag
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;과 같은 에러가 발생을 하거나 원하지 않는 동작을 하는 경우가 발생한다. 이런 경우에는 raw tag를 이용하면 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;{{site.baseurl}}/images/etc/스크린샷 2022-07-17 오후 8.24.16.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Jekyll에서 liquid warning 처리하는 방법은 다음과 같습니다.&lt;/p&gt;
+
+&lt;p&gt;Jekyll 에서 사용되는 liquid가 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{{&lt;/code&gt;와 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;}}&lt;/code&gt; , &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{% %}&lt;/code&gt;를 escape 문자로 사용합니다. 문서에 {{, }} 가 들어 있는 경우 jekyll engine이 경고 메시지를 출력하고, {{ … }} 사이에 있는 내용은 무시됩니다.&lt;/p&gt;
+
+&lt;p&gt;문서에는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x-success={{drafts://}}&lt;/code&gt; 라는 문장이 들어 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Liquid Exception: Liquid syntax error (line 46): Unknown tag 'url' in markdown(md)&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;해당 내용을 liquid parsing을 하지 않기 위해서는 문장 앞뒤로 다음과 같은 tag를 추가해 주면 warning과 출력 문제를 해결할 수 있습니다.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h3 id=&quot;결론&quot;&gt;결론&lt;/h3&gt;
+
+&lt;p&gt;아예 문서 시작 전에&lt;/p&gt;
+
+&lt;p&gt;raw tag를 사용하고&lt;/p&gt;
+
+&lt;p&gt;문서 끝에 raw tag를 사용하자&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;{{site.baseurl}}/images/etc/스크린샷 2022-07-17 오후 8.24.01.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Sun, 17 Jul 2022 00:00:00 -0500</pubDate>
+        <link>https://HaJunYoo.github.io/Blog/etc/2022/07/17/liquidwarning.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/etc/2022/07/17/liquidwarning.html</guid>
+        
+        
+        <category>etc</category>
+        
+      </item>
     
       <item>
         <title>URL Reverse를 통해 유연하게 URL 생성</title>
@@ -3958,70 +4011,6 @@ CO0000STE1BK
         
         
         <category>backend</category>
-        
-      </item>
-    
-      <item>
-        <title>재귀함수와 스택</title>
-        <description>&lt;h1 id=&quot;재귀함수와-스택&quot;&gt;재귀함수와 스택&lt;/h1&gt;
-
-&lt;p&gt;&lt;strong&gt;반복문을 대체제 : 재귀 함수&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;DFS라는 함수로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;재귀함수와 스택&lt;/code&gt;을 리뷰해보자&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;DFS1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;DFS1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# 1 2 3
-&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;DFS2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;DFS2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# 3 2 1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;위의 DFS 1,2 는 재귀 호출 위치에 따라서 리턴값이 각 오름차순과 내림차순으로 다르다.&lt;/p&gt;
-
-&lt;p&gt;메모리 영역 스택에 매개변수가 할당이 된다&lt;/p&gt;
-
-&lt;p&gt;DFS(3) → 스택에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;매개변수 x = 3, 지역변수, 복귀주소&lt;/code&gt;가 할당된다.&lt;/p&gt;
-
-&lt;p&gt;이렇게 재귀로 인해 쌓인 메모리 묶음을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;스택 프레임&lt;/code&gt;이라고 한다&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/Blog/images/algorithm/재귀함수와 스택.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;DFS(0)이 가장 위에 쌓이는 순간 DFS(0)은 x &amp;gt;0 조건을 성립하지 못하기 때문에 종료가 된다&lt;/p&gt;
-
-&lt;p&gt;종료가 되면서 스택 최상단에 있던 DFS(0)은 없어진다.&lt;/p&gt;
-
-&lt;p&gt;지워지면서 복귀주소 ⇒ DFS(1)로 복귀한다.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;DFS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;DFS&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;----&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;각&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;복귀&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;주소&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# 1 2 3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;복귀 주소로 복귀한 다음 바로 다음 줄인 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;print(x, end = ‘ ‘)&lt;/code&gt; 를 수행한다.&lt;/p&gt;
-
-&lt;p&gt;수행하고 종료되고 메모리가 할당 해제되면서 스택에서 사라진다.! 그리고 다시 다음 DFS(2)가 호출된다&lt;/p&gt;
-
-&lt;p&gt;그렇게 DFS(3)까지 호출되고 사라짐을 반복한다.&lt;/p&gt;
-
-&lt;p&gt;그렇게 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1 , 2, 3&lt;/code&gt; 이 출력되는 것이다.&lt;/p&gt;
-
-&lt;p&gt;그런 후 스택이 텅 비면 이제 다음 코드 라인으로 이동해서 코드를 수행한다.&lt;/p&gt;
-</description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/03/recursive.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/03/recursive.html</guid>
-        
-        
-        <category>algorithm</category>
         
       </item>
     
