@@ -10,12 +10,10 @@ image:
 
 {% raw %}
 
-# Jekyll에서 liquid warning(Liquid Exception) 처리
-
-# **Jekyll에서 liquid warning 처리**
+# Jekyll에서 liquid warning 처리
 
 > `Liquid Exception: Liquid syntax error (line 46): Unknown tag 'url' in markdown(md)`
-> 
+
 
 예제를 작성하거나 할 때에 liquid syntax를 포함시켜야 하는 경우가 있는데.. 그대로 작성하게 되는 경우에 해당 tag가 동작을 해서
 
@@ -48,6 +46,14 @@ raw tag를 사용하고
 
 문서 끝에 raw tag를 사용하자
 
-![그림 2]({{site.baseurl}}/images/etc/rawtag1.png)
+```python
+{% raw %}
+
+문서 내용
+
+{% endraw %}
+```
+
+![]({{site.baseurl}}/images/etc/rawtag1.png)
 
 {% endraw %}
