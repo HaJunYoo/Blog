@@ -43,7 +43,7 @@ urlpatterns = [
 
 ## URL Reverse 수행하기
 
-instagram앱의 urls.py에서 정의한 url을 활용하는 예시
+instagram앱의 urls.py에서 정의한 **url**을 활용하는 예시
 
 **템플릿 예시** 및 **reverse**, **resolve_url**, **redirect** 등의 함수를 이용해서 서버코드에서도 활용이 가능하다.
 
