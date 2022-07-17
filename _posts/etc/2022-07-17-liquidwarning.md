@@ -46,13 +46,17 @@ raw tag를 사용하고
 
 문서 끝에 raw tag를 사용하자
 
+{% raw %}
 ```python
+
 {% raw %}
 
 문서 내용
 
 {% endraw %}
+
 ```
+{% endraw %}
 
 ![]({{site.baseurl}}/images/etc/rawtag1.png)
 
