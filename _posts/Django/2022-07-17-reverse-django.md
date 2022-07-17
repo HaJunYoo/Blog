@@ -149,7 +149,7 @@ redirect(post) # 파이썬 상
 **{{ post.get_absolute_url }} # 템플릿 문법**
 ```
 
-## 모델 클래스에 `**get_absolute_url()**` 구현
+## 모델 클래스에  **`get_absolute_url()`**  구현
 
 모델 클래스를 만들면 내부 클래스 메소드로 `get_absolute_url` 메서드를 구현하면 된다.
 
