@@ -5,8 +5,8 @@
     <description>Yuki's Tech Blog는 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 18 Jul 2022 01:46:49 -0500</pubDate>
-    <lastBuildDate>Mon, 18 Jul 2022 01:46:49 -0500</lastBuildDate>
+    <pubDate>Mon, 18 Jul 2022 01:54:04 -0500</pubDate>
+    <lastBuildDate>Mon, 18 Jul 2022 01:54:04 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -412,7 +412,20 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;동적-계획법-알고리즘-이해&quot;&gt;&lt;strong&gt;**동적 계획법 알고리즘 이해&lt;/strong&gt;**&lt;/h2&gt;
+&lt;h3 id=&quot;dp-문제에-접근하는-법&quot;&gt;DP 문제에 접근하는 법&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;주어진 문제가 다이나믹 프로그래밍 유형임을 파악하는 것이 중요&lt;/li&gt;
+  &lt;li&gt;가장 먼저 그리디, 구현, 완전 탐색 등의 아이디어로 문제를 해결할 수 있는지 검토
+    &lt;ul&gt;
+      &lt;li&gt;다른 알고리즘으로 풀이 방법이 떠오르지 않으면 다이나믹 프로그래밍을 고려&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;일단 재귀 함수로 비효율적인 완전 탐색 프로그램을 작성한 뒤에 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;탑 다운&lt;/code&gt; 방식으로 작은 문제에서 구한 답이 큰 문제에서도 그대로 사용될 수 있으면, 코드를 개선하는 방법을 사용할 수 있습니다.&lt;/li&gt;
+  &lt;li&gt;일반적인 코딩 테스트 수준에서는 기본 유형의 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;다이나믹 프로그래밍 문제&lt;/code&gt;가 출제되는 경우가 많습니다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;동적-계획법-알고리즘-이해&quot;&gt;&lt;strong&gt;**동적 계획법 알고리즘 이해&lt;/strong&gt;**&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;프로그래밍 연습&lt;/strong&gt;&lt;/p&gt;
 
