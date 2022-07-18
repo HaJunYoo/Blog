@@ -1,0 +1,906 @@
+<h1 id="neural-collaborative-filtering-개요">Neural Collaborative Filtering 개요</h1>
+
+<p>본 실습은 패스트캠퍼스의 <code class="language-plaintext highlighter-rouge">'딥러닝을 활용한 추천시스템 구현 올인원 패키지 Online'</code> 을 듣고 작성하였다는 점을 명시합니다.</p>
+
+<ul>
+  <li>user과 item의 latent features를 모델링하기 위한 신경망 구조를 제안한다 ⇒ user과 item의 관계를 보다 복잡하게 모델링할 수 있다는 점.</li>
+  <li>Multi layer Perceptron을 사용</li>
+  <li>Neural net 기반의 Collaborative filtering으로 non linear한 부분을 커버했다. ⇒ 기존의 Linear Matrix Factorization의 한계점을 지적하였다.</li>
+</ul>
+
+<hr />
+
+<ol>
+  <li><a href="https://arxiv.org/pdf/1708.05031.pdf">논문</a></li>
+  <li>Keras로 작성된 <a href="https://github.com/hexiangnan/neural_collaborative_filtering">저자 코드</a></li>
+  <li>논문은 0과 1로 user-item interaction으로 matrix을 나타내고 학습했으나, 이번 실습에서는 rating을 직접 예측하고, loss를 구해보는 것을 진행한다</li>
+</ol>
+
+<h2 id="configuration">Configuration</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span><span class="p">,</span> <span class="n">optim</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Variable</span>
+
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="p">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s">"ignore"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="load-dataset">Load Dataset</h2>
+<ul>
+  <li>KMRD 데이터셋 활용</li>
+  <li>google colab의 경우 data path 다시 확인하기</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
+<span class="n">drive</span><span class="p">.</span><span class="n">mount</span><span class="p">(</span><span class="s">'/content/drive'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Mounted at /content/drive
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data_path</span> <span class="o">=</span> <span class="s">'/content/drive/MyDrive/추천 시스템/fastcampus-RecSys/data/kmrd/kmr_dataset/datafile/kmrd-small'</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">data_path</span><span class="p">):</span>
+  <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span><span class="s">'rates.csv'</span><span class="p">))</span>
+  <span class="n">train_df</span><span class="p">,</span> <span class="n">val_df</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1234</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">train_df</span><span class="p">,</span> <span class="n">val_df</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">nvidia</span><span class="o">-</span><span class="n">smi</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Fri Jul  1 16:21:37 2022       
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 460.32.03    Driver Version: 460.32.03    CUDA Version: 11.2     |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|                               |                      |               MIG M. |
+|===============================+======================+======================|
+|   0  Tesla T4            Off  | 00000000:00:04.0 Off |                    0 |
+| N/A   37C    P8     9W /  70W |      0MiB / 15109MiB |      0%      Default |
+|                               |                      |                  N/A |
++-------------------------------+----------------------+----------------------+
+                                                                               
++-----------------------------------------------------------------------------+
+| Processes:                                                                  |
+|  GPU   GI   CI        PID   Type   Process name                  GPU Memory |
+|        ID   ID                                                   Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 학습할 영화 데이터 분석
+</span><span class="n">train_df</span><span class="p">,</span> <span class="n">val_df</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">train_df</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">train_df</span><span class="p">.</span><span class="n">head</span><span class="p">())</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(112568, 4)
+         user  movie  rate        time
+137023  48423  10764    10  1212241560
+92868   17307  10170    10  1122185220
+94390   18180  10048    10  1573403460
+22289    1498  10001     9  1432684500
+80155   12541  10022    10  1370458140
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val_df</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(28142, 4)
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="s">'col'</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="s">'row'</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="n">train_df</span><span class="p">[</span><span class="s">'rate'</span><span class="p">].</span><span class="n">hist</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">val_df</span><span class="p">[</span><span class="s">'rate'</span><span class="p">].</span><span class="n">hist</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="/Blog/images/recommends/output_12_1.png" alt="output" /></p>
+
+<p>대부분 <code class="language-plaintext highlighter-rouge">10</code>점에 수렴한 상태이다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_df</span><span class="p">[</span><span class="s">'rate'</span><span class="p">].</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>count    112568.000000
+mean          8.948369
+std           2.114602
+min           1.000000
+25%           9.000000
+50%          10.000000
+75%          10.000000
+max          10.000000
+Name: rate, dtype: float64
+</code></pre></div></div>
+
+<h2 id="load-movie-dataframe">Load movie dataframe</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Load all related dataframe
+</span><span class="n">movies_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s">'movies.txt'</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf-8'</span><span class="p">)</span>
+<span class="n">movies_df</span> <span class="o">=</span> <span class="n">movies_df</span><span class="p">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'movie'</span><span class="p">)</span>
+
+<span class="n">castings_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s">'castings.csv'</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf-8'</span><span class="p">)</span>
+<span class="n">countries_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s">'countries.csv'</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf-8'</span><span class="p">)</span>
+<span class="n">genres_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_path</span><span class="p">,</span> <span class="s">'genres.csv'</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'utf-8'</span><span class="p">)</span>
+
+<span class="c1"># Get genre information
+</span><span class="n">genres</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'movie'</span><span class="p">].</span><span class="n">values</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span> <span class="s">'/'</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'genre'</span><span class="p">].</span><span class="n">values</span><span class="p">))</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">genres_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'movie'</span><span class="p">)]</span>
+<span class="n">combined_genres_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">genres</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'movie'</span><span class="p">,</span> <span class="s">'genres'</span><span class="p">])</span>
+<span class="n">combined_genres_df</span> <span class="o">=</span> <span class="n">combined_genres_df</span><span class="p">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'movie'</span><span class="p">)</span>
+
+<span class="c1"># Get castings information
+</span><span class="n">castings</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'movie'</span><span class="p">].</span><span class="n">values</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s">'people'</span><span class="p">].</span><span class="n">values</span><span class="p">)</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">castings_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'movie'</span><span class="p">)]</span>
+<span class="n">combined_castings_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">castings</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'movie'</span><span class="p">,</span><span class="s">'people'</span><span class="p">])</span>
+<span class="n">combined_castings_df</span> <span class="o">=</span> <span class="n">combined_castings_df</span><span class="p">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'movie'</span><span class="p">)</span>
+
+<span class="c1"># Get countries for movie information
+</span><span class="n">countries</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'movie'</span><span class="p">].</span><span class="n">values</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span> <span class="s">','</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">'country'</span><span class="p">].</span><span class="n">values</span><span class="p">))</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">countries_df</span><span class="p">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'movie'</span><span class="p">)]</span>
+<span class="n">combined_countries_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">countries</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">'movie'</span><span class="p">,</span> <span class="s">'country'</span><span class="p">])</span>
+<span class="n">combined_countries_df</span> <span class="o">=</span> <span class="n">combined_countries_df</span><span class="p">.</span><span class="n">set_index</span><span class="p">(</span><span class="s">'movie'</span><span class="p">)</span>
+
+<span class="n">movies_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">concat</span><span class="p">([</span><span class="n">movies_df</span><span class="p">,</span> <span class="n">combined_genres_df</span><span class="p">,</span> <span class="n">combined_castings_df</span><span class="p">,</span> <span class="n">combined_countries_df</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movies_df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div id="df-c04c21ee-9624-47e1-9d58-b913c84546d0">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+      <th>title_eng</th>
+      <th>year</th>
+      <th>grade</th>
+      <th>genres</th>
+      <th>people</th>
+      <th>country</th>
+    </tr>
+    <tr>
+      <th>movie</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>10001</th>
+      <td>시네마 천국</td>
+      <td>Cinema Paradiso , 1988</td>
+      <td>2013.0</td>
+      <td>전체 관람가</td>
+      <td>드라마/멜로/로맨스</td>
+      <td>[4374, 178, 3241, 47952, 47953, 19538, 18991, ...</td>
+      <td>이탈리아,프랑스</td>
+    </tr>
+    <tr>
+      <th>10002</th>
+      <td>빽 투 더 퓨쳐</td>
+      <td>Back To The Future , 1985</td>
+      <td>2015.0</td>
+      <td>12세 관람가</td>
+      <td>SF/코미디</td>
+      <td>[1076, 4603, 917, 8637, 5104, 9986, 7470, 9987]</td>
+      <td>미국</td>
+    </tr>
+    <tr>
+      <th>10003</th>
+      <td>빽 투 더 퓨쳐 2</td>
+      <td>Back To The Future Part 2 , 1989</td>
+      <td>2015.0</td>
+      <td>12세 관람가</td>
+      <td>SF/코미디</td>
+      <td>[1076, 4603, 917, 5104, 391, 5106, 5105, 5107,...</td>
+      <td>미국</td>
+    </tr>
+    <tr>
+      <th>10004</th>
+      <td>빽 투 더 퓨쳐 3</td>
+      <td>Back To The Future Part III , 1990</td>
+      <td>1990.0</td>
+      <td>전체 관람가</td>
+      <td>서부/SF/판타지/코미디</td>
+      <td>[1076, 4603, 1031, 5104, 10001, 5984, 10002, 1...</td>
+      <td>미국</td>
+    </tr>
+    <tr>
+      <th>10005</th>
+      <td>스타워즈 에피소드 4 - 새로운 희망</td>
+      <td>Star Wars , 1977</td>
+      <td>1997.0</td>
+      <td>PG</td>
+      <td>판타지/모험/SF/액션</td>
+      <td>[1007, 535, 215, 1236, 35]</td>
+      <td>미국</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-c04c21ee-9624-47e1-9d58-b913c84546d0')" title="Convert this dataframe to an interactive table." style="display:none;">
+
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none" />
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z" /><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z" />
+  &lt;/svg&gt;
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-c04c21ee-9624-47e1-9d58-b913c84546d0 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-c04c21ee-9624-47e1-9d58-b913c84546d0');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+
+<ul>
+  <li>논문:  user latent vector + item latent vector</li>
+  <li>
+    <p>새롭게 생각할 수 있는 방법: user latent vector + item latent vector + etc vector (예시) meta information</p>
+  </li>
+  <li>논문의 아이디어를 가져와서 <code class="language-plaintext highlighter-rouge">내 상황에 맞게끔 적용</code>하는 것이 추천시스템의 본질이다.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 영화 데이터의 메타 정보를 확인한다
+</span><span class="n">movieName_dict</span> <span class="o">=</span> <span class="n">movies_df</span><span class="p">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="s">'title'</span><span class="p">]</span>
+<span class="n">genres_dict</span> <span class="o">=</span> <span class="n">movies_df</span><span class="p">.</span><span class="n">to_dict</span><span class="p">()[</span><span class="s">'genres'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movies_df</span><span class="p">[</span><span class="s">'genres'</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>movie
+10001       드라마/멜로/로맨스
+10002           SF/코미디
+10003           SF/코미디
+10004    서부/SF/판타지/코미디
+10005     판타지/모험/SF/액션
+             ...      
+10995              스릴러
+10996              코미디
+10997               공포
+10998    드라마/액션/모험/스릴러
+10999        SF/드라마/공포
+Name: genres, Length: 999, dtype: object
+</code></pre></div></div>
+
+<h2 id="dataset-loader">Dataset Loader</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DatasetLoader</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">train_df</span><span class="p">,</span> <span class="n">val_temp_df</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span> <span class="c1"># 데이터를 읽어와서
+</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">min_rating</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">train_df</span><span class="p">.</span><span class="n">rate</span><span class="p">)</span> <span class="c1"># 최소 평점
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">max_rating</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">train_df</span><span class="p">.</span><span class="n">rate</span><span class="p">.</span><span class="nb">max</span><span class="p">()</span> <span class="c1"># 최대 평점 
+</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">unique_users</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">train_df</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">unique</span><span class="p">()</span> <span class="c1"># 유니크한 유저 얼마나 되는지 확인 
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">num_users</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">unique_users</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">user_to_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">original</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">original</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">unique_users</span><span class="p">)}</span>
+        <span class="c1"># 인덱스로 바꿔줌 =&gt; 어느 인덱스가 1이되는지 원핫벡터로 : 0 1 0 0 0 ... 0 
+</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">unique_movies</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">train_df</span><span class="p">.</span><span class="n">movie</span><span class="p">.</span><span class="n">unique</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">num_movies</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">unique_movies</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">movie_to_index</span> <span class="o">=</span> <span class="p">{</span><span class="n">original</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">original</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">unique_movies</span><span class="p">)}</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">val_df</span> <span class="o">=</span> <span class="n">val_temp_df</span><span class="p">[</span><span class="n">val_temp_df</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">isin</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">unique_users</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">val_temp_df</span><span class="p">.</span><span class="n">movie</span><span class="p">.</span><span class="n">isin</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">unique_movies</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">generate_trainset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># user 0, 0, 0, 1,2, 3,3, -&gt; movie: 0,0,0,0,0,0,
+</span>        <span class="n">X_train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">'user'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">train_df</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">user_to_index</span><span class="p">),</span>
+                     <span class="s">'movie'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">train_df</span><span class="p">.</span><span class="n">movie</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">movie_to_index</span><span class="p">)})</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">train_df</span><span class="p">[</span><span class="s">'rate'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span>
+
+    <span class="k">def</span> <span class="nf">generate_valset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">X_val</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s">'user'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">val_df</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">user_to_index</span><span class="p">),</span>
+                              <span class="s">'movie'</span><span class="p">:</span> <span class="bp">self</span><span class="p">.</span><span class="n">val_df</span><span class="p">.</span><span class="n">movie</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">movie_to_index</span><span class="p">)})</span>
+        <span class="n">y_val</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">val_df</span><span class="p">[</span><span class="s">'rate'</span><span class="p">].</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span>
+
+</code></pre></div></div>
+
+<h2 id="model-structure">Model Structure</h2>
+<ul>
+  <li>논문에서 제시한 모델 구조를 그대로 구현하고 영화 데이터로 실습해본다.</li>
+  <li>User Vector는 전체 영화 데이터에서 영화를 평가한 userid를 onehot vector로 나타낸 형태</li>
+  <li>Item Vector는 전체 영화 데이터에 등장하는 영화의 id를 onehot vector로 나타낸 형태</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">FeedForwardEmbedNN</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_users</span><span class="p">,</span> <span class="n">n_movies</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">dropouts</span><span class="p">,</span> <span class="n">n_factors</span><span class="p">,</span> <span class="n">embedding_dropout</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">user_emb</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">n_users</span><span class="p">,</span> <span class="n">n_factors</span><span class="p">)</span> <span class="c1"># number of user만큼 사이즈를 만들어서 원 핫으로 임베딩해야한다 
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">movie_emb</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">n_movies</span><span class="p">,</span> <span class="n">n_factors</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">drop</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">embedding_dropout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">hidden_layers</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">generate_layers</span><span class="p">(</span><span class="n">n_factors</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">dropouts</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># hidden(은닉층) 개수만큼 리니어(계층) 세트를 만들어내서 계속 붙여주는 작업 =&gt; 총 3개가 생김
+</span>    <span class="k">def</span> <span class="nf">generate_layers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_factors</span><span class="p">,</span> <span class="n">hidden</span><span class="p">,</span> <span class="n">dropouts</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">dropouts</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">hidden</span><span class="p">)</span>
+
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">hidden</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">n_factors</span><span class="p">,</span> <span class="n">hidden</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden</span><span class="p">[</span><span class="n">idx</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">hidden</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="k">yield</span> <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">()</span>
+            <span class="k">yield</span> <span class="n">nn</span><span class="p">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropouts</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+
+            <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">users</span><span class="p">,</span> <span class="n">movies</span><span class="p">,</span> <span class="n">min_rating</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">max_rating</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">concat_features</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cat</span><span class="p">([</span><span class="bp">self</span><span class="p">.</span><span class="n">user_emb</span><span class="p">(</span><span class="n">users</span><span class="p">),</span> <span class="bp">self</span><span class="p">.</span><span class="n">movie_emb</span><span class="p">(</span><span class="n">movies</span><span class="p">)],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> 
+        <span class="c1"># 유저와 유저 임베딩을 가지고 concat을 함
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">hidden_layers</span><span class="p">(</span><span class="n">concat_features</span><span class="p">))</span> <span class="c1"># relu를 씌우고 
+</span>        <span class="c1"># 0과 1사이의 숫자로 나타낸다
+</span>        <span class="n">out</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">fc</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="c1"># rating으로 변환한다
+</span>        <span class="n">out</span> <span class="o">=</span> <span class="p">(</span><span class="n">out</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_rating</span> <span class="o">-</span> <span class="n">min_rating</span><span class="p">))</span> <span class="o">+</span> <span class="n">min_rating</span> <span class="c1"># 0~1의 값은 변환을 해서 출력
+</span>
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">users</span><span class="p">,</span> <span class="n">movies</span><span class="p">):</span> <span class="c1"># predict score을 내보냄 
+</span>        <span class="c1"># return the score
+</span>        <span class="n">output_scores</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">forward</span><span class="p">(</span><span class="n">users</span><span class="p">,</span> <span class="n">movies</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output_scores</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">BatchIterator</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">shuffle</span> <span class="o">=</span> <span class="n">shuffle</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">n_batches</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="p">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">X</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="n">batch_size</span><span class="p">))</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_current</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="nb">next</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">_current</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="p">.</span><span class="n">n_batches</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="nb">StopIteration</span><span class="p">()</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">_current</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">_current</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">bs</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">batch_size</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">X</span><span class="p">[</span><span class="n">k</span> <span class="o">*</span> <span class="n">bs</span><span class="p">:(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">bs</span><span class="p">],</span> <span class="bp">self</span><span class="p">.</span><span class="n">y</span><span class="p">[</span><span class="n">k</span> <span class="o">*</span> <span class="n">bs</span><span class="p">:(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">bs</span><span class="p">]</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">batches</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span> <span class="c1"># 배치사이즈 32
+</span>    <span class="k">for</span> <span class="n">x_batch</span><span class="p">,</span> <span class="n">y_batch</span> <span class="ow">in</span> <span class="n">BatchIterator</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">bs</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">):</span>
+        <span class="n">x_batch</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="n">x_batch</span><span class="p">)</span>
+        <span class="n">y_batch</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">y_batch</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">x_batch</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="train-model">Train model</h2>
+<p>데이터셋과 모델 학습에 필요한 configuration을 입력하고, 학습을 하는 함수를 만든다
+configuration을 바꾸면서 모델의 성능을 측정해볼 수 있다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">model_train</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">device</span><span class="p">(</span><span class="s">'cuda:0'</span> <span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s">'cpu'</span><span class="p">)</span>
+
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">ds</span><span class="p">.</span><span class="n">generate_trainset</span><span class="p">()</span>
+    <span class="n">X_valid</span><span class="p">,</span> <span class="n">y_valid</span> <span class="o">=</span> <span class="n">ds</span><span class="p">.</span><span class="n">generate_valset</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'TrainSet Info: </span><span class="si">{</span><span class="n">ds</span><span class="p">.</span><span class="n">num_users</span><span class="si">}</span><span class="s"> users, </span><span class="si">{</span><span class="n">ds</span><span class="p">.</span><span class="n">num_movies</span><span class="si">}</span><span class="s"> movies'</span><span class="p">)</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">FeedForwardEmbedNN</span><span class="p">(</span>
+        <span class="n">n_users</span><span class="o">=</span><span class="n">ds</span><span class="p">.</span><span class="n">num_users</span><span class="p">,</span> <span class="n">n_movies</span><span class="o">=</span><span class="n">ds</span><span class="p">.</span><span class="n">num_movies</span><span class="p">,</span>
+        <span class="n">n_factors</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s">'num_factors'</span><span class="p">],</span> <span class="n">hidden</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s">'hidden_layers'</span><span class="p">],</span>
+        <span class="n">embedding_dropout</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s">'embedding_dropout'</span><span class="p">],</span> <span class="n">dropouts</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s">'dropouts'</span><span class="p">]</span>
+    <span class="p">)</span> <span class="c1"># 모델을 정의 
+</span>    <span class="n">model</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">'batch_size'</span><span class="p">]</span>
+    <span class="n">num_epochs</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">'num_epochs'</span><span class="p">]</span>
+    <span class="n">max_patience</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">'total_patience'</span><span class="p">]</span>
+    <span class="n">num_patience</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">best_loss</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">inf</span>
+
+    <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">MSELoss</span><span class="p">(</span><span class="n">reduction</span><span class="o">=</span><span class="s">'sum'</span><span class="p">)</span> <span class="c1"># MSE LOSS를 사용  &lt;- 논문은 cross entropy를 사용
+</span>    <span class="n">criterion</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="p">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s">'learning_rate'</span><span class="p">],</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s">'weight_decay'</span><span class="p">])</span>
+    <span class="c1"># 일반적으로 많이 사용하는 아담 옵티마이저 사용
+</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">)):</span>
+        <span class="n">training_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="n">batch_size</span><span class="p">):</span>
+            <span class="n">x_batch</span><span class="p">,</span> <span class="n">y_batch</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">]</span>
+            <span class="n">optimizer</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
+            <span class="c1"># with torch.no_grad() 와 동일한 syntax 입니다
+</span>            <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">set_grad_enabled</span><span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+                <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x_batch</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x_batch</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">ds</span><span class="p">.</span><span class="n">min_rating</span><span class="p">,</span> <span class="n">ds</span><span class="p">.</span><span class="n">max_rating</span><span class="p">)</span>
+                <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">y_batch</span><span class="p">)</span>
+                <span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>
+                <span class="n">optimizer</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="n">training_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="n">item</span><span class="p">()</span> <span class="c1"># 로스 값을 계속 더해줌 
+</span>        <span class="n">result</span><span class="p">[</span><span class="s">'train'</span><span class="p">]</span> <span class="o">=</span> <span class="n">training_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span> <span class="c1">#로스의 평균 값을 해줌
+</span>
+        <span class="c1"># Apply Early Stopping criteria and save best model params
+</span>        <span class="n">val_outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="n">X_valid</span><span class="p">.</span><span class="n">user</span><span class="p">.</span><span class="n">values</span><span class="p">).</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span>
+                            <span class="n">torch</span><span class="p">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="n">X_valid</span><span class="p">.</span><span class="n">movie</span><span class="p">.</span><span class="n">values</span><span class="p">).</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">ds</span><span class="p">.</span><span class="n">min_rating</span><span class="p">,</span> <span class="n">ds</span><span class="p">.</span><span class="n">max_rating</span><span class="p">)</span>
+        <span class="n">val_loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">val_outputs</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">y_valid</span><span class="p">.</span><span class="n">values</span><span class="p">).</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">'val'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">((</span><span class="n">val_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_valid</span><span class="p">)).</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">val_loss</span> <span class="o">&lt;</span> <span class="n">best_loss</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'Save new model on epoch: %d'</span> <span class="o">%</span> <span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">best_loss</span> <span class="o">=</span> <span class="n">val_loss</span>
+            <span class="n">result</span><span class="p">[</span><span class="s">'best_loss'</span><span class="p">]</span> <span class="o">=</span> <span class="n">val_loss</span>
+            <span class="n">torch</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">config</span><span class="p">[</span><span class="s">'save_path'</span><span class="p">])</span>
+            <span class="n">num_patience</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">num_patience</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'[epoch: </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">] train: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s">"train"</span><span class="p">]</span><span class="si">}</span><span class="s"> - val: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s">"val"</span><span class="p">]</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">num_patience</span> <span class="o">&gt;=</span> <span class="n">max_patience</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Early Stopped after epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+            <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># model valid는 학습한 모델을 로드함 =&gt; 저장된 모델을 가지고 predict를 수행 
+</span><span class="k">def</span> <span class="nf">model_valid</span><span class="p">(</span><span class="n">user_id_list</span><span class="p">,</span> <span class="n">movie_id_list</span><span class="p">,</span> <span class="n">data_path</span><span class="p">):</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">DatasetLoader</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span>
+    <span class="n">processed_test_input_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s">'user_id'</span><span class="p">:</span> <span class="p">[</span><span class="n">dataset</span><span class="p">.</span><span class="n">user_to_index</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">user_id_list</span><span class="p">],</span>
+        <span class="s">'movie_id'</span><span class="p">:</span> <span class="p">[</span><span class="n">dataset</span><span class="p">.</span><span class="n">movie_to_index</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">movie_id_list</span><span class="p">]</span>
+    <span class="p">})</span>
+
+    <span class="c1"># 학습한 모델 load하기 
+</span>    <span class="n">my_model</span> <span class="o">=</span> <span class="n">FeedForwardEmbedNN</span><span class="p">(</span><span class="n">dataset</span><span class="p">.</span><span class="n">num_users</span><span class="p">,</span> <span class="n">dataset</span><span class="p">.</span><span class="n">num_movies</span><span class="p">,</span>
+                       <span class="n">config</span><span class="p">[</span><span class="s">'hidden_layers'</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s">'dropouts'</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s">'num_factors'</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s">'embedding_dropout'</span><span class="p">])</span>
+    <span class="n">my_model</span><span class="p">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">load</span><span class="p">(</span><span class="s">'params.data'</span><span class="p">))</span> <span class="c1"># 모델을 로드
+</span>    <span class="n">prediction_outputs</span> <span class="o">=</span> <span class="n">my_model</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">users</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="n">processed_test_input_df</span><span class="p">.</span><span class="n">user_id</span><span class="p">.</span><span class="n">values</span><span class="p">),</span>
+                     <span class="n">movies</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">LongTensor</span><span class="p">(</span><span class="n">processed_test_input_df</span><span class="p">.</span><span class="n">movie_id</span><span class="p">.</span><span class="n">values</span><span class="p">))</span> <span class="c1"># 모델로 예측을 수행 
+</span>
+    <span class="k">return</span> <span class="n">prediction_outputs</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dataset</span> <span class="o">=</span> <span class="n">DatasetLoader</span><span class="p">(</span><span class="n">data_path</span><span class="p">)</span> <span class="c1"># 데이터 셋을 로드
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s">"num_factors"</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+  <span class="s">"hidden_layers"</span><span class="p">:</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span>
+  <span class="s">"embedding_dropout"</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
+  <span class="s">"dropouts"</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
+  <span class="s">"learning_rate"</span><span class="p">:</span> <span class="mf">1e-3</span><span class="p">,</span>
+  <span class="s">"weight_decay"</span><span class="p">:</span> <span class="mf">1e-5</span><span class="p">,</span>
+  <span class="s">"batch_size"</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+  <span class="s">"num_epochs"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+  <span class="s">"total_patience"</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+  <span class="s">"save_path"</span><span class="p">:</span> <span class="s">"params.data"</span>
+<span class="p">}</span> 
+<span class="c1"># configuration 정의
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model_train</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span> <span class="c1"># epoch 3
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TrainSet Info: 44453 users, 597 movies
+
+
+ 33%|███▎      | 1/3 [00:39&lt;01:19, 39.75s/it]
+
+Save new model on epoch: 1
+[epoch: 1] train: 4.342063758400752 - val: 3.8571109771728516
+
+
+ 67%|██████▋   | 2/3 [01:13&lt;00:36, 36.42s/it]
+
+Save new model on epoch: 2
+[epoch: 2] train: 3.7550543531024645 - val: 3.582547426223755
+
+
+100%|██████████| 3/3 [01:48&lt;00:00, 36.10s/it]
+
+Save new model on epoch: 3
+[epoch: 3] train: 3.3175223239590426 - val: 3.543619394302368
+
+
+
+
+
+
+
+
+{'best_loss': tensor(71779.5547, device='cuda:0', grad_fn=&lt;MseLossBackward0&gt;),
+ 'train': 3.3175223239590426,
+ 'val': 3.543619394302368}
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">val_df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div id="df-5c60993d-0171-47d4-9249-28bce80eeca2">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user</th>
+      <th>movie</th>
+      <th>rate</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>76196</th>
+      <td>11242</td>
+      <td>10253</td>
+      <td>10</td>
+      <td>1437788760</td>
+    </tr>
+    <tr>
+      <th>109800</th>
+      <td>26903</td>
+      <td>10102</td>
+      <td>10</td>
+      <td>1322643900</td>
+    </tr>
+    <tr>
+      <th>60479</th>
+      <td>7101</td>
+      <td>10007</td>
+      <td>1</td>
+      <td>1314804000</td>
+    </tr>
+    <tr>
+      <th>71460</th>
+      <td>9705</td>
+      <td>10016</td>
+      <td>10</td>
+      <td>1228825200</td>
+    </tr>
+    <tr>
+      <th>73864</th>
+      <td>10616</td>
+      <td>10106</td>
+      <td>8</td>
+      <td>1425046200</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-5c60993d-0171-47d4-9249-28bce80eeca2')" title="Convert this dataframe to an interactive table." style="display:none;">
+
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none" />
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z" /><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z" />
+  &lt;/svg&gt;
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-5c60993d-0171-47d4-9249-28bce80eeca2 button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-5c60993d-0171-47d4-9249-28bce80eeca2');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movie_id_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10253</span><span class="p">,</span> <span class="mi">10102</span><span class="p">,</span> <span class="mi">10007</span><span class="p">]</span>
+<span class="n">user_id</span> <span class="o">=</span> <span class="mi">11242</span>
+<span class="n">user_id_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">user_id</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">movie_id_list</span><span class="p">)</span>
+<span class="n">pred_results</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">model_valid</span><span class="p">(</span><span class="n">user_id_list</span><span class="p">,</span> <span class="n">movie_id_list</span><span class="p">,</span> <span class="n">data_path</span><span class="p">)]</span> <span class="c1"># 저장된 모델로 예측을 함 
+</span>
+<span class="n">result_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s">'userId'</span><span class="p">:</span> <span class="n">user_id_list</span><span class="p">,</span>
+    <span class="s">'movieId'</span><span class="p">:</span> <span class="n">movie_id_list</span><span class="p">,</span>
+    <span class="c1"># 'movieName': [movieName_dict[x] for x in movie_id_list],
+</span>    <span class="c1"># 'genres': [genres_dict[x] for x in movie_id_list],
+</span>    <span class="s">'pred_ratings'</span><span class="p">:</span> <span class="n">pred_results</span>
+<span class="p">})</span>
+
+<span class="n">result_df</span><span class="p">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">'pred_ratings'</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div id="df-39128870-72c8-4a2b-90b9-dc6d62611eed">
+    <div class="colab-df-container">
+      <div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>userId</th>
+      <th>movieId</th>
+      <th>pred_ratings</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11242</td>
+      <td>10253</td>
+      <td>4.825642</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>11242</td>
+      <td>10102</td>
+      <td>4.768200</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>11242</td>
+      <td>10007</td>
+      <td>4.103816</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+      <button class="colab-df-convert" onclick="convertToInteractive('df-39128870-72c8-4a2b-90b9-dc6d62611eed')" title="Convert this dataframe to an interactive table." style="display:none;">
+
+  &lt;svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
+       width="24px"&gt;
+    <path d="M0 0h24v24H0V0z" fill="none" />
+    <path d="M18.56 5.44l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94zm-11 1L8.5 8.5l.94-2.06 2.06-.94-2.06-.94L8.5 2.5l-.94 2.06-2.06.94zm10 10l.94 2.06.94-2.06 2.06-.94-2.06-.94-.94-2.06-.94 2.06-2.06.94z" /><path d="M17.41 7.96l-1.37-1.37c-.4-.4-.92-.59-1.43-.59-.52 0-1.04.2-1.43.59L10.3 9.45l-7.72 7.72c-.78.78-.78 2.05 0 2.83L4 21.41c.39.39.9.59 1.41.59.51 0 1.02-.2 1.41-.59l7.78-7.78 2.81-2.81c.8-.78.8-2.07 0-2.86zM5.41 20L4 18.59l7.72-7.72 1.47 1.35L5.41 20z" />
+  &lt;/svg&gt;
+      </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      flex-wrap:wrap;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+      <script>
+        const buttonEl =
+          document.querySelector('#df-39128870-72c8-4a2b-90b9-dc6d62611eed button.colab-df-convert');
+        buttonEl.style.display =
+          google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+        async function convertToInteractive(key) {
+          const element = document.querySelector('#df-39128870-72c8-4a2b-90b9-dc6d62611eed');
+          const dataTable =
+            await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                     [key], {});
+          if (!dataTable) return;
+
+          const docLinkHtml = 'Like what you see? Visit the ' +
+            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+            + ' to learn more about interactive tables.';
+          element.innerHTML = '';
+          dataTable['output_type'] = 'display_data';
+          await google.colab.output.renderOutput(dataTable, element);
+          const docLink = document.createElement('div');
+          docLink.innerHTML = docLinkHtml;
+          element.appendChild(docLink);
+        }
+      </script>
+    </div>
+  </div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>

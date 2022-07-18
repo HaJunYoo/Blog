@@ -5,8 +5,8 @@
     <description>Yuki's Tech Blog는 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 17 Jul 2022 10:56:22 -0500</pubDate>
-    <lastBuildDate>Sun, 17 Jul 2022 10:56:22 -0500</lastBuildDate>
+    <pubDate>Sun, 17 Jul 2022 23:19:17 -0500</pubDate>
+    <lastBuildDate>Sun, 17 Jul 2022 23:19:17 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -1894,6 +1894,219 @@ R R R U D D
       </item>
     
       <item>
+        <title>무신사 selenium</title>
+        <description>&lt;h1 id=&quot;무신사-selenium&quot;&gt;무신사 selenium&lt;/h1&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;requests&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;warnings&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;bs4&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BeautifulSoup&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;warnings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filterwarnings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'ignore'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;무신사 접속 -&amp;gt; 상의(전체보기) 카테고리 페이지로 접속을 한다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 무신사 접속 -&amp;gt; 상의(전체보기) 카테고리 페이지로 접속을 한다.
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'https://www.musinsa.com/category/001'&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 본인의 크롬 드라이버 절대주소
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'본인의 크롬 드라이버 절대주소 혹은 상대주소'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;implicitly_wait&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 웹 페이지 로딩 최대 5초 대기
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 가장 첫번째 옷 아이템의 사진을 클릭 
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#searchList &amp;gt; li:nth-child(1) &amp;gt; div.li_inner &amp;gt; div.list_img &amp;gt; a &amp;gt; img'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 상세 페이지 옷 사진 가져오기
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# img css selector을 가져온 후 
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#detail_bigimg &amp;gt; div.product-img &amp;gt; img'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# src 태그를 가져온다 
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;src&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'src'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;https://image.msscdn.net/images/goods_img/20210316/1848166/1848166_11_500.jpg?t=20220404173105
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 상품 이름 
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;product_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#page_product_detail &amp;gt; div.right_area.page_detail_product &amp;gt; div.right_contents.section_product_summary &amp;gt; span &amp;gt; em'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;product_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;에센셜 쿨 코튼 2-PACK 티셔츠
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 브랜드 이름
+# brand_name = driver.find_element_by_css_selector('#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(1) &amp;gt; p.product_article_contents &amp;gt; strong &amp;gt; a').text
+# brand_name 
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# #product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(1) &amp;gt; p.product_article_contents &amp;gt; strong
+# 브랜드 이름과 품번 가져오기
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;product_brand&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(1) &amp;gt; p.product_article_contents &amp;gt; strong'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;brand_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;product_brand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'/'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;brand_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;brand_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;brand_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;brand_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;product_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;brand_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;brand_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;product_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;COVERNAT
+CO0000STE1BK
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 시즌 정보와 성별 가져오기
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(2) &amp;gt; p.product_article_contents'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'/'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;season&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'/'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;gender&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;season&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2022 S/S
+남 여
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 상품 가격 가져오기
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#goods_price &amp;gt; del'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'[-=.,#/?:$}원]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;price&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;price&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'49000'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 해시태그 가져오기
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# #product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li.article-tag-list.list &amp;gt; p
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li.article-tag-list.list &amp;gt; p'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 정규표현식을 통해 #(특수기호) 제거
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'[-=.#/?:$}]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;['반팔티셔츠',
+ '티셔츠',
+ '반팔티',
+ '오버핏반팔',
+ '에센셜라인',
+ '쿨코튼',
+ '썸머컬렉션',
+ '로고티셔츠',
+ '입시덕후',
+ '깡스타일리스트PICK']
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 좋야요 개수
+# #product-top-like &amp;gt; p.product_article_contents.goods_like_1848166 &amp;gt; span
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;like&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#product-top-like &amp;gt; p.product_article_contents.goods_like_1848166 &amp;gt; span'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;like&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'[^0-9]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;like&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;like&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'126089'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 평점
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(6) &amp;gt; p.product_article_contents &amp;gt; a &amp;gt; span.prd-score__rating'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rate&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'4.8'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 구매 후기 개수 -&amp;gt; 평점과 구매 후기 개수를 곱해서 유의미한 feature을 만들어 낼 수 있을 것 같음 
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rate_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(6) &amp;gt; p.product_article_contents &amp;gt; a &amp;gt; span.prd-score__review-count'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rate_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'[^0-9]'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rate_num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;rate_num&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'32374'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 구매 현황 (purchase status)
+# ~18세 / 19 ~ 23세 / 24 ~ 28세 / 29 ~ 33세 / 34 ~ 39세 / 40세 ~ 
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;purchase_status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#page_product_detail &amp;gt; div.right_area.page_detail_product &amp;gt; div.section_graph_detail &amp;gt; div &amp;gt; div &amp;gt; div.graph_bar_wrap &amp;gt; div &amp;gt; ul'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;purchase_status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;purchase_status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
+
+&lt;span class=&quot;n&quot;&gt;cleaned_purchase_status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;purchase_status&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'%'&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cleaned_purchase_status&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;['37%', '21%', '19%', '11%', '4%', '8%']
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 남성 구매 비율 (파이 차트)
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;purchase_men&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#graph_doughnut_label &amp;gt; ul &amp;gt; li:nth-child(1) &amp;gt; dl &amp;gt; dd'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;purchase_men&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'64%'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#
+# 여성 구매 비율 (파이 차트)
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;purchase_women&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#graph_doughnut_label &amp;gt; ul &amp;gt; li:nth-child(2) &amp;gt; dl &amp;gt; dd'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;purchase_women&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;'36%'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</description>
+        <pubDate>Fri, 08 Jul 2022 00:00:00 -0500</pubDate>
+        <link>https://HaJunYoo.github.io/Blog/crawling/2022/07/08/%EB%AC%B4%EC%8B%A0%EC%82%AC-%EC%85%80%EB%A0%88%EB%8B%88%EC%9B%80.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/crawling/2022/07/08/%EB%AC%B4%EC%8B%A0%EC%82%AC-%EC%85%80%EB%A0%88%EB%8B%88%EC%9B%80.html</guid>
+        
+        
+        <category>crawling</category>
+        
+      </item>
+    
+      <item>
         <title>무신사 selenium 페이지 순회</title>
         <description>&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
@@ -2652,600 +2865,6 @@ N마리의 바둑이와 각 바둑이의 무게 W가 주어지면, 철수가 트
         
         
         <category>algorithm</category>
-        
-      </item>
-    
-      <item>
-        <title>무신사 selenium</title>
-        <description>&lt;!--
-#################################################
-### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
-#################################################
-# file to edit: _notebooks/2022-07-08-무신사-셀레니움.ipynb
---&gt;
-
-&lt;div class=&quot;container&quot; id=&quot;notebook-container&quot;&gt;
-        
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;requests&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;warnings&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;bs4&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BeautifulSoup&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;selenium&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;warnings&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filterwarnings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;action&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;ignore&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-&lt;div class=&quot;cell border-box-sizing text_cell rendered&quot;&gt;&lt;div class=&quot;inner_cell&quot;&gt;
-&lt;div class=&quot;text_cell_render border-box-sizing rendered_html&quot;&gt;
-&lt;p&gt;무신사 접속 -&amp;gt; 상의(전체보기) 카테고리 페이지로 접속을 한다.&lt;/p&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 무신사 접속 -&amp;gt; 상의(전체보기) 카테고리 페이지로 접속을 한다.&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;https://www.musinsa.com/category/001&amp;#39;&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# 본인의 크롬 드라이버 절대주소&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;webdriver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Chrome&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;본인의 크롬 드라이버 절대주소 혹은 상대주소&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;implicitly_wait&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# 웹 페이지 로딩 최대 5초 대기&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 가장 첫번째 옷 아이템의 사진을 클릭 &lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#searchList &amp;gt; li:nth-child(1) &amp;gt; div.li_inner &amp;gt; div.list_img &amp;gt; a &amp;gt; img&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 상세 페이지 옷 사진 가져오기&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# img css selector을 가져온 후 &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#detail_bigimg &amp;gt; div.product-img &amp;gt; img&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# src 태그를 가져온다 &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;src&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;src&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-&lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-&lt;div class=&quot;output_subarea output_stream output_stdout output_text&quot;&gt;
-&lt;pre&gt;https://image.msscdn.net/images/goods_img/20210316/1848166/1848166_11_500.jpg?t=20220404173105
-&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 상품 이름 &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;product_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#page_product_detail &amp;gt; div.right_area.page_detail_product &amp;gt; div.right_contents.section_product_summary &amp;gt; span &amp;gt; em&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;product_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-&lt;div class=&quot;output_subarea output_stream output_stdout output_text&quot;&gt;
-&lt;pre&gt;에센셜 쿨 코튼 2-PACK 티셔츠
-&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 브랜드 이름&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# brand_name = driver.find_element_by_css_selector(&amp;#39;#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(1) &amp;gt; p.product_article_contents &amp;gt; strong &amp;gt; a&amp;#39;).text&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# brand_name &lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# #product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(1) &amp;gt; p.product_article_contents &amp;gt; strong&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# 브랜드 이름과 품번 가져오기&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;product_brand&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(1) &amp;gt; p.product_article_contents &amp;gt; strong&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;brand_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;product_brand&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-&lt;span class=&quot;n&quot;&gt;brand_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;brand_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;brand_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;brand_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;product_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;brand_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;brand_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;product_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-&lt;div class=&quot;output_subarea output_stream output_stdout output_text&quot;&gt;
-&lt;pre&gt;COVERNAT
-CO0000STE1BK
-&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 시즌 정보와 성별 가져오기&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(2) &amp;gt; p.product_article_contents&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-&lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;season&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gender&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;season_gender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;season&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gender&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-&lt;div class=&quot;output_subarea output_stream output_stdout output_text&quot;&gt;
-&lt;pre&gt;2022 S/S
-남 여
-&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 상품 가격 가져오기&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#goods_price &amp;gt; del&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;price&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;[-=.,#/?:$}원]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;price&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;price&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-
-
-&lt;div class=&quot;output_text output_subarea output_execute_result&quot;&gt;
-&lt;pre&gt;&amp;#39;49000&amp;#39;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 해시태그 가져오기&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# #product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li.article-tag-list.list &amp;gt; p&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li.article-tag-list.list &amp;gt; p&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# 정규표현식을 통해 #(특수기호) 제거&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;[-=.#/?:$}]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;hashtag&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-
-
-&lt;div class=&quot;output_text output_subarea output_execute_result&quot;&gt;
-&lt;pre&gt;[&amp;#39;반팔티셔츠&amp;#39;,
- &amp;#39;티셔츠&amp;#39;,
- &amp;#39;반팔티&amp;#39;,
- &amp;#39;오버핏반팔&amp;#39;,
- &amp;#39;에센셜라인&amp;#39;,
- &amp;#39;쿨코튼&amp;#39;,
- &amp;#39;썸머컬렉션&amp;#39;,
- &amp;#39;로고티셔츠&amp;#39;,
- &amp;#39;입시덕후&amp;#39;,
- &amp;#39;깡스타일리스트PICK&amp;#39;]&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 좋야요 개수&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# #product-top-like &amp;gt; p.product_article_contents.goods_like_1848166 &amp;gt; span&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;like&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#product-top-like &amp;gt; p.product_article_contents.goods_like_1848166 &amp;gt; span&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;like&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;[^0-9]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;like&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;like&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-
-
-&lt;div class=&quot;output_text output_subarea output_execute_result&quot;&gt;
-&lt;pre&gt;&amp;#39;126089&amp;#39;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 평점&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;rate&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(6) &amp;gt; p.product_article_contents &amp;gt; a &amp;gt; span.prd-score__rating&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;rate&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-
-
-&lt;div class=&quot;output_text output_subarea output_execute_result&quot;&gt;
-&lt;pre&gt;&amp;#39;4.8&amp;#39;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 구매 후기 개수 -&amp;gt; 평점과 구매 후기 개수를 곱해서 유의미한 feature을 만들어 낼 수 있을 것 같음 &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;rate_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#product_order_info &amp;gt; div.explan_product.product_info_section &amp;gt; ul &amp;gt; li:nth-child(6) &amp;gt; p.product_article_contents &amp;gt; a &amp;gt; span.prd-score__review-count&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;rate_num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;[^0-9]&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rate_num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;rate_num&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-
-
-&lt;div class=&quot;output_text output_subarea output_execute_result&quot;&gt;
-&lt;pre&gt;&amp;#39;32374&amp;#39;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 구매 현황 (purchase status)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;# ~18세 / 19 ~ 23세 / 24 ~ 28세 / 29 ~ 33세 / 34 ~ 39세 / 40세 ~ &lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;purchase_status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#page_product_detail &amp;gt; div.right_area.page_detail_product &amp;gt; div.section_graph_detail &amp;gt; div &amp;gt; div &amp;gt; div.graph_bar_wrap &amp;gt; div &amp;gt; ul&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;purchase_status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;purchase_status&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-
-&lt;span class=&quot;n&quot;&gt;cleaned_purchase_status&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;purchase_status&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;%&amp;#39;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;elem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;cleaned_purchase_status&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-
-
-&lt;div class=&quot;output_text output_subarea output_execute_result&quot;&gt;
-&lt;pre&gt;[&amp;#39;37%&amp;#39;, &amp;#39;21%&amp;#39;, &amp;#39;19%&amp;#39;, &amp;#39;11%&amp;#39;, &amp;#39;4%&amp;#39;, &amp;#39;8%&amp;#39;]&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 남성 구매 비율 (파이 차트)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;purchase_men&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#graph_doughnut_label &amp;gt; ul &amp;gt; li:nth-child(1) &amp;gt; dl &amp;gt; dd&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;purchase_men&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-
-
-&lt;div class=&quot;output_text output_subarea output_execute_result&quot;&gt;
-&lt;pre&gt;&amp;#39;64%&amp;#39;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-    
-    
-&lt;div class=&quot;cell border-box-sizing code_cell rendered&quot;&gt;
-&lt;div class=&quot;input&quot;&gt;
-
-&lt;div class=&quot;inner_cell&quot;&gt;
-    &lt;div class=&quot;input_area&quot;&gt;
-&lt;div class=&quot; highlight hl-ipython3&quot;&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# 여성 구매 비율 (파이 차트)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;purchase_women&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;driver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find_element_by_css_selector&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;#graph_doughnut_label &amp;gt; ul &amp;gt; li:nth-child(2) &amp;gt; dl &amp;gt; dd&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;purchase_women&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-    &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;output_wrapper&quot;&gt;
-&lt;div class=&quot;output&quot;&gt;
-
-&lt;div class=&quot;output_area&quot;&gt;
-
-
-
-&lt;div class=&quot;output_text output_subarea output_execute_result&quot;&gt;
-&lt;pre&gt;&amp;#39;36%&amp;#39;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;/div&gt;
-    
-
-&lt;/div&gt;
-
-</description>
-        <pubDate>Fri, 08 Jul 2022 00:00:00 -0500</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/crawling/2022/07/08/%EB%AC%B4%EC%8B%A0%EC%82%AC-%EC%85%80%EB%A0%88%EB%8B%88%EC%9B%80.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/crawling/2022/07/08/%EB%AC%B4%EC%8B%A0%EC%82%AC-%EC%85%80%EB%A0%88%EB%8B%88%EC%9B%80.html</guid>
-        
-        
-        <category>crawling</category>
         
       </item>
     
