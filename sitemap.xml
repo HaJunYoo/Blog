@@ -36,6 +36,22 @@
     </url>
     
     <url>
+        <loc>https://HaJunYoo.github.io/django/2022/07/18/generic-edit.html</loc>
+        
+        <lastmod>2022-07-18T00:00:00-05:00</lastmod>
+        
+
+        
+        <changefreq>weekly</changefreq>
+        
+
+        
+        <priority>0.5</priority>
+        
+
+    </url>
+    
+    <url>
         <loc>https://HaJunYoo.github.io/etc/2022/07/17/liquidwarning.html</loc>
         
         <lastmod>2022-07-17T00:00:00-05:00</lastmod>
@@ -165,22 +181,6 @@
     
     <url>
         <loc>https://HaJunYoo.github.io/django/2022/07/13/view-decorator.html</loc>
-        
-        <lastmod>2022-07-13T00:00:00-05:00</lastmod>
-        
-
-        
-        <changefreq>weekly</changefreq>
-        
-
-        
-        <priority>0.5</priority>
-        
-
-    </url>
-    
-    <url>
-        <loc>https://HaJunYoo.github.io/django/2022/07/13/generic-edit.html</loc>
         
         <lastmod>2022-07-13T00:00:00-05:00</lastmod>
         
