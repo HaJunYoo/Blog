@@ -5,9 +5,197 @@
     <description>Yuki's Tech Blog는 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 18 Jul 2022 01:54:04 -0500</pubDate>
-    <lastBuildDate>Mon, 18 Jul 2022 01:54:04 -0500</lastBuildDate>
+    <pubDate>Mon, 18 Jul 2022 03:25:29 -0500</pubDate>
+    <lastBuildDate>Mon, 18 Jul 2022 03:25:29 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>개미전사</title>
+        <description>&lt;h2 id=&quot;문제&quot;&gt;문제&lt;/h2&gt;
+
+&lt;p&gt;개미 전사는 메뚜기 마을의 식량창고를 몰래 공격한다.메뚜기 마을의 식량창고는 일직선으로 되어 있다.각 식량창고에는 정해진 수의 식량을 저장하고 있으며 개미 전사는 식량창고를 선택적으로 약탈하여 식량을 빼앗을 예정이다.메뚜기 정찰병은 일직선상에 존재하는 식량창고 중에서 서로 인접한 식량창고가 공격받으면 알아챌 수 있다. 따라서 개미 전사가 정찰병에게 들키지 않고 식량창고를 약탈하기 위해서는 &lt;strong&gt;최소한 한 칸 이상&lt;/strong&gt; 떨어진 식량창고를 약탈해야 한다.&lt;/p&gt;
+
+&lt;p&gt;개미 전사는 식량창고 N에 대한 정보가 주어졌을 때 얻을 수 있는 식량의 최댓값을 구하는 프로그램을 작성하라.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{1, 3, 1, 5}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;이때 개미 전사는 두 번째 식량창고와 네 번째 식량창고를 선택했을 때 최댓값인 총 8개의 식량을 빼앗을 수 있다. 개미 전사는 식량창고가 이렇게 일직선상일 때 최대한 많은 식량을 얻기를 원한다.&lt;/p&gt;
+
+&lt;p&gt;개미 전사를 위해 식량창고 N개에 대한 정보가 주어졌을 때 얻을 수 있는 식량의 최댓값을 구하는 프로그램을 작성하시오.&lt;/p&gt;
+
+&lt;h2 id=&quot;입력&quot;&gt;입력&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;첫째 줄에 식량창고의 개수 N이 주어진다. (3&amp;lt;=N&amp;lt;=100)&lt;/li&gt;
+  &lt;li&gt;둘째 줄에 공백으로 구분되어 각 식량창고에 저장된 식량의 개수 K가 주어진다. (0&amp;lt;=K&amp;lt;=1,000)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;출력&quot;&gt;출력&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;첫째 줄에 개미 전사가 얻을 수 있는 식량의 최댓값을 출력하시오.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;문제-풀이-아이디어&quot;&gt;문제 풀이 아이디어&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;각 모든 경우의 수를 저장하는 리스트를 만들어서&lt;/li&gt;
+  &lt;li&gt;그 중의 최댓값을 출력할 수 있게&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;위 방식을 dfs 부분집합을 토대로 접근하였지만&lt;/p&gt;
+
+&lt;p&gt;모든 경우의 수를 dfs로 기록한다는 것은 너무 많은 계산량을 요구를 한다.&lt;/p&gt;
+
+&lt;p&gt;i번째의 식량 창고까지의 최적의 해를 기록할 수 있는 리스트를 만드는 편이 낫다.&lt;/p&gt;
+
+&lt;p&gt;즉 이 문제는 적재량을 결정하는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;점화식&lt;/code&gt;을 만들어푸는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;다이나믹 프로그래밍&lt;/code&gt; 문제이다.&lt;/p&gt;
+
+&lt;p&gt;$a_{i}$ = i 번째 식량 창고까지의 최적의 해 (얻을 수 있는 식량의 최댓값)&lt;/p&gt;
+
+&lt;p&gt;$k_{i}$ = i 번째 식량 창고에 있는 식량의 양&lt;/p&gt;
+
+&lt;p&gt;점화식은 다음과 같습니다&lt;/p&gt;
+
+&lt;p&gt;$a_{i} = max(a_{i-1}, a_{i-2}+k)$ $$&lt;/p&gt;
+
+&lt;p&gt;한 칸 이상 떨어진 식량 창고는 항상 털 수 있으므로 (i-3)번째 이하는 고려할 필요가 없습니다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# 정수 N을 입력 받기
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# 모든 식량 정보 입력 받기
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# bottom up 방식으로 i번째 저장할 식량의 최대량을 기록할 memoization list
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# bottom up 방식으로 dp 진행
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Mon, 18 Jul 2022 00:00:00 -0500</pubDate>
+        <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/18/%EA%B0%9C%EB%AF%B8%EC%A0%84%EC%82%AC.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/18/%EA%B0%9C%EB%AF%B8%EC%A0%84%EC%82%AC.html</guid>
+        
+        
+        <category>algorithm</category>
+        
+      </item>
+    
+      <item>
+        <title>1로 만들기</title>
+        <description>&lt;h1 id=&quot;1로-만들기-백준-1463&quot;&gt;1로 만들기 (백준 1463)&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;백준 1463&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.acmicpc.net/problem/1463&quot;&gt;1463번: 1로 만들기&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;문제-설명&quot;&gt;&lt;strong&gt;문제 설명&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;정수 X에 사용할 수 있는 연산은 다음과 같이 세 가지 이다.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;X가 3으로 나누어 떨어지면, 3으로 나눈다.&lt;/li&gt;
+  &lt;li&gt;X가 2로 나누어 떨어지면, 2로 나눈다.&lt;/li&gt;
+  &lt;li&gt;1을 뺀다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;정수 N이 주어졌을 때, 위와 같은 연산 세 개를 적절히 사용해서 1을 만들려고 한다. 연산을 사용하는 횟수의 최솟값을 출력하시오.&lt;/p&gt;
+
+&lt;h2 id=&quot;입력&quot;&gt;입력&lt;/h2&gt;
+
+&lt;p&gt;첫째 줄에 1보다 크거나 같고, 106보다 작거나 같은 정수 N이 주어진다.&lt;/p&gt;
+
+&lt;h2 id=&quot;출력&quot;&gt;출력&lt;/h2&gt;
+
+&lt;p&gt;첫째 줄에 연산을 하는 횟수의 최솟값을 출력한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;예제-입력-1&quot;&gt;예제 입력 1&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;예제-출력-1&quot;&gt;예제 출력 1&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;예제-입력-2&quot;&gt;예제 입력 2&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;10
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;예제-출력-2&quot;&gt;예제 출력 2&lt;/h2&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;힌트&quot;&gt;힌트&lt;/h2&gt;
+
+&lt;p&gt;10의 경우에 10 -&amp;gt; 9 -&amp;gt; 3 -&amp;gt; 1 로 3번 만에 만들 수 있다&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;문제풀이&quot;&gt;문제풀이&lt;/h2&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;바텀 업(Bottom up)&lt;/code&gt; 방식으로 문제를 풀어볼 수 있다.&lt;/p&gt;
+
+&lt;p&gt;작은 문제들을 조합해서 풀어본다.&lt;/p&gt;
+
+&lt;p&gt;$a_{i} = i$ 를 1로 만들기 위한 최소 연산 횟수&lt;/p&gt;
+
+&lt;p&gt;$&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a_{i} = min(a_{i-1},a_{i/2}, a_{i/3}) +1&lt;/code&gt;$&lt;/p&gt;
+
+&lt;p&gt;3가지 경우의 수 중 &lt;strong&gt;최소의 연산 횟수인 경우&lt;/strong&gt;를 가져와 1을 더해 현재 인덱스(index)에 기록&lt;/p&gt;
+
+&lt;p&gt;→ 1을 더하는 이유는 가져오는 것 자체가 연산 횟수 + 1이기 때문이다.&lt;/p&gt;
+
+&lt;p&gt;1부터 바텀업 방식으로 하게 되면 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;n까지의 모든 최적의 경우의 수(최소 연산 횟수)&lt;/code&gt;가 기록된다.&lt;/p&gt;
+
+&lt;p&gt;memoization을 입력 조건인 106까지 받을 수 있도록&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;d = [0] * 107&lt;/code&gt; 로 할 경우&lt;/p&gt;
+
+&lt;p&gt;백준에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Index Error&lt;/code&gt;가 난다.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# index를 1로 만들기 위해 필요한 최소 연산 횟수가 기록된 리스트 = memoization
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# 2부터 리스트를 채운다
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+
+	&lt;span class=&quot;c1&quot;&gt;# 먼저 현재의 수에서 1을 뺀 경우의 수를 리스트 i 인덱스에 기록
+&lt;/span&gt;	&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+	
+	&lt;span class=&quot;c1&quot;&gt;# 2로 나누어져 떨어진 경우와 비교
+&lt;/span&gt;	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+	&lt;span class=&quot;c1&quot;&gt;# 3으로 나누어 떨어진 경우와 비교
+&lt;/span&gt;	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</description>
+        <pubDate>Mon, 18 Jul 2022 00:00:00 -0500</pubDate>
+        <link>https://HaJunYoo.github.io/Blog/algorithm/2022/07/18/1%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/algorithm/2022/07/18/1%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0.html</guid>
+        
+        
+        <category>algorithm</category>
+        
+      </item>
     
       <item>
         <title>Jekyll에서 liquid warning(Liquid Exception) 처리</title>
@@ -3523,270 +3711,6 @@ N마리의 바둑이와 각 바둑이의 무게 W가 주어지면, 철수가 트
         <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
         <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/OLAP.html</link>
         <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/OLAP.html</guid>
-        
-        
-        <category>database</category>
-        
-      </item>
-    
-      <item>
-        <title>NoSQL에 대하여</title>
-        <description>&lt;h1 id=&quot;nosql&quot;&gt;NoSQL&lt;/h1&gt;
-
-&lt;h3 id=&quot;nosql의-개념&quot;&gt;NoSQL의 개념&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Not-Only SQL&lt;/strong&gt; 혹은 No SQL을 의미&lt;/li&gt;
-  &lt;li&gt;전통적인 관계형 데이터베이스(RDBMS)와 다르게 설계된 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;비관계형 데이터베이스&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;스키마가 없는&lt;/strong&gt; 데이터베이스&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;덜 제한적인 데이터 저장&lt;/strong&gt; 및 검색 메커니즘 제공&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;비정형 데이터베이스&lt;/code&gt;를 사용할 때 필요한 DB&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;용이한 데이터 규모 확장성&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;즉 &lt;strong&gt;데이터를 다수의 하드웨어에 분산해서 저장&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;대용량의 구조적, 반구조적 데이터들을 저장/분석 (웹, 소셜 미디어, 그래픽 등)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;NoSQL의 분류: 데이터 저장 방식에 따라&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;키-값(key - value) : 다이나모, 리악, 레디스, 캐시, 프로젝트 볼드모트
-    &lt;ul&gt;
-      &lt;li&gt;가장 간단한 구조 – eventual consistency 또는 serializability 의 consistency model제공&lt;/li&gt;
-      &lt;li&gt;사용 예제 ) session 정보 제공, 사용자 profile 등&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;컬럼 : H베이스, 아큐물로&lt;/li&gt;
-  &lt;li&gt;도큐먼트 : 몽고DB, 카우치베이스
-    &lt;ul&gt;
-      &lt;li&gt;JSON같은 semi-structured data 인 document를 저장/조회하는 데이터베이스&lt;/li&gt;
-      &lt;li&gt;Key-value store의 하위 클래스&lt;/li&gt;
-      &lt;li&gt;Key-value store와 달리 데이터베이스 내부에서 최적화를 지원하기 위해 document가 가진 metadata 정보 이용
-        &lt;ul&gt;
-          &lt;li&gt;
-            &lt;p&gt;mongo db 예시&lt;/p&gt;
-
-            &lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inventory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;insertMany&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;journal&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;21&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;cm&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;notebook&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;in&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;paper&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;in&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;D&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;planner&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;75&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;85&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;cm&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;D&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;postcard&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;qty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;cm&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
-            
-  &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inventory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;h&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;21&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;uom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;cm&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inventory&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;find&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;size.uom&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;in&quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;            &lt;/div&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;그래프: Neo4J, Infinite Graph, 알레그로그래프, 버투오소&lt;/p&gt;
-
-    &lt;p&gt;&lt;strong&gt;Graph database&lt;/strong&gt;&lt;/p&gt;
-
-    &lt;ul&gt;
-      &lt;li&gt;데이터를 node, edge 및 property를 가지고 graph structure를 이용하여 저장하는 데이터베이스&lt;/li&gt;
-      &lt;li&gt;Graph에서 데이터를 효율적으로 쿼리하기 위한 graph데이터베이스 전용 query language가 존재
-        &lt;ul&gt;
-          &lt;li&gt;Cypher, Gremlin&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Wide-column store (column family database)&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;데이터모델 : &amp;lt;키, 값&amp;gt; 저장 구조&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/Blog/images/database/테이블1.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt; &lt;img src=&quot;/Blog/images/database/테이블2.png&quot; alt=&quot;&quot; width=&quot;50%&quot; height=&quot;50%&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;설명 : 가장 간단한 데이터 모델, 응용 프로그램 모델링이 복잡&lt;/li&gt;
-  &lt;li&gt;RDBMS 와 비슷하게 wide-column store 도 table ,column, row 개념을 사용&lt;/li&gt;
-  &lt;li&gt;RDBMS와 차이점 : 각 rows가 다른 column list를 가질 수 있다&lt;/li&gt;
-  &lt;li&gt;Two-dimensional key-value store로 생각할 수 있음&lt;/li&gt;
-  &lt;li&gt;제품 예 : DynamoDB, 아마존 S3&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;nosql의-특징&quot;&gt;NoSQL의 특징&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;NoSQL은 CAP이론의 consistency와 availability을 동시에 제공하지 않는다 - 불가능&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;無 스키마&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;고정된 스키마 없이 키(Key) 값을 이용하여 다양한 형태의 데이터 저장 및 접근 기능&lt;/li&gt;
-      &lt;li&gt;데이터 저장 방식은 크게 값(Value), 열(Column), 문서(Document), 그래프(Graph) 등의 네 가지를 기반으로 구분&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;탄력성(Elasticity)&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;시스템 일부에 장애가 발생해도 클라이언트가 시스템에 접근 가능&lt;/li&gt;
-      &lt;li&gt;응용 시스템의 다운 타임이 없도록 하는 동시에 대용량 데이터의 생성 및 갱신&lt;/li&gt;
-      &lt;li&gt;시스템 규모와 성능 확장이 용이하며, 입출력의 부하를 분산시키는 데 용이한 구조&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;쿼리(Query) 기능&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;수십 대에서 수천 대 규모로 구성된 시스템에서도 데이터의 특성에 맞게 효율적으로 데이터를 검색 ·처리 가능&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;RDBMS vs NoSQL&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;RDBMS는 대용량 데이터 처리 및 다양한 유형의 데이터 처리를 하는데 어려움이 존재하였음&lt;/li&gt;
-  &lt;li&gt;강력한 수평적 확장성이 있는 NoSQL을 사용함으로써 데이터 분산 처리 및 다양한 유형의 데이터 관리가 가능해짐&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;참고 ) &lt;strong&gt;ACID&lt;/strong&gt;는 Atomicity(원자성), Consistency(일관성), Isolation(독립성), Durability(지속성)&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;구분&lt;/th&gt;
-      &lt;th&gt;관계형 데이터베이스(RDBMS)&lt;/th&gt;
-      &lt;th&gt;NoSQL&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;설명&lt;/td&gt;
-      &lt;td&gt;일관성(C)과 가용성(A)을 선택&lt;/td&gt;
-      &lt;td&gt;일관성이나 가용성중 하나를 포기하고, 지속성(P)를 보장&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;장점&lt;/td&gt;
-      &lt;td&gt;데이터 무결성, 정확성 보장, 정규화된 테이블과 소규모 트랜잭션이 있음&lt;/td&gt;
-      &lt;td&gt;웹 환경의 다양한 정보를 검색 및 저장 가능&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;단점&lt;/td&gt;
-      &lt;td&gt;확장성에 한계가 있음, 클라우드 분산 환경에 부적합&lt;/td&gt;
-      &lt;td&gt;데이터의 무결성과 정확성을 보장하지 않음&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;strong&gt;⇒ NoSQL 이 더 좋은 경우&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;NoSQL 데이터베이스는 very large semi-structured data 를 처리하는 애플리케이션에 적합 – Log Analysis, Social Networking Feeds, Time-based data..&lt;/li&gt;
-  &lt;li&gt;더 큰 데이터 볼륨을 처리하고 대기 시간을 줄이고 처리량을 개선하는 몇 가지 조합을 통해 데이터 액세스 성능을 개선&lt;/li&gt;
-  &lt;li&gt;복잡한 relationship이 있는 테이블이 있는 경우 JOIN을 제공하지 않기 때문에 적합하지 않음&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/Nosql.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/Nosql.html</guid>
-        
-        
-        <category>database</category>
-        
-      </item>
-    
-      <item>
-        <title>CAP 이론</title>
-        <description>&lt;h3 id=&quot;정형-데이터&quot;&gt;정형 데이터&lt;/h3&gt;
-
-&lt;p&gt;고정된 필드에 저장된 데이터&lt;/p&gt;
-
-&lt;p&gt;데이터베이스를 설계한 사람에 의해 수집되는 정보의 형태가 정해짐&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;예를 들어 관계형 데이터 베이스의 테이블들, 스프레드시트 등&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/Blog/images/database/테이블.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;비정형-데이터란&quot;&gt;비정형 데이터란?&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;미리 정해져서 고정되어 있는 필드에 저장되어 있지 않은 데이터&lt;/li&gt;
-  &lt;li&gt;스마트 기기에서 페이스북, 트위터, 유튜브 등으로 생성되는 소셜 데이터&lt;/li&gt;
-  &lt;li&gt;IoT 환경에서 생성되는 위치 정보나 센서 데이터와 같은 사물 데이터 등&lt;/li&gt;
-  &lt;li&gt;문서, 그림, 영상 등이 이에 해당&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;빅데이터 시대의 주요 특징&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;데이터의 크기가 엄청나게 크다&lt;/li&gt;
-  &lt;li&gt;데이터의 형태가 비정형적이고, 다양하다&lt;/li&gt;
-  &lt;li&gt;빠른 처리속도가 요구된다&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;비정형 데이터베이스 등장 배경&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;기존의 RDB나 DW와 같은 정형 데이터 베이스만으로는 해결이 어려움&lt;/li&gt;
-  &lt;li&gt;분산 시스템으로 갈 수 밖에 없다&lt;/li&gt;
-  &lt;li&gt;분산환경 하여서 대용량의 데이터를 신속하게 처리할 비정형 데이터베이스의 등장
-    &lt;ul&gt;
-      &lt;li&gt;NoSQL, Hadoop 등&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;분산-시스템이란&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;분산 시스템&lt;/code&gt;이란?&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;작업이나 데이터를 여러 대의 컴퓨터에 나누어서 처리, 저장하여 그 내용이나 결과가 통신망을 통해 상호교환 되도록 연결되어 있는 시스템&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;cap-이론이란&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CAP 이론&lt;/code&gt;이란?&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;2000년경 버클리 대학 에릭 브루어(Eric Brewer)가 주창한 이론으로, 2002년경 증명&lt;/li&gt;
-  &lt;li&gt;CAP정리(CAP Theorem), 혹은 브루어 정리(Brewer’s theorem) 등 으로 불리움&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;/Blog/images/database/cap.png&quot; alt=&quot;&quot; title=&quot;CAP&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;CAP theorem&lt;/strong&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;분산 컴퓨터 시스템에서 다음과 같은 세가지 조건을 모두 만족하는 시스템을 존재할 수 없음을 증명한 정리&lt;/p&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C(Consistency)&lt;/code&gt; : 모든 노드들이 같은 시점에 같은 값을 볼 수 있다 (또는 에러) → 한쪽이 업데이트 되면 즉시 같은 정보가 보여져야 한다&lt;/li&gt;
-    &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;A (Availability)&lt;/code&gt; : 모든 request는 에러 없이 response를 받을 수 있다. (최신 값을 return함은 보장 안함)
-      &lt;ul&gt;
-        &lt;li&gt;일부 노드가 다운되어도 다른 노드에 영향을 주지 않아야 함&lt;/li&gt;
-        &lt;li&gt;특정 노드가 장애가나도 서비스가 가능해야 한다”라는 의미&lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/li&gt;
-    &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;P (Partition tolerance)&lt;/code&gt; : network partition이 나서 message의 분실이 발생해도 시스템이 계속 동작해야 한다
-      &lt;ul&gt;
-        &lt;li&gt;구성된 분산 시스템에 노드 장애가 있어 일부 데이터를 손실 하더라도 사용자는 다른 최신 데이터에 접속하여 정상 동작할 수 있어야 한다&lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/li&gt;
-    &lt;li&gt;NoSQL은 consistency와 availability을 동시에 제공하지 않는다 - 불가능&lt;/li&gt;
-    &lt;li&gt;두 가지 만족이 가능하다
-      &lt;ul&gt;
-        &lt;li&gt;C-A, C-P, A-P&lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/li&gt;
-    &lt;li&gt;최근 CAP 이론이 주목받는 이유
-      &lt;ul&gt;
-        &lt;li&gt;빅데이터 저장 문제&lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;기존의 RDB가 C(일관성)와 A(가용성) 중심이라면 &lt;strong&gt;비정형 데이터베이스는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;P(지속성)&lt;/code&gt;을 중시&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/CAP-theorem.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/CAP-theorem.html</guid>
         
         
         <category>database</category>

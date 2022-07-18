@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>1로 만들기 | Yuki’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="1로 만들기" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="1로 만들기 (백준 1463 - DP)" />
+<meta property="og:description" content="1로 만들기 (백준 1463 - DP)" />
+<link rel="canonical" href="https://hajunyoo.github.io/Blog/algorithm/2022/07/18/1%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0.html" />
+<meta property="og:url" content="https://hajunyoo.github.io/Blog/algorithm/2022/07/18/1%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0.html" />
+<meta property="og:site_name" content="Yuki’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-18T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="1로 만들기" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-18T00:00:00-05:00","datePublished":"2022-07-18T00:00:00-05:00","description":"1로 만들기 (백준 1463 - DP)","headline":"1로 만들기","mainEntityOfPage":{"@type":"WebPage","@id":"https://hajunyoo.github.io/Blog/algorithm/2022/07/18/1%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0.html"},"url":"https://hajunyoo.github.io/Blog/algorithm/2022/07/18/1%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://hajunyoo.github.io/Blog/feed.xml" title="Yuki's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V1MM5F0SWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V1MM5F0SWD');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Yuki&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog/about/">About Me</a><a class="page-link" href="/Blog/gitInfo/">gitInfo</a><a class="page-link" href="/Blog/search/">Search</a><a class="page-link" href="/Blog/categories/">Category</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">1로 만들기</h1><p class="page-description">1로 만들기 (백준 1463 - DP)</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-18T00:00:00-05:00" itemprop="datePublished">
+        Jul 18, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#algorithm">algorithm</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1로-만들기-백준-1463">1로 만들기 (백준 1463)</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#문제-설명">문제 설명</a></li>
+<li class="toc-entry toc-h2"><a href="#입력">입력</a></li>
+<li class="toc-entry toc-h2"><a href="#출력">출력</a></li>
+<li class="toc-entry toc-h2"><a href="#예제-입력-1">예제 입력 1</a></li>
+<li class="toc-entry toc-h2"><a href="#예제-출력-1">예제 출력 1</a></li>
+<li class="toc-entry toc-h2"><a href="#예제-입력-2">예제 입력 2</a></li>
+<li class="toc-entry toc-h2"><a href="#예제-출력-2">예제 출력 2</a></li>
+<li class="toc-entry toc-h2"><a href="#힌트">힌트</a></li>
+<li class="toc-entry toc-h2"><a href="#문제풀이">문제풀이</a></li>
+</ul>
+</li>
+</ul><h1 id="1로-만들기-백준-1463">
+<a class="anchor" href="#1%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EB%B0%B1%EC%A4%80-1463" aria-hidden="true"><span class="octicon octicon-link"></span></a>1로 만들기 (백준 1463)</h1>
+
+<p><strong>백준 1463</strong></p>
+
+<p><a href="https://www.acmicpc.net/problem/1463">1463번: 1로 만들기</a></p>
+
+<h2 id="문제-설명">
+<a class="anchor" href="#%EB%AC%B8%EC%A0%9C-%EC%84%A4%EB%AA%85" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>문제 설명</strong>
+</h2>
+
+<p>정수 X에 사용할 수 있는 연산은 다음과 같이 세 가지 이다.</p>
+
+<ol>
+  <li>X가 3으로 나누어 떨어지면, 3으로 나눈다.</li>
+  <li>X가 2로 나누어 떨어지면, 2로 나눈다.</li>
+  <li>1을 뺀다.</li>
+</ol>
+
+<p>정수 N이 주어졌을 때, 위와 같은 연산 세 개를 적절히 사용해서 1을 만들려고 한다. 연산을 사용하는 횟수의 최솟값을 출력하시오.</p>
+
+<h2 id="입력">
+<a class="anchor" href="#%EC%9E%85%EB%A0%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>입력</h2>
+
+<p>첫째 줄에 1보다 크거나 같고, 106보다 작거나 같은 정수 N이 주어진다.</p>
+
+<h2 id="출력">
+<a class="anchor" href="#%EC%B6%9C%EB%A0%A5" aria-hidden="true"><span class="octicon octicon-link"></span></a>출력</h2>
+
+<p>첫째 줄에 연산을 하는 횟수의 최솟값을 출력한다.</p>
+
+<h2 id="예제-입력-1">
+<a class="anchor" href="#%EC%98%88%EC%A0%9C-%EC%9E%85%EB%A0%A5-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>예제 입력 1</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2
+</code></pre></div></div>
+
+<h2 id="예제-출력-1">
+<a class="anchor" href="#%EC%98%88%EC%A0%9C-%EC%B6%9C%EB%A0%A5-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>예제 출력 1</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+</code></pre></div></div>
+
+<h2 id="예제-입력-2">
+<a class="anchor" href="#%EC%98%88%EC%A0%9C-%EC%9E%85%EB%A0%A5-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>예제 입력 2</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>10
+</code></pre></div></div>
+
+<h2 id="예제-출력-2">
+<a class="anchor" href="#%EC%98%88%EC%A0%9C-%EC%B6%9C%EB%A0%A5-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>예제 출력 2</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3
+</code></pre></div></div>
+
+<h2 id="힌트">
+<a class="anchor" href="#%ED%9E%8C%ED%8A%B8" aria-hidden="true"><span class="octicon octicon-link"></span></a>힌트</h2>
+
+<p>10의 경우에 10 -&gt; 9 -&gt; 3 -&gt; 1 로 3번 만에 만들 수 있다</p>
+
+<hr>
+
+<h2 id="문제풀이">
+<a class="anchor" href="#%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4" aria-hidden="true"><span class="octicon octicon-link"></span></a>문제풀이</h2>
+
+<p><code class="language-plaintext highlighter-rouge">바텀 업(Bottom up)</code> 방식으로 문제를 풀어볼 수 있다.</p>
+
+<p>작은 문제들을 조합해서 풀어본다.</p>
+
+<p>$a_{i} = i$ 를 1로 만들기 위한 최소 연산 횟수</p>
+
+<p>$<code class="language-plaintext highlighter-rouge">a_{i} = min(a_{i-1},a_{i/2}, a_{i/3}) +1</code>$</p>
+
+<p>3가지 경우의 수 중 <strong>최소의 연산 횟수인 경우</strong>를 가져와 1을 더해 현재 인덱스(index)에 기록</p>
+
+<p>→ 1을 더하는 이유는 가져오는 것 자체가 연산 횟수 + 1이기 때문이다.</p>
+
+<p>1부터 바텀업 방식으로 하게 되면 <code class="language-plaintext highlighter-rouge">n까지의 모든 최적의 경우의 수(최소 연산 횟수)</code>가 기록된다.</p>
+
+<p>memoization을 입력 조건인 106까지 받을 수 있도록</p>
+
+<p><code class="language-plaintext highlighter-rouge">d = [0] * 107</code> 로 할 경우</p>
+
+<p>백준에서는 <code class="language-plaintext highlighter-rouge">Index Error</code>가 난다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+
+<span class="c1"># index를 1로 만들기 위해 필요한 최소 연산 횟수가 기록된 리스트 = memoization
+</span><span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 2부터 리스트를 채운다
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+
+	<span class="c1"># 먼저 현재의 수에서 1을 뺀 경우의 수를 리스트 i 인덱스에 기록
+</span>	<span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+	
+	<span class="c1"># 2로 나누어져 떨어진 경우와 비교
+</span>	<span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+		<span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+	<span class="c1"># 3으로 나누어 떨어진 경우와 비교
+</span>	<span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+		<span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="o">//</span><span class="mi">3</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+
+</code></pre></div></div>
+
+  </div><!-- from https://github.com/utterance/utterances
+<script src="https://utteranc.es/client.js"
+        repo="HaJunYoo/Blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>-->
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yukiblog-1.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript><a class="u-url" href="/Blog/algorithm/2022/07/18/1%EB%A1%9C-%EB%A7%8C%EB%93%A4%EA%B8%B0.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Yuki&#39;s Tech Blog는 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
