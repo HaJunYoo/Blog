@@ -1,6 +1,7 @@
 ---
 title: Neural Collaborative Filtering
 description: Neural Collaborative Filtering 실습
+layout: post
 toc: true 
 badges: true
 comments: false
