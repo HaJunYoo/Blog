@@ -5,8 +5,8 @@
     <description>Yuki's Tech Blog는 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</description>
     <link>https://HaJunYoo.github.io/Blog/</link>
     <atom:link href="https://HaJunYoo.github.io/Blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 18 Jul 2022 07:49:53 -0500</pubDate>
-    <lastBuildDate>Mon, 18 Jul 2022 07:49:53 -0500</lastBuildDate>
+    <pubDate>Mon, 18 Jul 2022 09:55:49 -0500</pubDate>
+    <lastBuildDate>Mon, 18 Jul 2022 09:55:49 -0500</lastBuildDate>
     <generator>Jekyll v4.1.1</generator>
     
       <item>
@@ -194,6 +194,255 @@
         
         
         <category>algorithm</category>
+        
+      </item>
+    
+      <item>
+        <title>API 서버와 REST</title>
+        <description>&lt;h2 id=&quot;api-서버란&quot;&gt;API 서버란?&lt;/h2&gt;
+
+&lt;p&gt;앱/웹 서비스를 만드는 개발자들이 이용하는 데이터(대표적으로 JSON) 위주의 서비스&lt;/p&gt;
+
+&lt;p&gt;시간이 지나도 호환성을 유지해야 합니다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;앱 등의 유저가 사용하는 UI는 유저가 원할 때 업데이트가 됩니다.&lt;/li&gt;
+  &lt;li&gt;유저층이 사용하는 앱의 버전이 다양하기에, API에도 버전 개념을 둡니다.
+    &lt;ul&gt;
+      &lt;li&gt;ex) /api/v1/posts/, /api/v2/posts/&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;그에 반해, 웹 서비스를 이용하는 유저는 항상 최신버전을 사용합니다.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Client to Server 통신&lt;/p&gt;
+
+    &lt;p&gt;→ 클라이언트 요청 시 서버로부터 html, 엑셀, xml응답 등이 있다. 주로 html 응답이다.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;rest-representational-state-transfer&quot;&gt;REST (Representational State Transfer)&lt;/h2&gt;
+
+&lt;p&gt;아키텍처 스타일. 프로토콜에 독립적 → 일반적인 REST 구현에서 HTTP를 사용
+RESTful API의 몇 가지 디자인 원칙&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;리소스&lt;/strong&gt;를 중심으로 디자인.&lt;/li&gt;
+  &lt;li&gt;클라이언트에서 액세스할 수 있는 모든 종류의 개체/서비스가 리소스에 포함&lt;/li&gt;
+  &lt;li&gt;리소스마다 해당 리소스를 &lt;strong&gt;고유하게 식별하는 식별자&lt;/strong&gt; → &lt;a href=&quot;https://my-trips.com/trips/1/&quot;&gt;https://my-trips.com/trips/1/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;요청/응답 포맷으로 흔히 &lt;strong&gt;JSON&lt;/strong&gt;을 사용 →
+    &lt;ol&gt;
+      &lt;li&gt;JSON은 xml보다 기능은 적지만 용량이 작다.&lt;/li&gt;
+      &lt;li&gt;트위터가 API 서비스 런칭 할 때, XML 및 JSON을 둘다 지원했으나, XML은 거의 사용하지 않았던 사례가 있다. JSON이 같은 용량에서 응답도 빠르고 트래픽이 적었기 때문&lt;/li&gt;
+    &lt;/ol&gt;
+
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&quot;pk&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&quot;name&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;프라하 여행&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&quot;user_id&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+ &lt;span class=&quot;s&quot;&gt;&quot;place_set&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;102&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;균일한(uniform) 인터페이스를 적용
+리소스에 표준 HTTP 동사 (GET, POST, PUT, PATCH, DELETE)를 적용&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;리소스를-중심으로-api-구성&quot;&gt;리소스를 중심으로 API 구성&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/orders/&lt;/code&gt; 로의 POST 요청
+&lt;del&gt;/create-order/ 로의 POST 요청&lt;/del&gt; → 동사를 URL로 명시하기보다, 리소스를 명시하고 HTTP 동사로서 역할을 구별한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/customers/&lt;/code&gt; → 고객 컬렉션
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/customers/5/&lt;/code&gt; → pk가 5인 고객 → 직관적인 웹 API
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/customers/5/orders/&lt;/code&gt; → 고객 5에 대한 모든 주문
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/orders/99/customer/&lt;/code&gt; → 주문 99의 고객&lt;/p&gt;
+
+&lt;h3 id=&quot;심플하게-uri를-구성하기&quot;&gt;심플하게 URI를 구성하기&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;요구사항: 1번 고객의 주문들 중 99번 주문에 대한 제품들&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/customer/1/orders/99/products/&lt;/code&gt; → 유연성이 떨어짐 (API, 스키마 등 비지니스 요구사항이 바뀌었을 때 좋지 않다.)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;유사한 작업을 하지만 다음과 같이 나누어서 작업하여 URI를 심플하게 구성한다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/customers/1/orders/&lt;/code&gt; 를 통해 고객 1의 모든 주문을 찾은 후에&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/order/99/products/&lt;/code&gt;로 변경해서 동일하게 처리&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/providers/masters/
+/providers/managers/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;http-메서드를-기준으로-기본-작업-정의&quot;&gt;HTTP 메서드를 기준으로 기본 작업 정의&lt;/h3&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GET&lt;/code&gt; : 리소스의 표현. 응답 본문에 리소스의 세부 정보&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;POST&lt;/code&gt;: 새 리소스 생성 요청. 응답 본문에 새 리소스의 세부 정보를 제공 → 멱등성(idempotent) 미보장&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PUT&lt;/code&gt;: 기존 리소스를 대체. 요청 본문에 갱신할 리소스 정보를 제공 → 반드시 멱등성이 보장되어야 함&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PATCH&lt;/code&gt;: 기존 리소스를 부분 대체. 요청 본문에 갱신할 리소스 정보를 제공. → 멱등성 미보장.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DELETE&lt;/code&gt;: 지정 리소스를 제거&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;멱등성&lt;/code&gt; : 같은 요청을 매번 해도 서버에서는 같은 결과 응답되는 성질&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.notion.so/4949168492d64392bc140439db48e1c0&quot;&gt;HTTP 메서드를 기준으로 기본 작업&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;요청--응답-형식-지정&quot;&gt;&lt;strong&gt;요청 / 응답 형식 지정&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;content-type-헤더&quot;&gt;Content-Type 헤더&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application/json&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application/vnd.ms-excel&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;image/json&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;application/pdf&lt;/code&gt; 등이 있다.&lt;/li&gt;
+  &lt;li&gt;요청 시에 처리를 원하는 형식으로 지정하면 서버에서는 이 형식으로 응답해준다.&lt;/li&gt;
+  &lt;li&gt;서버에서 해당 형식을 지원하지 않으면 HTTP 상태 코드 415 (지원하지 않는 미디어 유형)반환&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;http-method별-다양한-상태-코드&quot;&gt;HTTP METHOD별 다양한 상태 코드&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GET&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;일반적으로 200(OK) 응답&lt;/li&gt;
+      &lt;li&gt;리소스를 못 찾을 경우 404 (Not Found)응답&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;POST&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;201 (Created) 응답. 새 리소스의 URI는 응답의 Location 헤더에 담는다.&lt;/li&gt;
+      &lt;li&gt;새 리소스를 만들지 않은 경우, (ex. 업데이트를 구현 하였을 경우)
+        &lt;ul&gt;
+          &lt;li&gt;200 응답 하고 응답 본문에 포함하거나&lt;/li&gt;
+          &lt;li&gt;반환할 결과가 없으면 204(내용 없음)를 반환할 수도 있다.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;잘못된 데이터로 요청하면 400(잘못된 요청) 응답하고 응답 본문에 오류 정보 또는 자세한 정보를 제공하는 URI 링크를 포함한다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;PUT&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;기본 리소스를 업데이트 할 경우 200(OK) 또는 204(내용 없음)반환.&lt;/li&gt;
+      &lt;li&gt;상황에 따라 업데이트 할 수 없는 경우 409(충돌)반환.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;DELETE&lt;/code&gt;
+    &lt;ul&gt;
+      &lt;li&gt;성공하면 응답 본문에 추가 정보가 포함되지 않았음의 의미로 204 응답.&lt;/li&gt;
+      &lt;li&gt;리소스가 없는 경우 404 응답.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;비동기 작업&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;작업 완료에 시간이 오래 걸릴 경우, 다른 Task Queue를 통해 비동기 처리를 할 수 있다.
+        &lt;ul&gt;
+          &lt;li&gt;(예 : Celery 등) 이 때 요청은 수락되었지만 아직 완료되지 않았음을 나타내는 202(수락됨)을 응답.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;클라이언트가 이 작업을 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Polling&lt;/code&gt;을 통해 모니터링 할 수 있도록, 비동기 요청의 상태를 반환하는 URI를 Location헤더로 반환.
+        &lt;ul&gt;
+          &lt;li&gt;(Poling : 주기적으로 어떠한 대상을 검사함)&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;http-api-restful-api&quot;&gt;HTTP API? RESTFUL API&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;단순히 HTTP프로토콜을 통한 API는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTTP API&lt;/code&gt;라고 불러야 적절하다. 혹은 Web API.&lt;/li&gt;
+  &lt;li&gt;대부분의 REST API라는 API들은 REST 아키텍처를 지키지 않은 경우가 많음.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;REST API는 REST 아키텍처를 준수&lt;/code&gt;하여야 함.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;→ &lt;strong&gt;Web API ≥ HTTP API &amp;gt; REST API&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;django-rest-framework&quot;&gt;Django Rest Framework&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;장고의 패러다임 하에 빠르고 관리하기 쉬운 API를 만들 수 있다.&lt;/li&gt;
+  &lt;li&gt;DRF는 아래 REST API 컨셉을 쉽게 만들 수 있도록 도와준다.&lt;/li&gt;
+  &lt;li&gt;아래가 REST API의 전부는 아니다. (다만 DRF는 아래의 철학을 어느정도 기본적으로 지원한다.)
+    &lt;ul&gt;
+      &lt;li&gt;URI는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://{serviceRoot}/{collection}/{id}&lt;/code&gt; 형식이어야 한다.&lt;/li&gt;
+      &lt;li&gt;GET, PUT, DELETE, POST, HEAD, PATCH, OPTIONS를 지원해야 한다.&lt;/li&gt;
+      &lt;li&gt;API 비저닝은 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Major.minor&lt;/code&gt;로 하고, URI에 버전 정보를 포함시킨다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;django-rest-framework의-주요-기능들&quot;&gt;Django Rest Framework의 주요 기능들&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Serializer/ModelSerializer&lt;/strong&gt;를 통한 데이터 유효성 검증 및 데이터 직렬화(Json, xml)
+    &lt;ul&gt;
+      &lt;li&gt;→ 장고 &lt;strong&gt;Form/ModelForm&lt;/strong&gt;의 기능과 유사&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;각종 Parser를 통한 일관된 데이터 처리&lt;/li&gt;
+  &lt;li&gt;APIView/Generic/ViewSet/ModelViewSets를 통한 요청 처리&lt;/li&gt;
+  &lt;li&gt;각종 Renderer를 통한 다양한 응답 포맷 지원 (excel, yaml, pdf 등)&lt;/li&gt;
+  &lt;li&gt;인증(Authentication) / 권한(Permission)체계 - 써드파티를 통해 JWT(Json Web Token) 지원 (DRF 기본 인증 라이브러리는 기한제한이 없는 Token인증만 지원함)&lt;/li&gt;
+  &lt;li&gt;Throttling (최대 호출 횟수 제한) free유저는 100회의 호출 지원, premium은 10000회를 지원하는 등의 서비스가 가능.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;crud&quot;&gt;CRUD&lt;/h1&gt;
+
+&lt;p&gt;모든 데이터는 기본적으로 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;추가/조회/수정/삭제&lt;/code&gt; 액션으로 관리될 수 있다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;C : Create (생성) : 새 레코드 생성&lt;/li&gt;
+  &lt;li&gt;R : Read, Retrieve (조회) : 레코드 목록 조회, 특정 레코드 조회&lt;/li&gt;
+  &lt;li&gt;U : Update (수정) : 특정 레코드 수정&lt;/li&gt;
+  &lt;li&gt;D : Delete (삭제) : 특정 레코드 삭제&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;주의) &lt;strong&gt;CRUD&lt;/strong&gt;는 리소스에 대한 대표적인 동작일 뿐, &lt;strong&gt;API의 전부는 아님&lt;/strong&gt;&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;데이터 관리는 CRUD가 대표적인 동작이다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;DRF는 리소스(모델)만 정의되면 CRUD를 만들 수 있는 기틀이 잘 되어 있음&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;추가적인 동작 또한 잘 구현할 수 있도록 기반이 잘 되어 있다.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;프레임워크를-쓴다는-것은-&quot;&gt;프레임워크를 쓴다는 것은 …&lt;/h3&gt;
+
+&lt;hr /&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;DRF에 대해 보다 심도있는 이해를 하기 위해서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;장고의 Model/Form&lt;/code&gt;에 대한 이해가 필요하다. (장고가 베이스가 되어야 한다.)&lt;/li&gt;
+  &lt;li&gt;무작정 타이핑만 치는것이 개발이 아니다 → 탄탄한 이해와 설계 아래 탄탄한 애플리케이션이 갖춰진다.&lt;/li&gt;
+  &lt;li&gt;프레임워크를 쓴다는것은 그 프레임워크가 제시하는 길을 명확히 이해하고 존중하는 것에서 시작한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+&lt;h5 id=&quot;reference&quot;&gt;Reference&lt;/h5&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.inflearn.com/course/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EC%9E%A5%EA%B3%A0-%EC%9B%B9%EC%84%9C%EB%B9%84%EC%8A%A4/dashboard&quot;&gt;파이썬/장고 웹서비스 개발 완벽 가이드 with 리액트&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Mon, 18 Jul 2022 00:00:00 -0500</pubDate>
+        <link>https://HaJunYoo.github.io/Blog/django/2022/07/18/restapi.html</link>
+        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/django/2022/07/18/restapi.html</guid>
+        
+        
+        <category>Django</category>
         
       </item>
     
@@ -3888,113 +4137,6 @@ N마리의 바둑이와 각 바둑이의 무게 W가 주어지면, 철수가 트
         
         
         <category>algorithm</category>
-        
-      </item>
-    
-      <item>
-        <title>데이터 웨어하우스(Data Warehouse)란</title>
-        <description>&lt;h3 id=&quot;데이터-웨어하우스data-warehouse란&quot;&gt;데이터 웨어하우스(Data Warehouse)란&lt;/h3&gt;
-
-&lt;p&gt;기업 내에 있는 각종 데이터를 적절히 뽑아내고 조합해 다양한 사업목적에 맞는 정보, 또는 지식으로 바꾸어 주는 기술&lt;/p&gt;
-
-&lt;p&gt;⇒ 기존의 데이터베이스처럼 거래처리를 위한 데이터가 아니고, 의사결정 지원을 위한 데이터 베이스&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;몇 가지 정의들
-    &lt;ul&gt;
-      &lt;li&gt;Inmon (1992)
-        &lt;ul&gt;
-          &lt;li&gt;기업의 의사결정 과정을 지원하기 위한 주제 중심적이고 통합적이며 시간성을 가지는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;비휘발성 자료의 집합&lt;/code&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;Kelly (1994)
-        &lt;ul&gt;
-          &lt;li&gt;기업 내의 의사결정 지원 어플리케이션들을 위한 정보기반을 제공 하는 통합된 데이터 저장공간&lt;/li&gt;
-          &lt;li&gt;TPS&lt;/li&gt;
-          &lt;li&gt;DSS&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;Poe (1994)
-        &lt;ul&gt;
-          &lt;li&gt;의사결정 지원에 효과적으로 사용될 수 있도록 다양한 운영시스템으로부터 추출, 변환, 통합되고 요약된 읽기 전용 데이터베이스&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;데이터베이스 Vs 데이터 웨어하우스&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;데이터베이스&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;거래처리 중심&lt;/li&gt;
-  &lt;li&gt;응용프로그램 지원&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;데이터 웨어하우스&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;지식분석 중심&lt;/li&gt;
-  &lt;li&gt;의사결정지원시스템의 데이터베이스&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;데이터웨어하우스의-특징&quot;&gt;데이터웨어하우스의 특징&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;주제 중심적&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;기존의 데이터베이스가 응용프로그램 중심적이었다면&lt;/li&gt;
-  &lt;li&gt;데이터베이스는 재고관리, 영업관리, 회계관리 등 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;기업 운영에 필요한 업무 프로세스 처리를 지원&lt;/code&gt;하기 위해 설계&lt;/li&gt;
-  &lt;li&gt;데이터 웨어하우스는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;기업의 의사결정&lt;/code&gt;을 위한 주요 주제 및 그와 관련된 데이터들이 중심&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;◼ 통합적 구조&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;◼ &lt;strong&gt;비휘발성&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;각 부서 단위로 운영하고 있는 데이터베이스에서는 추가/삭제/변경과 같은 갱신 작업이 레코드 단위로 지속적으로 발생&lt;/li&gt;
-  &lt;li&gt;데이터 웨어하우스에서는 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;데이터 로드와 활용&lt;/code&gt;만이 존재하며, 기존 운영 시스템에서와 같은 갱신은 발생하지 않음&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;◼ &lt;strong&gt;시간성&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;기존 데이터베이스에서는 매 순간마다 발생되는 사건들을 즉시 처리 하도록 되어 있어 데이터를 접근하는 순간에만 의미가 있으나, 데이터 웨어하우스는 시간이라는 관점을 갖음&lt;/li&gt;
-  &lt;li&gt;데이터 포인트가 시간 상의 한 포인트와 연결되어 있어 데이터 포인트들을 시간 축을 따라 비교, 분석 가능&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;데이터-마트&quot;&gt;데이터 마트&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;데이터 웨어하우스와 사용자 사이의 중간층에 위치&lt;/li&gt;
-  &lt;li&gt;하나의 주제 또는 하나의 부서 중심의 데이터 웨어하우스&lt;/li&gt;
-  &lt;li&gt;데이터 웨어하우스가 도매상이라면 데이터 마트는 소매상&lt;/li&gt;
-  &lt;li&gt;데이터 마트의 데이터는 대부분 데이터 웨어하우스로부터 복제&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;데이터웨어하우스에는 단순히 자료가 저장되어 있을뿐만 아니라, 이러한 자료를 추출, 저장, 분류하는 일련의 과정을 포함&lt;/p&gt;
-
-&lt;p&gt;◼ 메타 데이터&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;데이터의 데이터&lt;/li&gt;
-  &lt;li&gt;데이터웨어하우스의 생성과 유지보수에 관련된 정보를 담고있는 자료&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;◼ 데이터 마트&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;데이터 웨어하우스에 저장된 자료 중에서 일정한 주제나 특정 부서의 자료를 별도의 장소에 중복 저장하여 사용자들이 사용하도록 하게 한 것&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        <pubDate>Sun, 03 Jul 2022 00:00:00 -0500</pubDate>
-        <link>https://HaJunYoo.github.io/Blog/database/2022/07/03/data_warehouse.html</link>
-        <guid isPermaLink="true">https://HaJunYoo.github.io/Blog/database/2022/07/03/data_warehouse.html</guid>
-        
-        
-        <category>database</category>
         
       </item>
     
