@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Generic editing view | Yuki’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Generic editing view" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Generic editing view in Django" />
+<meta property="og:description" content="Generic editing view in Django" />
+<link rel="canonical" href="https://hajunyoo.github.io/Blog/django/2022/07/13/generic-edit.html" />
+<meta property="og:url" content="https://hajunyoo.github.io/Blog/django/2022/07/13/generic-edit.html" />
+<meta property="og:site_name" content="Yuki’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-13T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Generic editing view" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-13T00:00:00-05:00","datePublished":"2022-07-13T00:00:00-05:00","description":"Generic editing view in Django","headline":"Generic editing view","mainEntityOfPage":{"@type":"WebPage","@id":"https://hajunyoo.github.io/Blog/django/2022/07/13/generic-edit.html"},"url":"https://hajunyoo.github.io/Blog/django/2022/07/13/generic-edit.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://hajunyoo.github.io/Blog/feed.xml" title="Yuki's Blog" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V1MM5F0SWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V1MM5F0SWD');
+</script>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="/Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Blog/">Yuki&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog/about/">About Me</a><a class="page-link" href="/Blog/gitInfo/">gitInfo</a><a class="page-link" href="/Blog/search/">Search</a><a class="page-link" href="/Blog/categories/">Category</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Generic editing view</h1><p class="page-description">Generic editing view in Django</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-13T00:00:00-05:00" itemprop="datePublished">
+        Jul 13, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Blog/categories/#Django">Django</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#generic-editing-view">Generic editing view</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#generic-editing-views">Generic editing views</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#fbv">FBV</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#create">Create</a></li>
+<li class="toc-entry toc-h3"><a href="#update">Update</a></li>
+<li class="toc-entry toc-h3"><a href="#delete">Delete</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#cbv">CBV</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#formview">FormView</a></li>
+<li class="toc-entry toc-h2"><a href="#create-1">Create</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#createview">CreateView</a></li>
+<li class="toc-entry toc-h3"><a href="#updateview">UpdateView</a></li>
+<li class="toc-entry toc-h3"><a href="#deleteview">DeleteView</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><h1 id="generic-editing-view">
+<a class="anchor" href="#generic-editing-view" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generic editing view</h1>
+
+<h2 id="generic-editing-views">
+<a class="anchor" href="#generic-editing-views" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>Generic editing views</strong>
+</h2>
+
+<ul>
+  <li><strong>폼을 통해 객체를 생성, 수정, 삭제하는 기능을 제공하는 뷰</strong></li>
+  <li>FormView, CreateView, UpdateView, DeleteView
+    <ul>
+      <li><strong>FormView</strong></li>
+      <li>
+<strong>CreateView</strong> : post_new()를 구현할 수 있다.</li>
+      <li>
+<strong>UpdateView</strong> : post_edit()를 구현할 수 있다.</li>
+      <li>
+<strong>DeleteView</strong> : post_delete()를 구현할 수 있다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>FormView</strong></p>
+
+<ul>
+  <li>TemplateResponseMixin, BaseFormView</li>
+</ul>
+
+<p><strong>CreateView</strong></p>
+
+<ul>
+  <li>SingleObjectTemplateResponseMixin</li>
+  <li>BaseCreateView ← ModelFormMixin, ProcessFormView</li>
+</ul>
+
+<p><strong>UpdateView</strong></p>
+
+<ul>
+  <li>SingleObjectTemplateResponseMixin</li>
+  <li>BaseUpdateView ← ModelFormMixin, ProcessFormView</li>
+</ul>
+
+<p><strong>DeleteView</strong></p>
+
+<ul>
+  <li>SingleObjectTemplateResponseMixin</li>
+  <li>BaseDeleteView ← DeletionMixin, BaseDetailView</li>
+</ul>
+
+<h1 id="fbv">
+<a class="anchor" href="#fbv" aria-hidden="true"><span class="octicon octicon-link"></span></a>FBV</h1>
+
+<h3 id="create">
+<a class="anchor" href="#create" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create</h3>
+
+<p><strong>post_new()</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">login_required</span>
+<span class="k">def</span> <span class="nf">post_new</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">'POST'</span><span class="p">:</span>
+				<span class="c1"># forms.py의 PostForm
+</span>        <span class="n">form</span> <span class="o">=</span> <span class="n">PostForm</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">request</span><span class="p">.</span><span class="n">FILES</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="p">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">post</span> <span class="o">=</span> <span class="n">form</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="n">post</span><span class="p">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">user</span> <span class="c1"># 현재 로그인한 유저 Instance
+</span>            <span class="n">post</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">messages</span><span class="p">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'포스팅을 저장했습니다.'</span><span class="p">)</span>
+						<span class="c1"># post의 detail.html로 이동함.
+</span>						<span class="c1"># redirect는 view 함수 내에서 특정 url로 이동하고자 할 때 사용
+</span>						<span class="c1"># model에 지정된 get_absolute_url로 이동
+</span>						<span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">PostForm</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'instagram/post_form.html'</span><span class="p">,{</span>
+        <span class="s">'form'</span> <span class="p">:</span> <span class="n">form</span><span class="p">,</span>
+				 <span class="c1"># 새 글을 작성할 당시 post는 Null 값일수도 있기에 None을 리턴한다.
+</span>		    <span class="s">'post'</span> <span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="p">})</span>
+</code></pre></div></div>
+
+<h3 id="update">
+<a class="anchor" href="#update" aria-hidden="true"><span class="octicon octicon-link"></span></a>Update</h3>
+
+<p><strong>post_edit()</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">login_required</span>
+<span class="k">def</span> <span class="nf">post_edit</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="p">):</span>
+		<span class="c1"># get_object_or_404는 model을 첫번째 인자로 받고, 몇개의 키워드 인수를 get() 함수에 넘김
+</span>    <span class="n">post</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Post</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+
+		<span class="c1"># 이렇게 반복되는 코드가 있다면 장식자로 만드는 것도 좋은 방법
+</span>		<span class="c1"># 작성자만 수정할 수 있도록
+</span>		<span class="k">if</span> <span class="n">post</span><span class="p">.</span><span class="n">author</span> <span class="o">!=</span> <span class="n">request</span><span class="p">.</span><span class="n">user</span><span class="p">:</span>
+        <span class="n">messages</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'작성자만 수정 가능합니다!'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">'POST'</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">PostForm</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">POST</span><span class="p">,</span> <span class="n">request</span><span class="p">.</span><span class="n">FILES</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">post</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">form</span><span class="p">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">post</span> <span class="o">=</span> <span class="n">form</span><span class="p">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">messages</span><span class="p">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'포스팅을 수정했습니다.'</span><span class="p">)</span>
+						
+						<span class="c1"># post의 detail.html로 이동함.
+</span>						<span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">form</span> <span class="o">=</span> <span class="n">PostForm</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="n">post</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'instagram/post_form.html'</span><span class="p">,{</span>
+										       <span class="s">'form'</span> <span class="p">:</span> <span class="n">form</span><span class="p">,</span>
+														<span class="c1"># 수정한다는 것은 이미 원글이 있다는 뜻이기에 post를 리턴한다.
+</span>														<span class="s">'post'</span> <span class="p">:</span> <span class="n">post</span><span class="p">,</span>
+    <span class="p">})</span>
+</code></pre></div></div>
+
+<h3 id="delete">
+<a class="anchor" href="#delete" aria-hidden="true"><span class="octicon octicon-link"></span></a>Delete</h3>
+
+<p><strong>post_delete()</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">login_required</span>
+<span class="k">def</span> <span class="nf">post_delete</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">pk</span><span class="p">):</span>
+		<span class="c1"># get_object_or_404는 model을 첫번째 인자로 받고, 몇개의 키워드 인수를 get() 함수에 넘김
+</span>    <span class="n">post</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Post</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">pk</span><span class="p">)</span>
+
+		<span class="c1"># 유저가 삭제 확인을 했을 때는 
+</span>		<span class="k">if</span> <span class="n">request</span><span class="p">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">'POST'</span><span class="p">:</span>
+        <span class="n">post</span><span class="p">.</span><span class="n">delete</span><span class="p">()</span>
+        <span class="n">messages</span><span class="p">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'성공적으로 삭제하였습니다.'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">redirect</span><span class="p">(</span><span class="s">'instagram:post_list'</span><span class="p">)</span>
+    
+	<span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'instagram/post_confirm_delete.html'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="s">'post'</span> <span class="p">:</span> <span class="n">post</span><span class="p">,</span>
+
+    <span class="p">})</span>
+</code></pre></div></div>
+
+<hr>
+
+<h1 id="cbv">
+<a class="anchor" href="#cbv" aria-hidden="true"><span class="octicon octicon-link"></span></a>CBV</h1>
+
+<h3 id="formview">
+<a class="anchor" href="#formview" aria-hidden="true"><span class="octicon octicon-link"></span></a>FormView</h3>
+
+<ul>
+  <li>폼이 주어지면 해당 폼을 출력</li>
+  <li>
+<strong>TemplateResponseMixin</strong>과 <strong>BaseFormView</strong>를 상속받는다</li>
+</ul>
+
+<p><strong>Example myapp/forms.py</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+
+<span class="k">class</span> <span class="nc">ContactForm</span><span class="p">(</span><span class="n">forms</span><span class="p">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">forms</span><span class="p">.</span><span class="n">CharField</span><span class="p">()</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">forms</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="p">.</span><span class="n">Textarea</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">send_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="c1"># send email using the self.cleaned_data dictionary
+</span>			<span class="k">pass</span>
+</code></pre></div></div>
+
+<p><strong>Example myapp/views.py</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">myapp.forms</span> <span class="kn">import</span> <span class="n">ContactForm</span>
+<span class="kn">from</span> <span class="nn">django.views.generic.edit</span> <span class="kn">import</span> <span class="n">FormView</span>
+
+<span class="k">class</span> <span class="nc">ContactFormView</span><span class="p">(</span><span class="n">FormView</span><span class="p">):</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s">'contact.html'</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">ContactForm</span>
+    <span class="n">success_url</span> <span class="o">=</span> <span class="s">'/thanks/'</span>
+
+    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="c1"># This method is called when valid form data has been POSTed.
+</span>        <span class="c1"># It should return an HttpResponse.
+</span>        <span class="n">form</span><span class="p">.</span><span class="n">send_email</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+	    	<span class="c1"># 주의 : Post 모델에 get_absolute_url() 멤버함수 구현 필요
+</span>        <span class="k">return</span> <span class="n">resolve_url</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="nb">object</span><span class="p">)</span>
+        
+        <span class="c1"># return self.post.get_absolute_url() 대안 1
+</span>        <span class="c1"># return reverse('blog:post_detail', args=[self.post.id]) 대안 2
+</span>        
+ <span class="n">post_new</span> <span class="o">=</span> <span class="n">PostCreateView</span><span class="p">.</span><span class="n">as_view</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><strong>Example myapp/contact.html</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">form</span> <span class="n">method</span><span class="o">=</span><span class="s">"post"</span><span class="o">&gt;</span> <span class="p">{</span><span class="o">%</span> <span class="n">csrf_token</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">{{</span> <span class="n">form</span><span class="p">.</span><span class="n">as_p</span> <span class="p">}}</span>
+    <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="n">value</span><span class="o">=</span><span class="s">"Send message"</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<hr>
+
+<h2 id="create-1">
+<a class="anchor" href="#create-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create</h2>
+
+<h3 id="createview">
+<a class="anchor" href="#createview" aria-hidden="true"><span class="octicon octicon-link"></span></a>CreateView</h3>
+
+<ul>
+  <li>객체를 생성하는 폼 출력</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">CreateView</code>에서 템플릿명 디폴트는 <code class="language-plaintext highlighter-rouge">{{model_name}}_form.html</code>로 지정된다.</li>
+</ul>
+
+<p><strong>instagram/views.py</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">CreateView</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Post</span>
+
+<span class="c1"># 클래스형 뷰에서 Create폼 처리하기
+</span><span class="k">class</span> <span class="nc">PostCreateView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">CreateView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Post</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">PostForm</span>
+
+    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="nb">object</span> <span class="o">=</span> <span class="n">form</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="nb">object</span><span class="p">.</span><span class="n">author</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">request</span><span class="p">.</span><span class="n">user</span> <span class="c1"># 현재 로그인한 유저 Instance
+</span>        <span class="n">messages</span><span class="p">.</span><span class="n">success</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">request</span><span class="p">,</span> <span class="s">'포스팅을 저장했습니다.'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">().</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
+
+<span class="n">post_new</span> <span class="o">=</span> <span class="n">PostCreateView</span><span class="p">.</span><span class="n">as_view</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><strong>Example myapp/author_form.html</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">form</span> <span class="n">method</span><span class="o">=</span><span class="s">"post"</span><span class="o">&gt;</span>
+	<span class="p">{</span><span class="o">%</span> <span class="n">csrf_token</span> <span class="o">%</span><span class="p">}</span>
+    <span class="p">{{</span> <span class="n">form</span><span class="p">.</span><span class="n">as_p</span> <span class="p">}}</span>
+  <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="n">value</span><span class="o">=</span><span class="s">"Save"</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<hr>
+
+<h3 id="updateview">
+<a class="anchor" href="#updateview" aria-hidden="true"><span class="octicon octicon-link"></span></a>UpdateView</h3>
+
+<ul>
+  <li>기존 객체를 수정하는 폼을 출력</li>
+  <li>UpdateView에서 템플릿명 디폴트는 <code class="language-plaintext highlighter-rouge">{{model_name}}_form.html</code> 로 지정된다.</li>
+</ul>
+
+<p><strong>instagram/views.py</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">django.views.generic.edit</span> <span class="kn">import</span> <span class="n">UpdateView</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">Post</span>
+
+<span class="c1"># 클래스형 뷰에서 Update폼 처리하기
+</span><span class="k">class</span> <span class="nc">PostUpdateView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">UpdateView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Post</span>
+    <span class="n">form_class</span> <span class="o">=</span> <span class="n">PostForm</span>
+
+    <span class="k">def</span> <span class="nf">form_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">):</span>
+        <span class="n">messages</span><span class="p">.</span><span class="n">success</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">request</span><span class="p">,</span> <span class="s">'포스팅을 저장했습니다.'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">PostUpdateView</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">form_valid</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
+
+<span class="n">post_edit</span> <span class="o">=</span> <span class="n">PostUpdateView</span><span class="p">.</span><span class="n">as_view</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><strong>Example myapp/author_update_form.html</strong>:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;form</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>{% csrf_token %}
+    {{ form.as_p }}
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"Update"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div></div>
+
+<hr>
+
+<h3 id="deleteview">
+<a class="anchor" href="#deleteview" aria-hidden="true"><span class="octicon octicon-link"></span></a>DeleteView</h3>
+
+<ul>
+  <li>기존 객체를 삭제하는 폼을 출력</li>
+  <li>DeleteView에서 템플릿명 디폴트는 <code class="language-plaintext highlighter-rouge">{{model_name}}_confirm_delete.html</code>로 지정된다.</li>
+</ul>
+
+<p><strong>Example myapp/views.py</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse_lazy</span>
+<span class="kn">from</span> <span class="nn">django.views.generic.edit</span> <span class="kn">import</span> <span class="n">DeleteView</span>
+<span class="kn">from</span> <span class="nn">myapp.models</span> <span class="kn">import</span> <span class="n">post</span>
+
+<span class="c1"># 클래스형 뷰에서 Delete 처리하기
+</span><span class="k">class</span> <span class="nc">PostDeleteView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">DeleteView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Post</span>
+    <span class="n">success_url</span> <span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s">'instagram:post_list'</span><span class="p">)</span>
+		<span class="c1"># reverse_lazy는 실제 값이 사용될 때 reverse를 해줌으로 오류 예방
+</span>    <span class="n">template_name</span> <span class="o">=</span> <span class="s">'instagram/post_confirm_delete.html'</span>
+
+    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">PostDeleteView</span><span class="p">,</span> <span class="bp">self</span><span class="p">).</span><span class="n">delete</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">messages</span><span class="p">.</span><span class="n">success</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'포스팅을 삭제했습니다.'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span>
+
+<span class="n">post_delete</span> <span class="o">=</span> <span class="n">PostDeleteView</span><span class="p">.</span><span class="n">as_view</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+<strong>success_url</strong>
+    <ul>
+      <li>지정된 개체가 삭제되었을 때 리디렉션할 url</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">/parent/{parent_id}/</code> 처럼 사전 문자열 형식을 포함할 수 있다</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">PostDeleteView</span><span class="p">(</span><span class="n">LoginRequiredMixin</span><span class="p">,</span> <span class="n">DeleteView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Post</span>
+    
+		<span class="c1"># reverse_lazy를 쓰지 않을 경우 아래와 같이 사용
+</span>    <span class="k">def</span> <span class="nf">get_success_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    	<span class="k">return</span> <span class="n">reverse</span><span class="p">(</span><span class="s">'instagram:post_list'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>post_delete()</strong> 함수의 <strong>return redirect(‘instagram:post_list’)</strong>와 같은 역할을 한다.</p>
+
+<p><strong>Example myapp/author_confirm_delete.html</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="n">form</span> <span class="n">method</span><span class="o">=</span><span class="s">"post"</span><span class="o">&gt;</span><span class="p">{</span><span class="o">%</span> <span class="n">csrf_token</span> <span class="o">%</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Are</span> <span class="n">you</span> <span class="n">sure</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">delete</span> <span class="s">"{{ object }}"</span><span class="err">?</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+    <span class="p">{{</span> <span class="n">form</span> <span class="p">}}</span>
+    <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s">"submit"</span> <span class="n">value</span><span class="o">=</span><span class="s">"Confirm"</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">form</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<hr>
+<h5 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference</h5>
+
+<ul>
+  <li>
+    <p><a href="https://www.inflearn.com/course/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EC%9E%A5%EA%B3%A0-%EC%9B%B9%EC%84%9C%EB%B9%84%EC%8A%A4/dashboard">파이썬/장고 웹서비스 개발 완벽 가이드 with 리액트</a></p>
+  </li>
+  <li>
+    <p><a href="https://devdongbaek.tistory.com/91?category=1037491">https://devdongbaek.tistory.com/91?category=1037491</a></p>
+  </li>
+</ul>
+
+  </div><!-- from https://github.com/utterance/utterances
+<script src="https://utteranc.es/client.js"
+        repo="HaJunYoo/Blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>-->
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://yukiblog-1.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript><a class="u-url" href="/Blog/django/2022/07/13/generic-edit.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Yuki&#39;s Tech Blog는 데이터 엔지니어링과 프로그래밍 전반에 대해서 다루는 블로그입니다.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
